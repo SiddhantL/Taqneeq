@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "32334314566",
+    "firebase_url": "https://taqneeq-51499.firebaseio.com",
+    "project_id": "taqneeq-51499",
+    "storage_bucket": "taqneeq-51499.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32334314566:android:85e1234f178c0877",
+        "android_client_info": {
+          "package_name": "com.example.siddhantlad.taqneeq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "32334314566-mm34d6ason6k32kbt4gaja6jub88d3t8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvA2CpYwcuopOJ35WZakeVoeDUA3yTz98"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "32334314566-mm34d6ason6k32kbt4gaja6jub88d3t8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
