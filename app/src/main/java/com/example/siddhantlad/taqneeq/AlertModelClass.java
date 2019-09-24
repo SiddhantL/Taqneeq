@@ -1,20 +1,22 @@
 package com.example.siddhantlad.taqneeq;
 
-public class ModelClass {
+public class AlertModelClass {
     private int image;
     private String title;
     private String classroom;
     private int score;
+    private String alert;
 
-    public ModelClass(int image, String title, String classroom, int score) {
+    public AlertModelClass(String alert, String title, String classroom, int score,int image) {
         this.image = image;
         this.title = title;
         this.classroom = classroom;
         this.score = score;
+        this.alert=alert;
     }
 
-    public int getImage() {
-        return image;
+    public String getAlert() {
+        return alert;
     }
 
     public String getTitle() {
@@ -27,5 +29,8 @@ public class ModelClass {
 
     public int getScore() {
         return score;
+    }
+    public int getImage() {
+        return image;
     }
 }

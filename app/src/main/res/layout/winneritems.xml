@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:background="#E8EDEE">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="9dp"
+            android:background="#ffff"
+            android:elevation="10dp">
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="185dp"
+                android:layout_height="120dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/itemimage" />
+
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/item_image"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="5dp"
+                android:text="Item Title"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/item_title"
+                android:paddingLeft="5dp"
+                android:text="Item Title"
+                android:textColor="#FF0000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/item_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/item_room"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/coinlef"
+                android:paddingLeft="5dp"
+                android:text="Item Title"
+                android:textColor="#08B3B9"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="138dp"
+        android:layout_height="83dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="11dp"
+        android:background="@drawable/relativecircular">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView10"
+            android:drawableRight="@drawable/thirdlef"
+            android:paddingLeft="10dp"
+            android:paddingTop="2dp"
+            android:text="Krisha Goti" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView6"
+            android:layout_centerVertical="true"
+            android:drawableRight="@drawable/secondlef"
+            android:paddingLeft="10dp"
+            android:paddingTop="2dp"
+            android:text="Jaanaki Dave" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:drawableRight="@drawable/firstlef"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Siddhant Lad" />
+    </RelativeLayout>
+
+</RelativeLayout>

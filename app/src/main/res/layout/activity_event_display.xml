@@ -2,11 +2,15 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/button"
+    android:visibility="gone"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/button">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -14,30 +18,104 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:src="@drawable/chefielogo3"
+                android:layout_height="205dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
+                android:layout_alignParentTop="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/robo" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
+                android:layout_height="3511dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="317dp"
+                android:background="@drawable/rounded_corner_text"
+                android:fontFamily="sans-serif-smallcaps"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/text_dummy"
+                android:textColor="#ffffff"
+                android:textSize="22sp" />
+
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="278dp"
+                android:background="#26777777" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:textColor="@android:color/black"
+                android:layout_above="@+id/textView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="-317dp"
+                android:text="DESCRIPTION:-"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/rlayout"
+                android:layout_width="252dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="210dp"
-                android:text="@string/text_dummy2" />
+                android:layout_marginTop="169dp"
+                android:background="@drawable/relativecircular"
+                android:backgroundTint="#20AFD9"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/t1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="Room No: 11"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/t2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/t1"
+                    android:drawableRight="@drawable/coinlef"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="Cost: 0 "
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/t3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/t2"
+                    android:drawableRight="@drawable/coinlef"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="First Place: 2000 "
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/t4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/t3"
+                    android:drawableRight="@drawable/coinlef"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="Second Place: 1000 "
+                    android:textColor="#ffffff"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
         </RelativeLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Play" />
 
 </RelativeLayout>

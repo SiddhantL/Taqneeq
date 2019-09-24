@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="9dp"
     android:elevation="10dp"
     android:background="#ffff">
-
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl2">
     <ImageView
         android:id="@+id/item_image"
         android:layout_width="185dp"
@@ -31,8 +35,8 @@
         android:id="@+id/item_room"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/item_title"
         android:layout_alignParentLeft="true"
+        android:layout_below="@+id/item_title"
         android:paddingLeft="5dp"
         android:text="Item Title"
         android:textColor="#FF0000"
@@ -50,5 +54,19 @@
         android:text="Item Title"
         android:textColor="#08B3B9"
         android:textSize="16sp" />
+</RelativeLayout>
 
+    <TextView
+        android:id="@+id/item_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="false"
+        android:layout_below="@+id/rl2"
+        android:layout_centerHorizontal="false"
+        android:gravity="center_horizontal"
+        android:paddingLeft="5dp"
+        android:text="Item Title"
+        android:textColor="#FF0000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 </RelativeLayout>

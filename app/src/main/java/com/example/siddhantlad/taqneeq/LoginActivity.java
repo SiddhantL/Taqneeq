@@ -29,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     //FireBase Authentication Field
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
-TextView SignUpText,ForgotPass;
     Button loginbtn;
     EditText userEmailEdit,UserPasswordEdit;
     FirebaseUser user;
@@ -41,30 +40,7 @@ TextView SignUpText,ForgotPass;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 //Assign ID's
-        SignUpText=(TextView)findViewById(R.id.textView2);
 loginbtn=(Button)findViewById(R.id.loginbtn);
-ForgotPass=(TextView)findViewById(R.id.fgtpass);
-ForgotPass.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if (!TextUtils.isEmpty(userEmailEdit.getText().toString())) {
-            FirebaseAuth.getInstance().sendPasswordResetEmail(userEmailEdit.getText().toString())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "Email to Reset the Password Sent", Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(LoginActivity.this, "Email is not Valid", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                    });
-        }else{
-            Toast.makeText(LoginActivity.this, "Enter an E-mail to Reset Password", Toast.LENGTH_SHORT).show();
-        }
-    }
-});
 userEmailEdit=(EditText)findViewById(R.id.EmailEdittext);
         UserPasswordEdit=(EditText)findViewById(R.id.PasswordeditText);
         //Assign Instances
