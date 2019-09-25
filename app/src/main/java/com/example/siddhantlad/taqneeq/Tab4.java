@@ -102,22 +102,22 @@ public class Tab4 extends Fragment {
                            for (final DataSnapshot postSnapshot : dataSnapshot2.getChildren()) {
                                if (dataSnapshot2.getValue() != null) {
                                    String alert = postSnapshot.getValue().toString().trim();
-                                   Toast.makeText(getActivity(), postSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
+                                  // Toast.makeText(getActivity(), postSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
                                    if (postSnapshot.getKey().toString().equals("Winner1")) {
                                        winner1=postSnapshot.getValue().toString();
-                                       if (dataSnapshot2.getChildrenCount()==1) {
+                                       if (dataSnapshot2.getChildrenCount()==2) {
                                            items.add(new WinnerModelClass(R.drawable.testeventimage1, eventname, "CR-101", 20, winner1, "", ""));
                                            adapter.notifyDataSetChanged();
                                        }
                                    }else if (postSnapshot.getKey().toString().equals("Winner2")) {
                                        winner2=postSnapshot.getValue().toString();
-                                       if (dataSnapshot2.getChildrenCount()==2) {
+                                       if (dataSnapshot2.getChildrenCount()==4) {
                                            items.add(new WinnerModelClass(R.drawable.testeventimage1, eventname, "CR-101", 20, winner1, winner2, ""));
                                            adapter.notifyDataSetChanged();
                                        }
                                    }else if (postSnapshot.getKey().toString().equals("Winner3")) {
                                        winner3=postSnapshot.getValue().toString();
-                                       if (dataSnapshot2.getChildrenCount()==3) {
+                                       if (dataSnapshot2.getChildrenCount()==6) {
                                            items.add(new WinnerModelClass(R.drawable.testeventimage1, eventname, "CR-101", 20,winner1, winner2, winner3));
                                            adapter.notifyDataSetChanged();
                                        }

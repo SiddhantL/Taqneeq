@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="9dp"
     android:elevation="10dp"
-    android:background="#ffff">
+    android:background="#ffffff">
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -28,8 +28,7 @@
         android:paddingLeft="5dp"
         android:textColor="#000"
         android:layout_alignParentLeft="true"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/item_room"
@@ -50,7 +49,7 @@
         android:paddingLeft="5dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentLeft="true"
-        android:drawableLeft="@drawable/coinlef"
+        android:drawableRight="@drawable/coinlef"
         android:text="Item Title"
         android:textColor="#08B3B9"
         android:textSize="16sp" />

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     android.support.design.widget.FloatingActionButton fab, fab2;
     ImageView img;
     String livecontent;
+    int score;
     TextView live,coins;
     Button scanbtn,backscan;
     DatabaseReference mDatabase,info;
@@ -73,53 +75,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.content_main);
         backscan=(Button)findViewById(R.id.button9);
         backscan.setEnabled(false);
+        findViewById(R.id.imgtq).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://www.taqneeq.com/";
+
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
         live=findViewById(R.id.textlive);
         coins=(TextView)findViewById(R.id.textView11);
-        info=FirebaseDatabase.getInstance().getReference("users");
-           info.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            final String name = postSnapshot.getKey().toString().trim();
-                            final DatabaseReference dataref = info.child(name);
-                            dataref.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull final DataSnapshot dataSnapshot1) {
-                                    for (DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
-                                        final String names = postSnapshot1.getKey().toString().trim();
-                                        dataref.child(names).addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
-                                                if (dataSnapshot2.getValue() != null) {
-                                                    if(names.equals("Score")) {
-                                                        coins.setText(dataSnapshot2.getValue().toString());
-                                                    }
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-                                                        livecontent=new String();
+        livecontent=new String();
         mDatabase=FirebaseDatabase.getInstance().getReference("Live");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -140,6 +108,40 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        info=FirebaseDatabase.getInstance().getReference("users");
+        info.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    //     Toast.makeText(MainActivity.this, postSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();//ID
+                    if (postSnapshot.getKey().toString().equals(mAuth.getCurrentUser().getUid())){
+                        //   Toast.makeText(MainActivity.this, "Yay", Toast.LENGTH_SHORT).show();
+                        info.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                                for (final DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
+                                    //     Toast.makeText(MainActivity.this, postSnapshot1.getKey().toString(), Toast.LENGTH_SHORT).show();
+                                    if (postSnapshot1.getKey().toString().equals("Score")){
+                                        //    Toast.makeText(MainActivity.this, postSnapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
+                                        coins.setText(postSnapshot1.getValue().toString());
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
                 }
             }
 
@@ -201,17 +203,21 @@ public class MainActivity extends AppCompatActivity {
         final RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativelayout);
 //
         ImageView icon = new ImageView(this); // Create an icon
-        Drawable myDrawable = getResources().getDrawable(R.drawable.tqlogo);
-        Drawable myDrawable1 = getResources().getDrawable(R.drawable.tqlogo);
-        icon.setImageDrawable(myDrawable);
+        Drawable myDrawable1 = getResources().getDrawable(R.drawable.helplef);
+        Drawable myDrawableUser = getResources().getDrawable(R.drawable.userlef);
+        Drawable myDrawable2 = getResources().getDrawable(R.drawable.belllef);
+        Drawable myDrawable3 = getResources().getDrawable(R.drawable.ttlef);
+        Drawable myDrawable4 = getResources().getDrawable(R.drawable.trophylef);
+        Drawable myDrawables = getResources().getDrawable(R.drawable.tqlogolef);
+        icon.setImageDrawable(myDrawables);
 /*
         FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
                 .build();*/
         fab = findViewById(R.id.fabs);
         fab2 = findViewById(R.id.fabs2);
-        fab.setImageDrawable(myDrawable);
-        fab2.setImageDrawable(myDrawable);
+        fab.setImageDrawable(myDrawableUser);
+        fab2.setImageDrawable(myDrawables);
         fab2.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -265,28 +271,28 @@ public class MainActivity extends AppCompatActivity {
         SubActionButton.Builder itemBuilder2 = new SubActionButton.Builder(this);
 // repeat many times:
         ImageView itemIcon = new ImageView(this);
-        itemIcon.setImageDrawable(myDrawable);
+        itemIcon.setImageDrawable(myDrawable4);
         SubActionButton button1 = itemBuilder.setContentView(itemIcon).setLayoutParams(new FrameLayout.LayoutParams(200, 200)).build();
         ImageView itemIcon2 = new ImageView(this);
-        itemIcon2.setImageDrawable(myDrawable);
+        itemIcon2.setImageDrawable(myDrawable2);
         SubActionButton button2 = itemBuilder.setContentView(itemIcon2).build();
         ImageView itemIcon3 = new ImageView(this);
-        itemIcon3.setImageDrawable(myDrawable);
+        itemIcon3.setImageDrawable(myDrawable3);
         SubActionButton button3 = itemBuilder.setContentView(itemIcon3).build();
         ImageView itemIcon4 = new ImageView(this);
-        itemIcon4.setImageDrawable(myDrawable1);
+        itemIcon4.setImageDrawable(myDrawable3);
         SubActionButton button4 = itemBuilder.setContentView(itemIcon4).build();
         ImageView itemIcon5 = new ImageView(this);
-        itemIcon.setImageDrawable(myDrawable);
+        itemIcon.setImageDrawable(myDrawable3);
         SubActionButton button5 = itemBuilder2.setContentView(itemIcon5).setLayoutParams(new FrameLayout.LayoutParams(1, 1)).build();
         ImageView itemIcon6 = new ImageView(this);
-        itemIcon2.setImageDrawable(myDrawable);
+        itemIcon2.setImageDrawable(myDrawable4);
         SubActionButton button6 = itemBuilder2.setContentView(itemIcon6).build();
         ImageView itemIcon7 = new ImageView(this);
-        itemIcon3.setImageDrawable(myDrawable);
+        itemIcon3.setImageDrawable(myDrawable1);
         SubActionButton button7 = itemBuilder2.setContentView(itemIcon7).build();
         ImageView itemIcon8 = new ImageView(this);
-        itemIcon4.setImageDrawable(myDrawable1);
+        itemIcon4.setImageDrawable(myDrawable2);
         SubActionButton button8 = itemBuilder2.setContentView(itemIcon8).build();
         final Intent helpsl=new Intent(MainActivity.this,HelpSlide.class);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -336,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View view) {
-                                       actionMenu.close(true);
+/*                                       actionMenu.close(true);
                                        fab2.show();
                                        fab.hide();
                                        fab2.animate().translationY(-10).setListener(new Animator.AnimatorListener() {
@@ -359,7 +365,8 @@ public class MainActivity extends AppCompatActivity {
                                            public void onAnimationRepeat(Animator animator) {
 
                                            }
-                                       });
+                                       });*/
+startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
                                    }
                                });
         user=mAuth.getCurrentUser();
@@ -391,52 +398,84 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        final IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             //if qrcode has nothing in it
             if (result.getContents() == null) {
                 Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
             } else {
-                //if qr contains data
-                try {
-                    //converting the data to json
+                 try {
                     JSONObject obj = new JSONObject(result.getContents());
-                    //setting values to textviews
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    //if control comes here
-                    //that means the encoded format not matches
-                    //in this case you can display whatever data is available on the qrcode
-                    //to a toast
-                 //   Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-                    if (result.getContents().equals("Taqneeq-SNL-50")){
-                    //    Toast.makeText(this, "Game Entered- 50 Deducted", Toast.LENGTH_SHORT).show();
-                        int val=Integer.parseInt(coins.getText().toString())-50;
-                        coins.setText(Integer.toString(val));
-                        info.addValueEventListener(new ValueEventListener() {
+                    //if (result.getContents().equals("Taqneeq-SNL-50")){
+
+               //         Toast.makeText(this, "Hi", Toast.LENGTH_SHORT).show();
+                     final DatabaseReference eventdata=FirebaseDatabase.getInstance().getReference("events");
+                        DatabaseReference scandata=FirebaseDatabase.getInstance().getReference("Scan");
+                     scandata.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                    final String name = postSnapshot.getKey().toString().trim();
-                                    final DatabaseReference dataref = info.child(name);
-                                    dataref.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull final DataSnapshot dataSnapshot1) {
-                                            for (DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
-                                                final String names = postSnapshot1.getKey().toString().trim();
-                                                Toast.makeText(MainActivity.this, postSnapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
-                                               // Toast.makeText(MainActivity.this, names, Toast.LENGTH_SHORT).show();
-                                              //  info.child("eI5liFhtRsSNOuXpbovLran7VK93").child("Score").setValue("234");
-                                               final DatabaseReference dataref2 = info.child(name);
-                                                Toast.makeText(MainActivity.this, names, Toast.LENGTH_SHORT).show();
+                                    if (postSnapshot.getKey().toString().equals(result.getContents())){
+                                       final String eventcode=postSnapshot.getValue().toString();
+                                       final String id=eventdata.push().getKey();
+                                       eventdata.child(eventcode).child(mAuth.getCurrentUser().getUid()).child("Name").setValue(mAuth.getCurrentUser().getDisplayName());
+                                       final int scorechanged= Integer.parseInt(coins.getText().toString());
+                                       eventdata.child(eventcode).child(mAuth.getCurrentUser().getUid()).child("Score").setValue(Integer.toString(scorechanged));
+                                        //
+                                        final DatabaseReference userdata=FirebaseDatabase.getInstance().getReference("users");
+                                        userdata.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                                    final String name = postSnapshot.getKey().toString().trim();
+                                                    if (name.equals(mAuth.getCurrentUser().getUid())) {
+                                                        final DatabaseReference dataref = userdata.child(name);
+                                                        dataref.addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                for (DataSnapshot postSnapshot1 : dataSnapshot.getChildren()) {
+                                                                    final String names = postSnapshot1.getKey().toString().trim();
+                                                                    dataref.child(names).addValueEventListener(new ValueEventListener() {
+                                                                        @Override
+                                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                            if (dataSnapshot.getValue() != null) {
+                                                                                if (names.equals("Phone")) {
+                                                                                    String phoneNum = dataSnapshot.getValue().toString().trim();
+                                                                                    //Toast.makeText(MainActivity.this, phoneNum, Toast.LENGTH_SHORT).show();
+                                                                                    eventdata.child(eventcode).child(mAuth.getCurrentUser().getUid()).child("Phone").setValue(phoneNum);
+
+                                                                                }
+                                                                            }
+                                                                        }
+
+                                                                        @Override
+                                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+                                                    }
+                                                }
                                             }
-                                        }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                        }
-                                    });
+                                            }
+                                        });
+                                        //
+                                        score=Integer.parseInt(coins.getText().toString())-50;
+                                        info.child(mAuth.getCurrentUser().getUid()).child("Score").setValue(Integer.toString(score));
+                                    }
                                 }
                             }
 
@@ -445,8 +484,47 @@ public class MainActivity extends AppCompatActivity {
 
                             }
                         });
+                        info=FirebaseDatabase.getInstance().getReference("users");
+                        info.addValueEventListener(new ValueEventListener() {
+                       @Override
+                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                           for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                          //     Toast.makeText(MainActivity.this, postSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();//ID
+                               if (postSnapshot.getKey().toString().equals(mAuth.getCurrentUser().getUid())){
+                               //   Toast.makeText(MainActivity.this, "Yay", Toast.LENGTH_SHORT).show();
+                                   info.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                                       @Override
+                                       public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                                           for (final DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
+                                          //     Toast.makeText(MainActivity.this, postSnapshot1.getKey().toString(), Toast.LENGTH_SHORT).show();
+                                           if (postSnapshot1.getKey().toString().equals("Score")){
+                                           //    Toast.makeText(MainActivity.this, postSnapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
+                                         //  coins.setText(postSnapshot1.getValue().toString());
+                                         score=Integer.parseInt(postSnapshot1.getValue().toString());
+                                               }
+
+                                           }
+                                       }
+
+                                       @Override
+                                       public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                       }
+                                   });
+                               }
+                           }
+                       }
+
+                       @Override
+                       public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                       }
+                   });
+
+
+
                     }
-                }
+
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

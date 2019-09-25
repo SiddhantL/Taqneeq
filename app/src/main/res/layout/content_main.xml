@@ -22,6 +22,25 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true">
 
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/textView9"
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="109dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="serif-monospace"
+                android:paddingBottom="30dp"
+                android:text="  DESIGNED BY \n PRANIT SEHGAL\n pranitsehgal@gmail.com"
+                android:textAlignment="center"
+                android:textColor="#5e5d5d"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/my_recycler_view"
                 android:layout_width="match_parent"
@@ -87,7 +106,7 @@
                 android:layout_alignParentStart="true"
                 android:paddingLeft="16dp"
                 android:paddingTop="10dp"
-                android:text="Events"
+                android:text="EVENTS"
                 android:textColor="#353535"
                 android:textSize="24sp" />
 
@@ -98,7 +117,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/divider2"
                 android:paddingLeft="16dp"
-                android:text="Workshop"
+                android:text="WORKSHOP"
                 android:textColor="#353535"
                 android:textSize="24sp" />
 
@@ -109,7 +128,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/divider"
                 android:paddingLeft="16dp"
-                android:text="Informals"
+                android:text="INFORMALS"
                 android:textColor="#353535"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,12 +141,23 @@
                 android:layout_below="@+id/divider3"
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="false"
-                android:paddingBottom="30dp"
-                android:text="Developed By \n Siddhant Lad"
-                android:textColor="#880D0D0D"
+                android:fontFamily="serif-monospace"
+                android:paddingBottom="5dp"
+                android:text=" DEVELOPED BY \n SIDDHANT LAD\n siddhantnlad@gmail.com"
+                android:textAlignment="center"
+                android:textColor="#000000"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="80dp"
+                android:layout_height="2dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView9"
+                android:layout_centerHorizontal="true"
+                android:background="#5e5d5d" />
         </RelativeLayout>
     </ScrollView>
 
@@ -136,12 +166,12 @@
         android:layout_width="61dp"
         android:layout_height="61dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:clickable="true"
         android:scaleType="center"
         android:visibility="visible"
         app:backgroundTint="#ffffff"
-        app:fabCustomSize="61dp"
+        app:fabCustomSize="52dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/tqlogo" />
@@ -153,11 +183,11 @@
         android:layout_height="100dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/gradient"
+        android:background="@drawable/gradienttheme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <!-- <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -167,6 +197,16 @@
         android:text="TAQNEEQ 12.0"
         android:textColor="#ffffff"
         android:textSize="35sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button4"
+        app:layout_constraintTop_toTopOf="parent" />-->
+    <ImageView
+        android:id="@+id/imgtq"
+        android:layout_width="200dp"
+        android:layout_height="85dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/tqnewlogo"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button4"
         app:layout_constraintTop_toTopOf="parent" />
@@ -181,9 +221,10 @@
         android:background="@drawable/circular_button"
         android:backgroundTint="#000000"
         android:padding="5dp"
+        android:paddingTop="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
+        app:layout_constraintTop_toBottomOf="@+id/imgtq">
 
         <TextView
             android:id="@+id/textlive1"
@@ -217,8 +258,7 @@
             android:singleLine="true"
             android:text="TAQNEEQ IS BIGGER THAN EVER NOW"
             android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
     </RelativeLayout>
 
     <ImageView
@@ -227,7 +267,7 @@
         android:layout_height="43dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#0093E9"
+        android:background="#AF09C0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -255,17 +295,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tqlogo" />
+        app:srcCompat="@drawable/userlef" />
 
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="61dp"
-        android:layout_height="61dp"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="10dp" />
@@ -274,16 +314,14 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="23dp"
-        android:layout_toEndOf="@+id/textView4"
+        android:layout_alignBaseline="@+id/button4"
+        android:layout_alignParentEnd="true"
         android:drawableRight="@drawable/coinlef"
         android:paddingLeft="8dp"
         android:paddingRight="5dp"
-        android:text=" 2000"
+        android:text=" 20000"
         android:textColor="#ffffff"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/button9"
@@ -292,7 +330,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_sub_action"
-        android:backgroundTint="#0093E9"
+        android:backgroundTint="#9616FF"
         android:saveEnabled="false" />
 
     <Button

@@ -40,7 +40,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/calling"
                 android:fontFamily="monospace"
-                android:text="Jaanaki Dave"
+                android:text=" Yash"
                 android:textColor="#000000"
                 android:textSize="22dp"
                 android:textStyle="bold" />
@@ -51,7 +51,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_below="@id/name"
                 android:layout_toEndOf="@+id/calling"
-                android:text="-8879618666"
+                android:text="-9820050976"
                 android:textColor="#000000"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -89,7 +89,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/calling1"
                 android:fontFamily="monospace"
-                android:text=" Siddhant Lad"
+                android:text=" Omair"
                 android:textColor="#000000"
                 android:textSize="22dp"
                 android:textStyle="bold" />
@@ -100,7 +100,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_below="@id/name1"
                 android:layout_toEndOf="@+id/calling1"
-                android:text="-9082003007"
+                android:text="-9821500066"
                 android:textColor="#000000"
                 android:textSize="18sp" />
         </RelativeLayout>
