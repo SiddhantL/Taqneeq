@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".SplashLogo">
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="334dp"
+        android:layout_height="160dp"
+        android:layout_centerInParent="true"
+        app:srcCompat="@drawable/tqnewlogo"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="272dp" />
+
+</RelativeLayout>
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000F2E"
+    tools:context=".SplashLogo">
+
+    <RelativeLayout
+        android:id="@+id/animatinglayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/imageView7"
+        android:background="#000000">
+
+        <ImageView
+            android:id="@+id/imageView71"
+            android:layout_width="334dp"
+            android:layout_height="160dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/tqnewlogo"
+            tools:layout_editor_absoluteX="162dp"
+            tools:layout_editor_absoluteY="272dp" />
+
+        <ImageView
+            android:id="@+id/imageView101"
+            android:layout_width="202dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/imageView71"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/blueobj" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="334dp"
+        android:layout_height="160dp"
+        android:layout_centerInParent="true"
+        app:srcCompat="@drawable/tqnewlogo"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="272dp" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="202dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/imageView7"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/blueobj" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="monospace"
+        android:text="@string/sign_in"
+        android:textColor="#000F2E"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/button_action" />
+</RelativeLayout>-->

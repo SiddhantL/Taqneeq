@@ -33,8 +33,27 @@ public class CustomAlertAdapter extends RecyclerView.Adapter<CustomAlertAdapter.
         holder.itemTitle.setText(items.get(position).getTitle());
         holder.itemClass.setText(items.get(position).getClassroom());
         holder.itemAlert.setText(items.get(position).getAlert());
-        holder.itemScore.setText(Integer.toString(items.get(position).getScore()));
-        holder.itemImage.setImageResource(items.get(position).getImage());
+        for (int i=0;i<MyData.nameArray.length;i++){
+            if(MyData.nameArray[i].equals(items.get(position).getTitle())){
+                holder.itemImage.setImageResource(MyData.drawableArray[i]);
+                holder.itemScore.setText(Integer.toString(MyData.scoreArray[i]));
+                holder.itemClass.setText(MyData.roomArray[i]);
+            }
+        }
+        for (int i=0;i<MyData.informalArray.length;i++){
+            if(MyData.informalArray[i].equals(items.get(position).getTitle())){
+                holder.itemImage.setImageResource(MyData.informaldrawableArray[i]);
+                holder.itemScore.setText(Integer.toString(MyData.scoreArray2[i]));
+                holder.itemClass.setText(MyData.roomArray2[i]);
+            }
+        }
+        for (int i=0;i<MyData.workshopArray.length;i++){
+            if(MyData.workshopArray[i].equals(items.get(position).getTitle())){
+                holder.itemImage.setImageResource(MyData.workshopdrawableArray[i]);
+                holder.itemScore.setText(Integer.toString(MyData.scoreArray3[i]));
+                holder.itemClass.setText(MyData.roomArray3[i]);
+            }
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,8 +80,8 @@ public class CustomAlertAdapter extends RecyclerView.Adapter<CustomAlertAdapter.
             itemImage = view.findViewById(R.id.item_image);
             itemTitle = view.findViewById(R.id.item_title);
             itemAlert = view.findViewById(R.id.item_alert);
-            itemClass = view.findViewById(R.id.item_room);
-            itemScore = view.findViewById(R.id.item_score);
+            itemClass = view.findViewById(R.id.item_date);
+            itemScore = view.findViewById(R.id.item_cost);
         }
     }
 }

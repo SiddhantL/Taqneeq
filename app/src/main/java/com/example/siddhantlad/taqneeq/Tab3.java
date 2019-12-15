@@ -74,7 +74,7 @@ public class Tab3 extends Fragment{
         final Button b2=(Button)view.findViewById(R.id.button6);
         final Button b3=(Button)view.findViewById(R.id.button7);
         final ImageView img=(ImageView)view.findViewById(R.id.imageView5);
-        b1.setOnClickListener(new View.OnClickListener() {
+      /*  b1.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -111,6 +111,47 @@ public class Tab3 extends Fragment{
                 b2.setBackgroundResource(R.color.unselectedButton);
                 Drawable drawables=getResources().getDrawable(R.drawable.tt1);
                 img.setImageDrawable(drawables);
+            }
+        });*/
+        b1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //do your operation here
+                // this will be called whenever user click anywhere in Fragment
+                b1.setBackgroundResource(R.color.selectedButton);
+                b2.setBackgroundResource(R.color.unselectedButton);
+                b3.setBackgroundResource(R.color.unselectedButton);
+                Drawable drawables=getResources().getDrawable(R.drawable.tt1);
+                img.setImageDrawable(drawables);
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //do your operation here
+                // this will be called whenever user click anywhere in Fragment
+                b1.setBackgroundResource(R.color.selectedButton);
+                b2.setBackgroundResource(R.color.unselectedButton);
+                b3.setBackgroundResource(R.color.unselectedButton);
+                Drawable drawables=getResources().getDrawable(R.drawable.tt1);
+                img.setImageDrawable(drawables);
+                Toast.makeText(getActivity(), "To Be Decided", Toast.LENGTH_SHORT).show();
+            }
+        });
+        b3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //do your operation here
+                // this will be called whenever user click anywhere in Fragment
+                b1.setBackgroundResource(R.color.selectedButton);
+                b2.setBackgroundResource(R.color.unselectedButton);
+                b3.setBackgroundResource(R.color.unselectedButton);
+                Drawable drawables=getResources().getDrawable(R.drawable.tt1);
+                img.setImageDrawable(drawables);
+                Toast.makeText(getActivity(), "To Be Decided", Toast.LENGTH_SHORT).show();
             }
         });
     return view;

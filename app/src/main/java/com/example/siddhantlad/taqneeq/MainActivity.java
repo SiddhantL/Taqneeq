@@ -37,6 +37,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -60,35 +61,38 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser user;
     FloatingActionMenu actionMenu;
+    ArrayList<String> customEventName,customEventVenue,customEventCost,customEventDate,customEventTime,customEventDrinks,customEventAdult,customEventFood,customEventMusic,customEventIntro;
     android.support.design.widget.FloatingActionButton fab, fab2;
     ImageView img;
     String livecontent;
-    int score;
+    int score,deduct,eventno,workshopno,informalno,s,l;
     TextView live,coins;
     Button scanbtn,backscan;
-    DatabaseReference mDatabase,info;
+    DatabaseReference mDatabase,info,mDataList;
     private IntentIntegrator qrScan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
+        deduct=0;
         backscan=(Button)findViewById(R.id.button9);
         backscan.setEnabled(false);
-        findViewById(R.id.imgtq).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = "https://www.taqneeq.com/";
-
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
-            }
-        });
         live=findViewById(R.id.textlive);
+        customEventName=new ArrayList<>();
+        customEventVenue=new ArrayList<>();
+        customEventCost=new ArrayList<>();
+        customEventDate=new ArrayList<>();
+        customEventTime=new ArrayList<>();
+        customEventAdult=new ArrayList<>();
+        customEventDrinks=new ArrayList<>();
+        customEventFood=new ArrayList<>();
+        customEventMusic=new ArrayList<>();
+        customEventIntro=new ArrayList<>();
         coins=(TextView)findViewById(R.id.textView11);
         livecontent=new String();
         mDatabase=FirebaseDatabase.getInstance().getReference("Live");
+        mDataList=FirebaseDatabase.getInstance().getReference();
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -370,12 +374,12 @@ startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
                                    }
                                });
         user=mAuth.getCurrentUser();
-        ArrayList<ModelClass> items = new ArrayList<>();
-        ArrayList<ModelClass> items2 = new ArrayList<>();
-        ArrayList<ModelClass> items3 = new ArrayList<>();
-        CustomAdapter adapter = new CustomAdapter(this, items);
-        CustomAdapter adapter2 = new CustomAdapter(this, items2);
-        CustomAdapter adapter3 = new CustomAdapter(this, items3);
+        final ArrayList<ModelClass> items = new ArrayList<>();
+        final ArrayList<ModelClass> items2 = new ArrayList<>();
+        final ArrayList<ModelClass> items3 = new ArrayList<>();
+        final CustomAdapter adapter = new CustomAdapter(this, items);
+        final CustomAdapter2 adapter2 = new CustomAdapter2(this, items2);
+        final CustomAdapter3 adapter3 = new CustomAdapter3(this, items3);
         RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
         RecyclerView recyclerView2 = findViewById(R.id.my_recycler_view2);
         RecyclerView recyclerView3 = findViewById(R.id.my_recycler_view3);
@@ -383,17 +387,97 @@ startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
         recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
-        recyclerView2.setAdapter(adapter);
-        recyclerView3.setAdapter(adapter);
+        recyclerView2.setAdapter(adapter2);
+        recyclerView3.setAdapter(adapter3);
 
 // let's create 10 random items
-        for (int i = 0; i < 10; i++) {
-            items.add(new ModelClass(MyData.drawableArray[i], MyData.nameArray[i],MyData.roomArray[i],MyData.scoreArray[i]));
-            adapter.notifyDataSetChanged();
-            items2.add(new ModelClass(MyData.drawableArray[i], MyData.nameArray[i],MyData.roomArray[i],MyData.scoreArray[i]));
+        mDataList=FirebaseDatabase.getInstance().getReference("events");
+mDataList.addValueEventListener(new ValueEventListener() {
+    @Override
+    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+      long x=dataSnapshot.getChildrenCount();
+      s=(int)x;
+        /* for(final  DataSnapshot p:dataSnapshot.getChildren()){
+s=p.getChildrenCount();
+         }*/
+        l=0;
+        mDataList.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+           for (final DataSnapshot pd:dataSnapshot.getChildren()){
+               final String name=pd.getKey().toString();
+               mDataList.child(name).addValueEventListener(new ValueEventListener() {
+                   @Override
+                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                  //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
+                       for (final DataSnapshot pd : dataSnapshot.getChildren()) {
+                           if (pd.getKey().toString().equals("Date")) {
+                               customEventDate.add(pd.getValue().toString());
+                             }else if (pd.getKey().toString().equals("Venue")) {
+                               customEventVenue.add(pd.getValue().toString());
+                               }else if (pd.getKey().toString().equals("Name")) {
+                               customEventName.add(pd.getValue().toString());
+                           }else if (pd.getKey().toString().equals("Time")) {
+                               customEventTime.add(pd.getValue().toString());
+                           }else if (pd.getKey().toString().equals("Cost")) {
+                               customEventCost.add(pd.getValue().toString());
+                           }else if (pd.getKey().toString().equals("Drinks")) {
+                               customEventDrinks.add(pd.getValue().toString());
+                           }else if (pd.getKey().toString().equals("Adult")) {
+                               customEventAdult.add(pd.getValue().toString());
+                           }else if (pd.getKey().toString().equals("Food")) {
+                               customEventFood.add(pd.getValue().toString());
+                           }else if (pd.getKey().toString().equals("Music")) {
+                               customEventMusic.add(pd.getValue().toString());
+                           }else if (pd.getKey().toString().equals("Intro")) {
+                               customEventIntro.add(pd.getValue().toString());
+                           }
+                       //    Toast.makeText(MainActivity.this, Integer.toString(customEvent.size()), Toast.LENGTH_SHORT).show();
+
+                           if ( customEventVenue.size()==s&&customEventName.size()==s && customEventCost.size()==s&& customEventTime.size()==s&& customEventDate.size()==s && customEventVenue.size()!=0) {
+                               items.clear();
+                               for (int i = 0; i < customEventVenue.size(); i++) {
+                                   //        Toast.makeText(MainActivity.this, customEvent.get(s-2), Toast.LENGTH_SHORT).show();
+                                   items.add(new ModelClass(MyData.drawableArray[i], customEventName.get(i), customEventVenue.get(i), Integer.parseInt(customEventCost.get(i)),customEventDate.get(i),customEventTime.get(i),customEventAdult.get(i),customEventDrinks.get(i),customEventMusic.get(i),customEventFood.get(i),customEventIntro.get(i)));
+                                   adapter.notifyDataSetChanged();
+                                  //Toast.makeText(MainActivity.this, customEventName.get(i), Toast.LENGTH_SHORT).show();
+                               }
+                           }
+                       }
+                   }
+
+                   @Override
+                   public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                   }
+               });
+
+           }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+    }
+});
+
+        for (int j=0;j<5;j++){
+            items2.add(new ModelClass(MyData.informaldrawableArray[j], MyData.informalArray[j],MyData.roomArray2[j],MyData.scoreArray2[j],"","","Yes","Yes","No","No",""));
             adapter2.notifyDataSetChanged();
-            items3.add(new ModelClass(MyData.drawableArray[i], MyData.nameArray[i],MyData.roomArray[i],MyData.scoreArray[i]));
+        }
+        for (int k=0;k<5;k++){
+            items3.add(new ModelClass(MyData.workshopdrawableArray[k], MyData.workshopArray[k],MyData.roomArray3[k],MyData.scoreArray3[k],"","","No","No","No","No",""));
             adapter3.notifyDataSetChanged();
+
         }
     }
     @Override
@@ -411,42 +495,58 @@ startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
                     //if (result.getContents().equals("Taqneeq-SNL-50")){
 
                //         Toast.makeText(this, "Hi", Toast.LENGTH_SHORT).show();
-                     final DatabaseReference eventdata=FirebaseDatabase.getInstance().getReference("events");
-                        DatabaseReference scandata=FirebaseDatabase.getInstance().getReference("Scan");
+                     final DatabaseReference eventdata=FirebaseDatabase.getInstance().getReference("participants");
+                        final DatabaseReference scandata=FirebaseDatabase.getInstance().getReference("Scan");
                      scandata.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                     if (postSnapshot.getKey().toString().equals(result.getContents())){
-                                       final String eventcode=postSnapshot.getValue().toString();
-                                       final String id=eventdata.push().getKey();
-                                       eventdata.child(eventcode).child(mAuth.getCurrentUser().getUid()).child("Name").setValue(mAuth.getCurrentUser().getDisplayName());
-                                       final int scorechanged= Integer.parseInt(coins.getText().toString());
-                                       eventdata.child(eventcode).child(mAuth.getCurrentUser().getUid()).child("Score").setValue(Integer.toString(scorechanged));
-                                        //
-                                        final DatabaseReference userdata=FirebaseDatabase.getInstance().getReference("users");
-                                        userdata.addValueEventListener(new ValueEventListener() {
+                                        scandata.child(postSnapshot.getKey().toString()).addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                                    final String name = postSnapshot.getKey().toString().trim();
-                                                    if (name.equals(mAuth.getCurrentUser().getUid())) {
-                                                        final DatabaseReference dataref = userdata.child(name);
-                                                        dataref.addValueEventListener(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                for (DataSnapshot postSnapshot1 : dataSnapshot.getChildren()) {
-                                                                    final String names = postSnapshot1.getKey().toString().trim();
-                                                                    dataref.child(names).addValueEventListener(new ValueEventListener() {
+                                                for (final DataSnapshot postSnapshot2 : dataSnapshot.getChildren()) {
+                                                     if (Integer.parseInt(postSnapshot2.getValue().toString())<=Integer.parseInt(coins.getText().toString())){
+                                                   deduct=Integer.parseInt(postSnapshot2.getValue().toString());
+                                                         score=Integer.parseInt(coins.getText().toString())-deduct;
+                                                         info.child(mAuth.getCurrentUser().getUid()).child("Score").setValue(Integer.toString(score));
+                                                         deduct=0;
+                                                    final String eventcode = postSnapshot2.getValue().toString();
+                                                         final String eventName = postSnapshot2.getKey().toString();
+                                                         final String id = eventdata.push().getKey();
+                                                    eventdata.child(eventName).child(mAuth.getCurrentUser().getUid()).child("Name").setValue(mAuth.getCurrentUser().getDisplayName());
+                                                    final int scorechanged = Integer.parseInt(coins.getText().toString());
+                                                    eventdata.child(eventName).child(mAuth.getCurrentUser().getUid()).child("Score").setValue(Integer.toString(scorechanged));
+                                                    final DatabaseReference userdata = FirebaseDatabase.getInstance().getReference("users");
+                                                    userdata.addValueEventListener(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                            for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                                                final String name = postSnapshot.getKey().toString().trim();
+                                                                if (name.equals(mAuth.getCurrentUser().getUid())) {
+                                                                    final DatabaseReference dataref = userdata.child(name);
+                                                                    dataref.addValueEventListener(new ValueEventListener() {
                                                                         @Override
                                                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                            if (dataSnapshot.getValue() != null) {
-                                                                                if (names.equals("Phone")) {
-                                                                                    String phoneNum = dataSnapshot.getValue().toString().trim();
-                                                                                    //Toast.makeText(MainActivity.this, phoneNum, Toast.LENGTH_SHORT).show();
-                                                                                    eventdata.child(eventcode).child(mAuth.getCurrentUser().getUid()).child("Phone").setValue(phoneNum);
+                                                                            for (DataSnapshot postSnapshot1 : dataSnapshot.getChildren()) {
+                                                                                final String names = postSnapshot1.getKey().toString().trim();
+                                                                                dataref.child(names).addValueEventListener(new ValueEventListener() {
+                                                                                    @Override
+                                                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                                        if (dataSnapshot.getValue() != null) {
+                                                                                            if (names.equals("Phone")) {
+                                                                                                String phoneNum = dataSnapshot.getValue().toString().trim();
+                                                                                                eventdata.child(eventName).child(mAuth.getCurrentUser().getUid()).child("Phone").setValue(phoneNum);
 
-                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+
+                                                                                    @Override
+                                                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                                    }
+                                                                                });
                                                                             }
                                                                         }
 
@@ -457,13 +557,16 @@ startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
                                                                     });
                                                                 }
                                                             }
+                                                        }
 
-                                                            @Override
-                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                                            }
-                                                        });
-                                                    }
+                                                        }
+                                                    });
+                                                }else{
+                                                         Toast.makeText(MainActivity.this, "Invalid Cash", Toast.LENGTH_SHORT).show();
+                                                     }
                                                 }
                                             }
 
@@ -472,9 +575,10 @@ startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
 
                                             }
                                         });
+                                       //
+
                                         //
-                                        score=Integer.parseInt(coins.getText().toString())-50;
-                                        info.child(mAuth.getCurrentUser().getUid()).child("Score").setValue(Integer.toString(score));
+
                                     }
                                 }
                             }

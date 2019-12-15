@@ -2,9 +2,11 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#C564F9</color>
+    <color name="colorAccent">#c564f9</color>
     <color name="colorBlue">#0093E9</color>
+    <color name="colorPurple">#000F2E</color>
     <color name="selectedButton">#9616FF</color>
     <color name="unselectedButton">#C564F9</color>
     <color name="Black">#000000</color>
+    <color name="BlueCustom">#12ffff</color>
 </resources>

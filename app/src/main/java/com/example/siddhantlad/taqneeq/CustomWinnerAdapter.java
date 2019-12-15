@@ -29,18 +29,55 @@ public class CustomWinnerAdapter extends RecyclerView.Adapter<CustomWinnerAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CustomViewHolder holder, final int position) {
         holder.itemTitle.setText(items.get(position).getTitle());
         holder.winner1.setText(items.get(position).getWinner1());
         holder.winner2.setText(items.get(position).getWinner2());
         holder.winner3.setText(items.get(position).getWinner3());
         holder.itemRoom.setText(items.get(position).getClassroom());
         holder.itemScore.setText(Integer.toString(items.get(position).getScore()));
-        holder.itemImage.setImageResource(items.get(position).getImage());
+        for (int i=0;i<MyData.nameArray.length;i++){
+            if(MyData.nameArray[i].equals(items.get(position).getTitle())){
+                holder.itemImage.setImageResource(MyData.drawableArray[i]);
+            }
+        }
+        for (int i=0;i<MyData.informalArray.length;i++){
+            if(MyData.informalArray[i].equals(items.get(position).getTitle())){
+                holder.itemImage.setImageResource(MyData.informaldrawableArray[i]);
+            }
+        }
+        for (int i=0;i<MyData.workshopArray.length;i++){
+            if(MyData.workshopArray[i].equals(items.get(position).getTitle())){
+                holder.itemImage.setImageResource(MyData.workshopdrawableArray[i]);
+            }
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context,EventDisplay.class));
+                int section=0,positions=0;
+                for (int i=0;i<MyData.nameArray.length;i++){
+                    if(MyData.nameArray[i].equals(items.get(position).getTitle())){
+                        section=1;
+                        positions=i;
+                    }
+                }
+                for (int i=0;i<MyData.informalArray.length;i++){
+                    if(MyData.informalArray[i].equals(items.get(position).getTitle())){
+                        section=2;
+                        positions=i;
+                    }
+                }
+                for (int i=0;i<MyData.workshopArray.length;i++){
+                    if(MyData.workshopArray[i].equals(items.get(position).getTitle())){
+                        section=3;
+                        positions=i;
+                    }
+                }
+                Intent newIntent=new Intent(context,EventDisplay.class);
+                newIntent.putExtra("position",positions);
+                newIntent.putExtra("section",section);
+                context.startActivity(newIntent);
             }
         });
     }
@@ -64,8 +101,8 @@ public class CustomWinnerAdapter extends RecyclerView.Adapter<CustomWinnerAdapte
             super(view);
             itemImage = view.findViewById(R.id.item_image);
             itemTitle = view.findViewById(R.id.item_title);
-            itemRoom = view.findViewById(R.id.item_room);
-            itemScore = view.findViewById(R.id.item_score);
+            itemRoom = view.findViewById(R.id.item_date);
+            itemScore = view.findViewById(R.id.item_cost);
            winner1 = view.findViewById(R.id.textView6);
             winner2 = view.findViewById(R.id.textView10);
             winner3 = view.findViewById(R.id.textView2);

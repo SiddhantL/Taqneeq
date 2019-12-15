@@ -31,7 +31,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/item_room"
+        android:id="@+id/item_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -39,20 +39,22 @@
         android:paddingLeft="5dp"
         android:text="Item Title"
         android:textColor="#FF0000"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="visible" />
 
     <TextView
-        android:id="@+id/item_score"
+        android:id="@+id/item_cost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/item_room"
-        android:paddingLeft="5dp"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentLeft="true"
+        android:layout_below="@+id/item_date"
+        android:layout_centerHorizontal="true"
         android:drawableRight="@drawable/coinlef"
+        android:paddingLeft="5dp"
         android:text="Item Title"
         android:textColor="#08B3B9"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="visible" />
 </RelativeLayout>
 
     <TextView

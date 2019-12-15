@@ -1,13 +1,17 @@
 package com.example.siddhantlad.taqneeq;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +23,8 @@ import org.json.JSONObject;
 
 public class EventDisplay extends AppCompatActivity {
     private Button buttonScan;
-
+    ImageView pic;
+TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
     //qr code scanner object
     private IntentIntegrator qrScan;
 
@@ -28,7 +33,64 @@ public class EventDisplay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_display);
         Window window = EventDisplay.this.getWindow();
-
+        ViewPager viewPager = findViewById(R.id.viewpager);
+        ImageAdapter adapter = new ImageAdapter(this);
+        viewPager.setAdapter(adapter);
+        content=findViewById(R.id.textView);
+        pic=findViewById(R.id.eventpic);
+        title=findViewById(R.id.textView12);
+        cost=findViewById(R.id.t1);
+        date=findViewById(R.id.t2);
+        time=findViewById(R.id.t3);
+        day=findViewById(R.id.t4);
+        adults=findViewById(R.id.c1);
+        drinks=findViewById(R.id.c2);
+        venue=findViewById(R.id.textView20);
+        foods=findViewById(R.id.c3);
+        musics=findViewById(R.id.c4);
+        Intent mIntent = getIntent();
+        String costing=mIntent.getStringExtra("costing");
+        String drink=mIntent.getStringExtra("drinks");
+        String adult=mIntent.getStringExtra("adult");
+        String music=mIntent.getStringExtra("music");
+        String food=mIntent.getStringExtra("food");
+        String venues=mIntent.getStringExtra("venue");
+        String dates=mIntent.getStringExtra("date");
+        String titles=mIntent.getStringExtra("title");
+        String times=mIntent.getStringExtra("time");
+        String intros=mIntent.getStringExtra("intro");
+        String days=mIntent.getStringExtra("day");
+        int position = mIntent.getIntExtra("position", 0);
+        int section = mIntent.getIntExtra("section", 1);
+        if (section==1) {
+            Drawable myDarawable = getResources().getDrawable(MyData.drawableArray[position]);
+            pic.setImageDrawable(myDarawable);
+            content.setText(intros);
+            cost.setText("Cost: " + costing);
+            title.setText(titles);
+            date.setText("Date: " + dates);
+            time.setText("Time: "+times);
+            day.setText("Day: "+days);
+            adults.setText(" Adult: "+adult);
+            drinks.setText(" Drinks: "+drink);
+            foods.setText(" Food: "+food);
+            musics.setText(" Music: "+music);
+            venue.setText(venues);
+        }else  if (section==2) {
+            Drawable myDarawable = getResources().getDrawable(MyData.informaldrawableArray[position]);
+            pic.setImageDrawable(myDarawable);
+            content.setText(MyData.informalcontentArray[position]);
+            cost.setText("Venue: " + MyData.roomArray2[position]);
+            title.setText(MyData.informalArray[position]);
+            date.setText("Cost: " + Integer.toString(MyData.scoreArray2[position]));
+        }else  if (section==3) {
+            Drawable myDarawable = getResources().getDrawable(MyData.workshopdrawableArray[position]);
+            pic.setImageDrawable(myDarawable);
+            content.setText(MyData.workshopcontentArray[position]);
+            cost.setText("Venue: " + MyData.roomArray3[position]);
+            title.setText(MyData.workshopArray[position]);
+            date.setText("Cost: " + Integer.toString(MyData.scoreArray3[position]));
+        }
 // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
