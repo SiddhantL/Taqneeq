@@ -3,10 +3,10 @@ package com.example.siddhantlad.taqneeq;
 public class ModelClass {
     private int image;
     private String title;
-    private String venue,date,time,adult,drinks,music,food,intro;
+    private String venue,date,time,adult,drinks,music,food,intro,id;
     private int cost;
 
-    public ModelClass(int image, String title, String venue, int cost,String date,String time,String adult, String drinks, String music,String food,String intro) {
+    public ModelClass(int image, String title, String venue, int cost,String date,String time,String adult, String drinks, String music,String food,String intro,String ID) {
         this.image = image;
         this.title = title;
         this.venue = venue;
@@ -18,6 +18,7 @@ public class ModelClass {
         this.music=music;
         this.food=food;
         this.intro=intro;
+        this.id=ID;
     }
 
     public int getImage() {
@@ -60,5 +61,9 @@ public class ModelClass {
 
     public String getIntro() {
         return intro;
+    }
+
+    public String getId() {
+        return id;
     }
 }

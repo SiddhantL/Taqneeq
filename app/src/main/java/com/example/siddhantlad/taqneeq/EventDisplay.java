@@ -3,6 +3,8 @@ package com.example.siddhantlad.taqneeq;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,14 +17,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class EventDisplay extends AppCompatActivity {
+import java.util.List;
+
+public class EventDisplay extends AppCompatActivity implements OnMapReadyCallback{
     private Button buttonScan;
+    String addr="";
+double lat,lon;
     ImageView pic;
 TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
     //qr code scanner object
@@ -34,7 +47,9 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
         setContentView(R.layout.activity_event_display);
         Window window = EventDisplay.this.getWindow();
         ViewPager viewPager = findViewById(R.id.viewpager);
-        ImageAdapter adapter = new ImageAdapter(this);
+        Intent mIntent = getIntent();
+        String ID=mIntent.getStringExtra("ID");
+        ImageAdapter adapter = new ImageAdapter(this,ID);
         viewPager.setAdapter(adapter);
         content=findViewById(R.id.textView);
         pic=findViewById(R.id.eventpic);
@@ -48,7 +63,6 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
         venue=findViewById(R.id.textView20);
         foods=findViewById(R.id.c3);
         musics=findViewById(R.id.c4);
-        Intent mIntent = getIntent();
         String costing=mIntent.getStringExtra("costing");
         String drink=mIntent.getStringExtra("drinks");
         String adult=mIntent.getStringExtra("adult");
@@ -76,6 +90,20 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
             foods.setText(" Food: "+food);
             musics.setText(" Music: "+music);
             venue.setText(venues);
+            addr=venues;
+            Geocoder gc = new Geocoder(EventDisplay.this);
+            if(gc.isPresent()){
+                try {
+                    List<Address> list = gc.getFromLocationName(venues, 1);
+                    Address address = list.get(0);
+                    lat = address.getLatitude();
+                    lon= address.getLongitude();
+                   // Toast.makeText(this, Double.toString(lat), Toast.LENGTH_SHORT).show();
+                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.map);
+                    mapFragment.getMapAsync(this);
+
+                }catch (Exception e){}}
         }else  if (section==2) {
             Drawable myDarawable = getResources().getDrawable(MyData.informaldrawableArray[position]);
             pic.setImageDrawable(myDarawable);
@@ -109,9 +137,11 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
         buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                qrScan.initiateScan();
+                startActivity(new Intent(EventDisplay.this,TicketActivity.class));
             }
         });
+
+
     }
 
     //Getting the scan results
@@ -141,6 +171,19 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        // Add a marker in Sydney, Australia,
+        // and move the map's camera to the same location.
+        LatLng sydney = new LatLng(lat, lon);
+        googleMap.addMarker(new MarkerOptions().position(sydney)
+                .title(addr));
+      //  googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 14.0f));
+
+    }
+
 
 }
+
 

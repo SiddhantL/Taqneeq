@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <Button
         android:id="@+id/button"
@@ -102,7 +103,7 @@
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/eventpic"
+                android:layout_below="@+id/viewpager"
                 android:layout_centerHorizontal="true"
                 android:fontFamily="sans-serif-condensed"
                 android:text="Linux Kernel"
@@ -116,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView20"
+                android:layout_below="@+id/map"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
@@ -126,6 +127,13 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/textView20"
+                tools:context="com.example.siddhantlad.taqneeq.EventDisplay" />
             <TextView
                 android:id="@+id/textView19"
                 android:layout_width="wrap_content"
@@ -262,8 +270,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="205dp"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true" />
-
+                android:layout_alignParentTop="true"/>
         </RelativeLayout>
     </ScrollView>
 

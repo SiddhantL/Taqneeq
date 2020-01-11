@@ -132,12 +132,12 @@ public class Tab3 extends Fragment{
             public void onClick(View v) {
                 //do your operation here
                 // this will be called whenever user click anywhere in Fragment
-                b1.setBackgroundResource(R.color.selectedButton);
-                b2.setBackgroundResource(R.color.unselectedButton);
+                b1.setBackgroundResource(R.color.unselectedButton);
+                b2.setBackgroundResource(R.color.selectedButton);
                 b3.setBackgroundResource(R.color.unselectedButton);
-                Drawable drawables=getResources().getDrawable(R.drawable.tt1);
+                Drawable drawables=getResources().getDrawable(R.drawable.tt2);
                 img.setImageDrawable(drawables);
-                Toast.makeText(getActivity(), "To Be Decided", Toast.LENGTH_SHORT).show();
+           //     Toast.makeText(getActivity(), "To Be Decided", Toast.LENGTH_SHORT).show();
             }
         });
         b3.setOnClickListener(new View.OnClickListener() {
@@ -146,12 +146,12 @@ public class Tab3 extends Fragment{
             public void onClick(View v) {
                 //do your operation here
                 // this will be called whenever user click anywhere in Fragment
-                b1.setBackgroundResource(R.color.selectedButton);
+                b1.setBackgroundResource(R.color.unselectedButton);
                 b2.setBackgroundResource(R.color.unselectedButton);
-                b3.setBackgroundResource(R.color.unselectedButton);
-                Drawable drawables=getResources().getDrawable(R.drawable.tt1);
+                b3.setBackgroundResource(R.color.selectedButton);
+                Drawable drawables=getResources().getDrawable(R.drawable.tt3);
                 img.setImageDrawable(drawables);
-                Toast.makeText(getActivity(), "To Be Decided", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(getActivity(), "To Be Decided", Toast.LENGTH_SHORT).show();
             }
         });
     return view;

@@ -3,6 +3,7 @@ package com.example.siddhantlad.taqneeq;
 import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -61,18 +62,20 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser user;
     FloatingActionMenu actionMenu;
-    ArrayList<String> customEventName,customEventVenue,customEventCost,customEventDate,customEventTime,customEventDrinks,customEventAdult,customEventFood,customEventMusic,customEventIntro;
+    ArrayList<String> customEventName,customEventVenue,customEventCost,customEventDate,customEventTime,customEventDrinks,customEventAdult,customEventFood,customEventMusic,customEventIntro,customEventID;
+    ArrayList<String> customExhibitionName,customExhibitionVenue,customExhibitionCost,customExhibitionDate,customExhibitionTime,customExhibitionDrinks,customExhibitionAdult,customExhibitionFood,customExhibitionMusic,customExhibitionIntro,customExhibitionID;
+    ArrayList<String> customWorkshopName,customWorkshopVenue,customWorkshopCost,customWorkshopDate,customWorkshopTime,customWorkshopDrinks,customWorkshopAdult,customWorkshopFood,customWorkshopMusic,customWorkshopIntro,customWorkshopID;
     android.support.design.widget.FloatingActionButton fab, fab2;
     ImageView img;
     String livecontent;
-    int score,deduct,eventno,workshopno,informalno,s,l;
+    int score,deduct,eventno,workshopno,informalno,s,l,s1,l1,s2,l2;
     TextView live,coins;
     Button scanbtn,backscan;
-    DatabaseReference mDatabase,info,mDataList;
+    DatabaseReference mDatabase,info,mDataList,mDataExhibition,mDataWorkshop;
     private IntentIntegrator qrScan;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
         deduct=0;
@@ -89,10 +92,37 @@ public class MainActivity extends AppCompatActivity {
         customEventFood=new ArrayList<>();
         customEventMusic=new ArrayList<>();
         customEventIntro=new ArrayList<>();
+        customEventID=new ArrayList<>();
+        customExhibitionName=new ArrayList<>();
+        customExhibitionVenue=new ArrayList<>();
+        customExhibitionCost=new ArrayList<>();
+        customExhibitionDate=new ArrayList<>();
+        customExhibitionTime=new ArrayList<>();
+        customExhibitionAdult=new ArrayList<>();
+        customExhibitionDrinks=new ArrayList<>();
+        customExhibitionFood=new ArrayList<>();
+        customExhibitionMusic=new ArrayList<>();
+        customExhibitionIntro=new ArrayList<>();
+        customExhibitionID=new ArrayList<>();
+        customWorkshopName=new ArrayList<>();
+        customWorkshopVenue=new ArrayList<>();
+        customWorkshopCost=new ArrayList<>();
+        customWorkshopDate=new ArrayList<>();
+        customWorkshopTime=new ArrayList<>();
+        customWorkshopAdult=new ArrayList<>();
+        customWorkshopDrinks=new ArrayList<>();
+        customWorkshopFood=new ArrayList<>();
+        customWorkshopMusic=new ArrayList<>();
+        customWorkshopIntro=new ArrayList<>();
+        customWorkshopID=new ArrayList<>();
         coins=(TextView)findViewById(R.id.textView11);
+        SharedPreferences settings = getSharedPreferences("coinVal", 0);
+        String coinVals = settings.getString("coinVal", "0");
+        coins.setText(coinVals);
         livecontent=new String();
         mDatabase=FirebaseDatabase.getInstance().getReference("Live");
         mDataList=FirebaseDatabase.getInstance().getReference();
+
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -136,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
                                     if (postSnapshot1.getKey().toString().equals("Score")){
                                         //    Toast.makeText(MainActivity.this, postSnapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
                                         coins.setText(postSnapshot1.getValue().toString());
+                                        SharedPreferences settings = getSharedPreferences("coinVal", 0);
+                                        SharedPreferences.Editor editor=settings.edit();
+                                        editor.putString("coinVal",coins.getText().toString());
+                                        editor.commit();
                                     }
                                 }
                             }
@@ -380,12 +414,33 @@ startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
         final CustomAdapter adapter = new CustomAdapter(this, items);
         final CustomAdapter2 adapter2 = new CustomAdapter2(this, items2);
         final CustomAdapter3 adapter3 = new CustomAdapter3(this, items3);
+        for (int i = 0; i < 5; i++) {
+            //        Toast.makeText(MainActivity.this, customEvent.get(s-2), Toast.LENGTH_SHORT).show();
+            items.add(new ModelClass(MyData.drawableArray[i], "Loading...", "Venue: India", 0,"00/00/0000","00:00","Yes","Yes","Yes","Yes","This is a Loading Message...",""));
+            adapter.notifyDataSetChanged();
+            //Toast.makeText(MainActivity.this, customEventName.get(i), Toast.LENGTH_SHORT).show();
+        }
+        for (int i = 0; i < 5; i++) {
+            //        Toast.makeText(MainActivity.this, customEvent.get(s-2), Toast.LENGTH_SHORT).show();
+            items2.add(new ModelClass(MyData.drawableArray[i], "Loading...", "Venue: India", 0,"00/00/0000","00:00","Yes","Yes","Yes","Yes","This is a Loading Message...",""));
+            adapter2.notifyDataSetChanged();
+            //Toast.makeText(MainActivity.this, customEventName.get(i), Toast.LENGTH_SHORT).show();
+        }
+        for (int i = 0; i < 5; i++) {
+            //        Toast.makeText(MainActivity.this, customEvent.get(s-2), Toast.LENGTH_SHORT).show();
+            items3.add(new ModelClass(MyData.drawableArray[i], "Loading...", "Venue: India", 0,"00/00/0000","00:00","Yes","Yes","Yes","Yes","This is a Loading Message...",""));
+            adapter3.notifyDataSetChanged();
+            //Toast.makeText(MainActivity.this, customEventName.get(i), Toast.LENGTH_SHORT).show();
+        }
         RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
         RecyclerView recyclerView2 = findViewById(R.id.my_recycler_view2);
         RecyclerView recyclerView3 = findViewById(R.id.my_recycler_view3);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView2.setNestedScrollingEnabled(false);
+        recyclerView3.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         recyclerView2.setAdapter(adapter2);
         recyclerView3.setAdapter(adapter3);
@@ -406,6 +461,7 @@ s=p.getChildrenCount();
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
            for (final DataSnapshot pd:dataSnapshot.getChildren()){
                final String name=pd.getKey().toString();
+               customEventID.add(name);
                mDataList.child(name).addValueEventListener(new ValueEventListener() {
                    @Override
                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -438,7 +494,7 @@ s=p.getChildrenCount();
                                items.clear();
                                for (int i = 0; i < customEventVenue.size(); i++) {
                                    //        Toast.makeText(MainActivity.this, customEvent.get(s-2), Toast.LENGTH_SHORT).show();
-                                   items.add(new ModelClass(MyData.drawableArray[i], customEventName.get(i), customEventVenue.get(i), Integer.parseInt(customEventCost.get(i)),customEventDate.get(i),customEventTime.get(i),customEventAdult.get(i),customEventDrinks.get(i),customEventMusic.get(i),customEventFood.get(i),customEventIntro.get(i)));
+                                   items.add(new ModelClass(MyData.drawableArray[i], customEventName.get(i), customEventVenue.get(i), Integer.parseInt(customEventCost.get(i)),customEventDate.get(i),customEventTime.get(i),customEventAdult.get(i),customEventDrinks.get(i),customEventMusic.get(i),customEventFood.get(i),customEventIntro.get(i),customEventID.get(i)));
                                    adapter.notifyDataSetChanged();
                                   //Toast.makeText(MainActivity.this, customEventName.get(i), Toast.LENGTH_SHORT).show();
                                }
@@ -470,15 +526,171 @@ s=p.getChildrenCount();
     }
 });
 
-        for (int j=0;j<5;j++){
+        mDataExhibition=FirebaseDatabase.getInstance().getReference("exhibitions");
+        mDataExhibition.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long x1=dataSnapshot.getChildrenCount();
+                s1=(int)x1;
+                l1=0;
+                mDataExhibition.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (final DataSnapshot pd1:dataSnapshot.getChildren()){
+                            final String name=pd1.getKey().toString();
+                            customExhibitionID.add(name);
+                            mDataExhibition.child(name).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                                    //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
+                                    for (final DataSnapshot pd1 : dataSnapshot1.getChildren()) {
+                                        if(pd1.getKey().toString().equals("")){
+
+                                        }else if (pd1.getKey().toString().equals("Date")) {
+                                            customExhibitionDate.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Venue")) {
+                                            customExhibitionVenue.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Name")) {
+                                            customExhibitionName.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Time")) {
+                                            customExhibitionTime.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Cost")) {
+                                            customExhibitionCost.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Drinks")) {
+                                            customExhibitionDrinks.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Adult")) {
+                                            customExhibitionAdult.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Food")) {
+                                            customExhibitionFood.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Music")) {
+                                            customExhibitionMusic.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Intro")) {
+                                            customExhibitionIntro.add(pd1.getValue().toString());
+                                        }
+
+                                        //    Toast.makeText(MainActivity.this, Integer.toString(customExhibition.size()), Toast.LENGTH_SHORT).show();
+                                        if ( customExhibitionVenue.size()==s1&&customExhibitionName.size()==s1 && customExhibitionCost.size()==s1&& customExhibitionTime.size()==s1&& customExhibitionDate.size()==s1 && customExhibitionVenue.size()!=0) {
+                                            items2.clear();
+                                            for (int i = 0; i < customExhibitionVenue.size(); i++) {
+                                                //        Toast.makeText(MainActivity.this, customExhibition.get(s-2), Toast.LENGTH_SHORT).show();
+                                                items2.add(new ModelClass(MyData.informaldrawableArray[i], customExhibitionName.get(i), customExhibitionVenue.get(i), Integer.parseInt(customExhibitionCost.get(i)),"12/10/2020",customExhibitionTime.get(i),customExhibitionAdult.get(i),customExhibitionDrinks.get(i),customExhibitionMusic.get(i),customExhibitionFood.get(i),customExhibitionIntro.get(i),customExhibitionID.get(i)));
+                                                adapter2.notifyDataSetChanged();
+                                                //Toast.makeText(MainActivity.this, customExhibitionName.get(i), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        mDataWorkshop=FirebaseDatabase.getInstance().getReference("workshops");
+        mDataWorkshop.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long x2=dataSnapshot.getChildrenCount();
+                s2=(int)x2;
+                l2=0;
+                mDataWorkshop.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                        for (final DataSnapshot pd2:dataSnapshot2.getChildren()){
+                            final String name=pd2.getKey().toString();
+                            customWorkshopID.add(name);
+                            mDataWorkshop.child(name).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                                    //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
+                                    for (final DataSnapshot pd2 : dataSnapshot1.getChildren()) {
+                                        if(pd2.getKey().toString().equals("")){
+
+                                        }else if (pd2.getKey().toString().equals("Date")) {
+                                            customWorkshopDate.add(pd2.getValue().toString());
+                                        }else if (pd2.getKey().toString().equals("Venue")) {
+                                            customWorkshopVenue.add(pd2.getValue().toString());
+                                        }else if (pd2.getKey().toString().equals("Name")) {
+                                            customWorkshopName.add(pd2.getValue().toString());
+                                        }else if (pd2.getKey().toString().equals("Time")) {
+                                            customWorkshopTime.add(pd2.getValue().toString());
+                                        }else if (pd2.getKey().toString().equals("Cost")) {
+                                            customWorkshopCost.add(pd2.getValue().toString());
+                                        }else if (pd2.getKey().toString().equals("Drinks")) {
+                                            customWorkshopDrinks.add(pd2.getValue().toString());
+                                        }else if (pd2.getKey().toString().equals("Adult")) {
+                                            customWorkshopAdult.add(pd2.getValue().toString());
+                                        }else if (pd2.getKey().toString().equals("Food")) {
+                                            customWorkshopFood.add(pd2.getValue().toString());
+                                        }else if (pd2.getKey().toString().equals("Music")) {
+                                            customWorkshopMusic.add(pd2.getValue().toString());
+                                        }else if (pd2.getKey().toString().equals("Intro")) {
+                                            customWorkshopIntro.add(pd2.getValue().toString());
+                                        }
+
+                                        //    Toast.makeText(MainActivity.this, Integer.toString(customWorkshop.size()), Toast.LENGTH_SHORT).show();
+                                        if ( customWorkshopVenue.size()==s2&&customWorkshopName.size()==s2 && customWorkshopCost.size()==s2&& customWorkshopTime.size()==s2&& customWorkshopDate.size()==s2 && customWorkshopVenue.size()!=0) {
+                                            items3.clear();
+                                            for (int i = 0; i < customWorkshopVenue.size(); i++) {
+                                                //        Toast.makeText(MainActivity.this, customWorkshop.get(s-2), Toast.LENGTH_SHORT).show();
+                                                items3.add(new ModelClass(MyData.workshopdrawableArray[i], customWorkshopName.get(i), customWorkshopVenue.get(i), Integer.parseInt(customWorkshopCost.get(i)),"12/10/2020",customWorkshopTime.get(i),customWorkshopAdult.get(i),customWorkshopDrinks.get(i),customWorkshopMusic.get(i),customWorkshopFood.get(i),customWorkshopIntro.get(i),customWorkshopID.get(i)));
+                                                adapter3.notifyDataSetChanged();
+                                                //Toast.makeText(MainActivity.this, customWorkshopName.get(i), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+     /*   for (int j=0;j<5;j++){
             items2.add(new ModelClass(MyData.informaldrawableArray[j], MyData.informalArray[j],MyData.roomArray2[j],MyData.scoreArray2[j],"","","Yes","Yes","No","No",""));
             adapter2.notifyDataSetChanged();
-        }
-        for (int k=0;k<5;k++){
+        }*/
+       /* for (int k=0;k<5;k++){
             items3.add(new ModelClass(MyData.workshopdrawableArray[k], MyData.workshopArray[k],MyData.roomArray3[k],MyData.scoreArray3[k],"","","No","No","No","No",""));
             adapter3.notifyDataSetChanged();
 
-        }
+        }*/
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -605,6 +817,7 @@ s=p.getChildrenCount();
                                            //    Toast.makeText(MainActivity.this, postSnapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
                                          //  coins.setText(postSnapshot1.getValue().toString());
                                          score=Integer.parseInt(postSnapshot1.getValue().toString());
+
                                                }
 
                                            }
