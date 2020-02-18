@@ -2,9 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:drawable="@drawable/trophycircle"
+        android:drawable="@drawable/settingscircle"
         android:width="64dp"
         android:height="64dp"
         />
 
-</layer-list >
+</layer-list>

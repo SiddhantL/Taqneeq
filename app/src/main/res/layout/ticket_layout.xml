@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="#ffffff"
+        android:elevation="10dp">
+
+        <LinearLayout
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="false"
+            android:layout_below="@+id/ticket_type"
+            android:layout_toEndOf="@+id/item_image">
+
+            <TextView
+                android:id="@+id/item_dateplaceholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_enters"
+                android:layout_toEndOf="@+id/item_image"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:paddingLeft="5dp"
+                android:text="Date:  "
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/item_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:paddingRight="5dp"
+                android:text="10/10/2020"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ticket_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/enters"
+            android:layout_toEndOf="@+id/item_image">
+
+            <TextView
+                android:id="@+id/item_ticketplaceholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_enters"
+                android:layout_toEndOf="@+id/item_image"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:paddingLeft="5dp"
+                android:text="Ticket:"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/item_ticketname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:paddingRight="5dp"
+                android:text="Buddy Pass"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="188dp"
+            android:layout_height="120dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="0dp"
+            android:background="#f2f2f2"
+            android:backgroundTint="#f2f2f2"
+            android:scaleType="fitCenter"
+            android:src="@drawable/itemimage" />
+
+        <RelativeLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/item_image">
+
+            <TextView
+                android:id="@+id/item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:ellipsize="end"
+                android:fontFamily="@font/montserrat"
+                android:maxLines="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="EVENT NAME"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/enters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_title"
+            android:layout_toEndOf="@id/item_image">
+
+            <TextView
+                android:id="@+id/item_entersplaceholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_enters"
+                android:layout_toEndOf="@+id/item_image"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:paddingLeft="5dp"
+                android:text="Enters:"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/item_enters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:paddingRight="5dp"
+                android:text="4 People"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+</RelativeLayout>

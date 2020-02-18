@@ -80,7 +80,7 @@ public class CustomAlertAdapter extends RecyclerView.Adapter<CustomAlertAdapter.
             itemImage = view.findViewById(R.id.item_image);
             itemTitle = view.findViewById(R.id.item_title);
             itemAlert = view.findViewById(R.id.item_alert);
-            itemClass = view.findViewById(R.id.item_date);
+            itemClass = view.findViewById(R.id.item_enters);
             itemScore = view.findViewById(R.id.item_cost);
         }
     }

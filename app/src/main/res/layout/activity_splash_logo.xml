@@ -9,10 +9,10 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="334dp"
-        android:layout_height="160dp"
+        android:layout_width="250dp"
+        android:layout_height="180dp"
         android:layout_centerInParent="true"
-        app:srcCompat="@drawable/tqnewlogo"
+        app:srcCompat="@drawable/logoeventry"
         tools:layout_editor_absoluteX="162dp"
         tools:layout_editor_absoluteY="272dp" />
 

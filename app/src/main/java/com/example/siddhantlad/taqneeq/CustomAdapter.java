@@ -12,13 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -214,8 +211,8 @@ String timeformat,day;
             itemTitle = view.findViewById(R.id.item_title);
             itemVenue = view.findViewById(R.id.item_venue);
             itemCost = view.findViewById(R.id.item_cost);
-            itemDate = view.findViewById(R.id.item_date);
-            itemTime = view.findViewById(R.id.item_time);
+            itemDate = view.findViewById(R.id.item_enters);
+            itemTime = view.findViewById(R.id.item_enters);
         }
     }
 }

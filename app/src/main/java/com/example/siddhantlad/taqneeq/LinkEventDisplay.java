@@ -1,10 +1,11 @@
 package com.example.siddhantlad.taqneeq;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,44 +16,40 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class EventDisplay extends AppCompatActivity implements OnMapReadyCallback{
+public class LinkEventDisplay extends AppCompatActivity implements OnMapReadyCallback {
     private Button buttonScan;
     String addr="";
-double lat,lon;
+    double lat,lon;
+    DatabaseReference eventData;
     ImageView pic;
-    String ID;
-    ArrayList<String> savedEvents;
-TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
+    TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
     //qr code scanner object
-    private IntentIntegrator qrScan;
-
+    String adultstr,costingstr,datestr,drinkstr,foodstr,introstr,musicstr,namestr,timestr,venuestr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_display);
-        Window window = EventDisplay.this.getWindow();
-//        saveEvent(savedInstanceState);
+        setContentView(R.layout.activity_link_event_display);
+        Window window = LinkEventDisplay.this.getWindow();
         ViewPager viewPager = findViewById(R.id.viewpager);
+        eventData= FirebaseDatabase.getInstance().getReference("exhibitions");
         Intent mIntent = getIntent();
-        ID=mIntent.getStringExtra("ID");
+        final String ID=mIntent.getStringExtra("UID");
+
         ImageAdapter adapter = new ImageAdapter(this,ID);
         viewPager.setAdapter(adapter);
         content=findViewById(R.id.textView);
@@ -67,42 +64,74 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
         venue=findViewById(R.id.textView20);
         foods=findViewById(R.id.c3);
         musics=findViewById(R.id.c4);
-        String costing=mIntent.getStringExtra("costing");
-        String drink=mIntent.getStringExtra("drinks");
-        String adult=mIntent.getStringExtra("adult");
-        String music=mIntent.getStringExtra("music");
-        String food=mIntent.getStringExtra("food");
-        final String venues=mIntent.getStringExtra("venue");
-        final String dates=mIntent.getStringExtra("date");
-        final String titles=mIntent.getStringExtra("title");
-        final String times=mIntent.getStringExtra("time");
-        String intros=mIntent.getStringExtra("intro");
-        String days=mIntent.getStringExtra("day");
         int position = mIntent.getIntExtra("position", 0);
+        eventData.child(ID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (final DataSnapshot pd : dataSnapshot.getChildren()) {
+                    if (pd.getKey().toString().equals("Adult")) {
+                        adultstr=pd.getValue().toString();
+                        adults.setText(" Adult: "+adultstr);
+                    }else if (pd.getKey().toString().equals("Date")) {
+                        datestr=pd.getValue().toString();
+                        date.setText("Date: "+datestr);
+                    }else if (pd.getKey().toString().equals("Drinks")) {
+                        drinkstr=pd.getValue().toString();
+                        drinks.setText(" Drinks: "+drinkstr);
+                    }else if (pd.getKey().toString().equals("Food")) {
+                        foodstr=pd.getValue().toString();
+                        foods.setText(" Food: "+foodstr);
+                    }else if (pd.getKey().toString().equals("Intro")) {
+                        introstr=pd.getValue().toString();
+                        content.setText(introstr);
+                    }else if (pd.getKey().toString().equals("Music")) {
+                        musicstr=pd.getValue().toString();
+                        musics.setText(" Music: "+musicstr);
+                    }else if (pd.getKey().toString().equals("Name")) {
+                        namestr=pd.getValue().toString();
+                        title.setText(namestr);
+                    }else if (pd.getKey().toString().equals("Time")) {
+                        timestr=pd.getValue().toString();
+                        time.setText("Time: "+timestr);
+                    }else if (pd.getKey().toString().equals("Venue")) {
+                        venuestr=pd.getValue().toString();
+                        venue.setText("Venue: "+venuestr);
+                    }else if (pd.getKey().toString().equals("Cost")) {
+                        costingstr=pd.getValue().toString();
+                        cost.setText("Cost:" +costingstr);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         int section = mIntent.getIntExtra("section", 1);
         if (section==1) {
             Drawable myDarawable = getResources().getDrawable(MyData.drawableArray[position]);
             pic.setImageDrawable(myDarawable);
-            content.setText(intros);
-            cost.setText("Cost: " + costing);
-            title.setText(titles);
-            date.setText("Date: " + dates);
-            time.setText("Time: "+times);
-            day.setText("Day: "+days);
-            adults.setText(" Adult: "+adult);
-            drinks.setText(" Drinks: "+drink);
-            foods.setText(" Food: "+food);
-            musics.setText(" Music: "+music);
-            venue.setText(venues);
-            addr=venues;
-            Geocoder gc = new Geocoder(EventDisplay.this);
+            /*content.setText(introstr);
+            cost.setText("Cost: " + costingstr);
+            title.setText(namestr);
+            date.setText("Date: " + datestr);
+            time.setText("Time: "+timestr);
+            //day.setText("Day: "+);
+            adults.setText(" Adult: "+adultstr);
+            drinks.setText(" Drinks: "+drinkstr);
+            foods.setText(" Food: "+foodstr);
+            musics.setText(" Music: "+musicstr);
+            venue.setText(venuestr);*/
+            addr=venuestr;
+            Geocoder gc = new Geocoder(LinkEventDisplay.this);
             if(gc.isPresent()){
                 try {
-                    List<Address> list = gc.getFromLocationName(venues, 1);
+                    List<Address> list = gc.getFromLocationName(venuestr, 1);
                     Address address = list.get(0);
                     lat = address.getLatitude();
                     lon= address.getLongitude();
-                   // Toast.makeText(this, Double.toString(lat), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, Double.toString(lat), Toast.LENGTH_SHORT).show();
                     SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                             .findFragmentById(R.id.map);
                     mapFragment.getMapAsync(this);
@@ -130,57 +159,19 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
 // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(EventDisplay.this,R.color.colorBlue));
+        window.setStatusBarColor(ContextCompat.getColor(LinkEventDisplay.this,R.color.colorBlue));
         //View objects
         buttonScan = (Button) findViewById(R.id.button);
-
-        //intializing scan object
-        qrScan = new IntentIntegrator(this);
-
-        //attaching onclick listener
         buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent pay=new Intent(EventDisplay.this,PaymentActivity.class);
+                Intent pay=new Intent(LinkEventDisplay.this,PaymentActivity.class);
                 pay.putExtra("ID",ID);
-                pay.putExtra("Name",titles);
-                pay.putExtra("Date",dates);
-                pay.putExtra("Venue",venues);
-                pay.putExtra("Time",times);
-                pay.putExtra("Enters","1");
+                pay.putExtra("Name",namestr);
                 startActivity(pay);
             }
         });
 
-
-    }
-
-    //Getting the scan results
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            //if qrcode has nothing in it
-            if (result.getContents() == null) {
-                Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
-            } else {
-                //if qr contains data
-                try {
-                    //converting the data to json
-                    JSONObject obj = new JSONObject(result.getContents());
-                    //setting values to textviews
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    //if control comes here
-                    //that means the encoded format not matches
-                    //in this case you can display whatever data is available on the qrcode
-                    //to a toast
-                    Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
-                }
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -189,25 +180,8 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
         LatLng sydney = new LatLng(lat, lon);
         googleMap.addMarker(new MarkerOptions().position(sydney)
                 .title(addr));
-      //  googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //  googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 14.0f));
 
     }
-
-public void saveEvent(Bundle savedState){
-   Boolean exists=false;
-   savedEvents=new ArrayList<String>();
-    savedEvents = savedState.getStringArrayList("savedEvents");
-    for (int i=0;i<savedEvents.size();i++){
-        if (savedEvents.get(i)==ID){
-            exists=true;
-        }
-    }
-    if (!exists) {
-        savedEvents.add(ID);
-        savedState.putStringArrayList("savedEvents", savedEvents);
-    }
 }
-}
-
-

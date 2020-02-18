@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:drawable="@drawable/bellcircle"
+        android:drawable="@drawable/boughtcircle"
         android:width="64dp"
         android:height="64dp"
         />

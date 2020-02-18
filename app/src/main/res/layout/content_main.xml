@@ -10,6 +10,7 @@
 
 
     <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/imageView3"
@@ -57,13 +58,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView8" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/my_recycler_view3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/my_recycler_view2" />
-
             <View
                 android:id="@+id/divider"
                 android:layout_width="300dp"
@@ -78,7 +72,7 @@
                 android:id="@+id/divider3"
                 android:layout_width="300dp"
                 android:layout_height="2dp"
-                android:layout_below="@+id/my_recycler_view3"
+                android:layout_below="@+id/my_recycler_view2"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
@@ -143,7 +137,15 @@
                 android:layout_alignTop="@+id/divider3"
                 android:layout_centerHorizontal="true"
                 android:elevation="6dp"
-                app:srcCompat="@drawable/snl" />
+                app:srcCompat="@drawable/snlnew" />
+
+            <SearchView
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_above="@+id/my_recycler_view2"
+                android:layout_toEndOf="@+id/textView8"
+                android:layoutDirection="rtl" />
         </RelativeLayout>
     </ScrollView>
 
@@ -188,11 +190,12 @@
         app:layout_constraintTop_toTopOf="parent" />-->
     <ImageView
         android:id="@+id/imgtq"
-        android:layout_width="200dp"
+        android:layout_width="160dp"
         android:layout_height="85dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/tqnewlogo"
+        android:adjustViewBounds="true"
+        android:src="@drawable/logoeventry"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button4"
         app:layout_constraintTop_toTopOf="parent" />

@@ -8,6 +8,13 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="fill_parent"
@@ -16,7 +23,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"
-        android:src="@drawable/tt1" />
+        android:src="@drawable/tt1"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll"
@@ -24,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#9616FF">
+        android:background="#9616FF"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/button5"

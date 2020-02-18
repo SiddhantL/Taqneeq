@@ -14,7 +14,7 @@
             android:id="@+id/imageView13"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_below="@+id/textView29"
+            android:layout_below="@+id/id"
             android:layout_centerHorizontal="true"
             app:srcCompat="@drawable/qrtest" />
 
@@ -34,7 +34,7 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/textView242"
+                    android:id="@+id/venue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView182"
@@ -60,25 +60,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/textView27"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView21"
-                    android:fontFamily="@font/montserrat"
-                    android:text="2 Seats"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/montserrat"
-                    android:text="Seats"
-                    android:textColor="#565656" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -87,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView16"
+            android:layout_below="@+id/eventName"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="horizontal">
@@ -98,7 +79,33 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/textView24"
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Enters"
+                    android:textColor="#565656" />
+
+                <TextView
+                    android:id="@+id/enters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView21"
+                    android:layout_weight="1"
+                    android:text="2 People"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView18"
@@ -125,7 +132,7 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/textView272"
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView212"
@@ -175,13 +182,13 @@
                     android:layout_height="85dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/tqnewlogo"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:src="@drawable/logoeventry" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
         <ImageView
-            android:id="@+id/imageView11"
+            android:id="@+id/imageEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar2"
@@ -189,11 +196,11 @@
             app:srcCompat="@drawable/cssevent" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/eventName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/imageView11"
+            android:layout_below="@+id/imageEvent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:fontFamily="@font/montserrat"
@@ -204,7 +211,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textView29"
+            android:id="@+id/id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout2"

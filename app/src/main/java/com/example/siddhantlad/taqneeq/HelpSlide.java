@@ -29,9 +29,9 @@ public class HelpSlide extends AppCompatActivity implements Tab1.OnFragmentInter
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
         int tabno = getIntent().getIntExtra("val",1);
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.help));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.bell));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.calendar));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.trophy));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ticket));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.save));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.settings));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewPager viewPager = (ViewPager)findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());

@@ -45,17 +45,17 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/dates"
+        android:id="@+id/enters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_title"
         android:layout_toEndOf="@id/item_image">
 
         <TextView
-            android:id="@+id/item_date"
+            android:id="@+id/item_enters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/item_time"
+            android:layout_below="@+id/item_enters"
             android:layout_toEndOf="@+id/item_image"
             android:layout_weight="1"
             android:maxLines="1"
@@ -65,7 +65,7 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/item_time"
+            android:id="@+id/item_enters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -82,7 +82,7 @@
         android:id="@+id/costlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dates"
+        android:layout_below="@+id/enters"
         android:layout_toEndOf="@id/item_image">
 
         <TextView
@@ -105,7 +105,7 @@
             android:id="@+id/item_info3"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_below="@+id/item_date"
+            android:layout_below="@+id/item_enters"
             android:layout_toStartOf="@+id/item_info2"
             android:layout_weight="0.25"
             app:srcCompat="@drawable/foodlef" />
@@ -114,7 +114,7 @@
             android:id="@+id/item_info4"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_below="@+id/item_date"
+            android:layout_below="@+id/item_enters"
             android:layout_toStartOf="@+id/item_info3"
             android:layout_weight="0.25"
             app:srcCompat="@drawable/musiclef" />
@@ -124,7 +124,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/item_date"
+            android:layout_below="@+id/item_enters"
             android:layout_marginRight="5dp"
             android:layout_weight="0.25"
             app:srcCompat="@drawable/adultlef" />
@@ -133,7 +133,7 @@
             android:id="@+id/item_info2"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_below="@+id/item_date"
+            android:layout_below="@+id/item_enters"
             android:layout_toStartOf="@+id/item_info1"
             android:layout_weight="0.25"
             app:srcCompat="@drawable/alcohollef" />

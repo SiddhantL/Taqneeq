@@ -21,6 +21,9 @@
             android:required="false" />
 
         <meta-data
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_live_uRZD9B8dUMfbXK" />
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAvA2CpYwcuopOJ35WZakeVoeDUA3yTz98" />
         <meta-data
@@ -60,9 +63,27 @@
             </intent-filter>
         </activity>
         <activity android:name=".Notification" />
-        <activity android:name=".TicketActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".TicketActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".LinkEventDisplay"></activity>
+        <activity android:name=".LinkSplash">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="eventry.epizy.com"
+                    android:pathPrefix="/event" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

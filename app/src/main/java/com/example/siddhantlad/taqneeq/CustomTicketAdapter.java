@@ -2,10 +2,8 @@ package com.example.siddhantlad.taqneeq;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,15 +16,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
-public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.CustomViewHolder> {
+public class CustomTicketAdapter extends RecyclerView.Adapter<CustomTicketAdapter.CustomViewHolder> {
 
     private Context context;
-    private ArrayList<ModelClass> items;
+    private ArrayList<TicketModelClass> items;
     String timeformat,day;
-    public CustomAdapter3(Context context, ArrayList<ModelClass> items) {
+    public CustomTicketAdapter(Context context, ArrayList<TicketModelClass> items) {
         this.context = context;
         this.items = items;
     }
@@ -34,17 +30,43 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.CustomVi
     @NonNull
     @Override
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.items_vertical, parent, false));
+        return new CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.ticket_layout, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull final CustomViewHolder holder, final int position) {
-        holder.itemTitle.setText(items.get(position).getTitle());
+        holder.itemEventName.setText(items.get(position).getName());
+        holder.itemDate.setText(items.get(position).getDate());
+        holder.itemEnters.setText(items.get(position).getEntering());
+        holder.itemTicketName.setText(items.get(position).getType());
+        FirebaseStorage stor= FirebaseStorage.getInstance();
+        String idEvent=items.get(position).getId();
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ticketShow=new Intent(context,TicketActivity.class);
+                ticketShow.putExtra("Name",items.get(position).getName());
+                ticketShow.putExtra("Date",items.get(position).getDate());
+                ticketShow.putExtra("Venue",items.get(position).getVenue());
+                ticketShow.putExtra("Time",items.get(position).getTime());
+                ticketShow.putExtra("Enters",items.get(position).getEntering());
+                ticketShow.putExtra("ID",items.get(position).getId());
+                context.startActivity(ticketShow);
+            }
+        });
+        stor.getReference().child(idEvent+"/"+idEvent+Integer.toString(1)+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                String url = uri.toString();
+                Glide.with(context).load(url).into(holder.itemImage);
+            }
+        });
+       /* holder.itemTitle.setText(items.get(position).getTitle());
         holder.itemVenue.setText(items.get(position).getVenue());
         holder.itemCost.setText(Integer.toString(items.get(position).getCost()));
-        holder.itemImage.setImageResource(items.get(position).getImage());
         FirebaseStorage stor=FirebaseStorage.getInstance();
         String idEvent=items.get(position).getId();
+        holder.itemImage.setImageResource(items.get(position).getImage());
         stor.getReference().child(idEvent+"/"+idEvent+Integer.toString(1)+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -56,8 +78,8 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.CustomVi
         holder.itemInfo2.setImageDrawable(null);
         holder.itemInfo3.setImageDrawable(null);
         holder.itemInfo4.setImageDrawable(null);
-        String hour = items.get(position).getTime().substring(0, 2);
-        final String minute = items.get(position).getTime().substring(3, 5);
+        String hour = items.get(position).getTime().substring(0,2);
+        final String minute = items.get(position).getTime().substring(3,5);
         ArrayList<String> info = new ArrayList<>();
         Drawable adult = ResourcesCompat.getDrawable(context.getResources(), R.drawable.adultlef, null);
         Drawable drinks = ResourcesCompat.getDrawable(context.getResources(), R.drawable.alcohollef, null);
@@ -144,6 +166,7 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.CustomVi
                     intent.putExtra("date", items.get(position).getDate());
                     intent.putExtra("intro", items.get(position).getIntro());
                     intent.putExtra("title", items.get(position).getTitle());
+                    intent.putExtra("ID", items.get(position).getId());
                     //Toast.makeText(context, items.get(position).getDate(), Toast.LENGTH_SHORT).show();
                     String year = items.get(position).getDate().substring(6, 10);
                     String month = (items.get(position).getDate().substring(3, 5));
@@ -186,7 +209,7 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.CustomVi
 
                 }
             });
-        }
+        }*/
     }
     @Override
     public int getItemCount() {
@@ -196,9 +219,7 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.CustomVi
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView itemImage,itemInfo1,itemInfo2,itemInfo3,itemInfo4;
-        private TextView itemTitle;
-        private TextView itemVenue;
-        private TextView itemCost,itemDate,itemTime;
+        private TextView itemEventName,itemEnters,itemTicketName,itemDate;
 
         public CustomViewHolder(View view) {
             super(view);
@@ -207,81 +228,11 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.CustomVi
             itemInfo2 = view.findViewById(R.id.item_info2);
             itemInfo4 = view.findViewById(R.id.item_info4);
             itemInfo3 = view.findViewById(R.id.item_info3);
-            itemTitle = view.findViewById(R.id.item_title);
-            itemVenue = view.findViewById(R.id.item_venue);
-            itemCost = view.findViewById(R.id.item_cost);
-            itemDate = view.findViewById(R.id.item_enters);
-            itemTime = view.findViewById(R.id.item_enters);
+            itemEventName = view.findViewById(R.id.item_title);
+            itemEnters = view.findViewById(R.id.item_enters);
+            itemTicketName = view.findViewById(R.id.item_ticketname);
+            itemDate = view.findViewById(R.id.item_date);
+            // itemTime = view.findViewById(R.id.item_date);
         }
     }
 }
-/*
-package com.example.siddhantlad.taqneeq;
-
-import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-
-public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.CustomViewHolder> {
-
-    private Context context;
-    private ArrayList<ModelClass> items;
-
-    public CustomAdapter2(Context context, ArrayList<ModelClass> items) {
-        this.context = context;
-        this.items = items;
-    }
-
-    @NonNull
-    @Override
-    public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.items, parent, false));
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull CustomViewHolder holder, final int position) {
-        holder.itemTitle.setText(items.get(position).getTitle());
-        holder.itemClass.setText(items.get(position).getVenue());
-        holder.itemScore.setText(Integer.toString(MyData.scoreArray2[position]));
-        holder.itemImage.setImageResource(items.get(position).getImage());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(context,EventDisplay.class);
-                intent.putExtra("position",position);
-                intent.putExtra("section",2);
-                context.startActivity(intent);
-
-            }
-        });
-    }
-
-    @Override
-    public int getItemCount() {
-        return items.size();
-    }
-
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
-
-        private ImageView itemImage;
-        private TextView itemTitle;
-        private TextView itemClass;
-        private TextView itemScore;
-
-        public CustomViewHolder(View view) {
-            super(view);
-            itemImage = view.findViewById(R.id.item_image);
-            itemTitle = view.findViewById(R.id.item_title);
-            itemClass = view.findViewById(R.id.item_date);
-            itemScore = view.findViewById(R.id.item_cost);
-        }
-    }
-}*/

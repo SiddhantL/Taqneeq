@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -35,6 +36,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +48,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -56,12 +60,23 @@ import com.oguzdev.circularfloatingactionmenu.library.animation.MenuAnimationHan
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser user;
+    SearchView searchView;
+    ScrollView scrollView;
     FloatingActionMenu actionMenu;
+    ArrayList<ModelClass> items,items2;
+    RecyclerView recyclerView2;
+    CustomAdapter2 adapter2;
+    View divider;
     ArrayList<String> customEventName,customEventVenue,customEventCost,customEventDate,customEventTime,customEventDrinks,customEventAdult,customEventFood,customEventMusic,customEventIntro,customEventID;
     ArrayList<String> customExhibitionName,customExhibitionVenue,customExhibitionCost,customExhibitionDate,customExhibitionTime,customExhibitionDrinks,customExhibitionAdult,customExhibitionFood,customExhibitionMusic,customExhibitionIntro,customExhibitionID;
     ArrayList<String> customWorkshopName,customWorkshopVenue,customWorkshopCost,customWorkshopDate,customWorkshopTime,customWorkshopDrinks,customWorkshopAdult,customWorkshopFood,customWorkshopMusic,customWorkshopIntro,customWorkshopID;
@@ -79,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
         deduct=0;
-        backscan=(Button)findViewById(R.id.button9);
+        searchView=findViewById(R.id.search);
+        scrollView=findViewById(R.id.scrollview);
+        backscan=findViewById(R.id.button9);
         backscan.setEnabled(false);
         live=findViewById(R.id.textlive);
         customEventName=new ArrayList<>();
@@ -93,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         customEventMusic=new ArrayList<>();
         customEventIntro=new ArrayList<>();
         customEventID=new ArrayList<>();
+        divider=findViewById(R.id.divider);
         customExhibitionName=new ArrayList<>();
         customExhibitionVenue=new ArrayList<>();
         customExhibitionCost=new ArrayList<>();
@@ -408,11 +426,11 @@ startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
                                    }
                                });
         user=mAuth.getCurrentUser();
-        final ArrayList<ModelClass> items = new ArrayList<>();
-        final ArrayList<ModelClass> items2 = new ArrayList<>();
+        items = new ArrayList<>();
+        items2 = new ArrayList<>();
         final ArrayList<ModelClass> items3 = new ArrayList<>();
         final CustomAdapter adapter = new CustomAdapter(this, items);
-        final CustomAdapter2 adapter2 = new CustomAdapter2(this, items2);
+         adapter2 = new CustomAdapter2(this, items2);
         final CustomAdapter3 adapter3 = new CustomAdapter3(this, items3);
         for (int i = 0; i < 5; i++) {
             //        Toast.makeText(MainActivity.this, customEvent.get(s-2), Toast.LENGTH_SHORT).show();
@@ -433,17 +451,17 @@ startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
             //Toast.makeText(MainActivity.this, customEventName.get(i), Toast.LENGTH_SHORT).show();
         }
         RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
-        RecyclerView recyclerView2 = findViewById(R.id.my_recycler_view2);
-        RecyclerView recyclerView3 = findViewById(R.id.my_recycler_view3);
+        recyclerView2 = findViewById(R.id.my_recycler_view2);
+       // RecyclerView recyclerView3 = findViewById(R.id.my_recycler_view3);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView2.setNestedScrollingEnabled(false);
-        recyclerView3.setNestedScrollingEnabled(false);
+        //recyclerView3.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        //recyclerView3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         recyclerView2.setAdapter(adapter2);
-        recyclerView3.setAdapter(adapter3);
+        //recyclerView3.setAdapter(adapter3);
 
 // let's create 10 random items
         mDataList=FirebaseDatabase.getInstance().getReference("events");
@@ -525,7 +543,6 @@ s=p.getChildrenCount();
 
     }
 });
-
         mDataExhibition=FirebaseDatabase.getInstance().getReference("exhibitions");
         mDataExhibition.addValueEventListener(new ValueEventListener() {
             @Override
@@ -544,9 +561,7 @@ s=p.getChildrenCount();
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
                                     //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
                                     for (final DataSnapshot pd1 : dataSnapshot1.getChildren()) {
-                                        if(pd1.getKey().toString().equals("")){
-
-                                        }else if (pd1.getKey().toString().equals("Date")) {
+                                      if (pd1.getKey().toString().equals("Date")) {
                                             customExhibitionDate.add(pd1.getValue().toString());
                                         }else if (pd1.getKey().toString().equals("Venue")) {
                                             customExhibitionVenue.add(pd1.getValue().toString());
@@ -573,7 +588,7 @@ s=p.getChildrenCount();
                                             items2.clear();
                                             for (int i = 0; i < customExhibitionVenue.size(); i++) {
                                                 //        Toast.makeText(MainActivity.this, customExhibition.get(s-2), Toast.LENGTH_SHORT).show();
-                                                items2.add(new ModelClass(MyData.informaldrawableArray[i], customExhibitionName.get(i), customExhibitionVenue.get(i), Integer.parseInt(customExhibitionCost.get(i)),"12/10/2020",customExhibitionTime.get(i),customExhibitionAdult.get(i),customExhibitionDrinks.get(i),customExhibitionMusic.get(i),customExhibitionFood.get(i),customExhibitionIntro.get(i),customExhibitionID.get(i)));
+                                                items2.add(new ModelClass(MyData.informaldrawableArray[0], customExhibitionName.get(i), customExhibitionVenue.get(i), Integer.parseInt(customExhibitionCost.get(i)),customExhibitionDate.get(i),customExhibitionTime.get(i),customExhibitionAdult.get(i),customExhibitionDrinks.get(i),customExhibitionMusic.get(i),customExhibitionFood.get(i),customExhibitionIntro.get(i),customExhibitionID.get(i)));
                                                 adapter2.notifyDataSetChanged();
                                                 //Toast.makeText(MainActivity.this, customExhibitionName.get(i), Toast.LENGTH_SHORT).show();
                                             }
@@ -603,7 +618,7 @@ s=p.getChildrenCount();
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });/*
         mDataWorkshop=FirebaseDatabase.getInstance().getReference("workshops");
         mDataWorkshop.addValueEventListener(new ValueEventListener() {
             @Override
@@ -681,7 +696,7 @@ s=p.getChildrenCount();
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });*/
      /*   for (int j=0;j<5;j++){
             items2.add(new ModelClass(MyData.informaldrawableArray[j], MyData.informalArray[j],MyData.roomArray2[j],MyData.scoreArray2[j],"","","Yes","Yes","No","No",""));
             adapter2.notifyDataSetChanged();
@@ -847,6 +862,183 @@ s=p.getChildrenCount();
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+@Override
+    protected void onStart(){
+        super.onStart();
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    scrollView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.smoothScrollTo(0, divider.getBottom());
+                        }
+                    });
+
+            }
+        });
+        if (searchView!=null){
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    search(s);
+                    return true;
+                }
+            });
+        }
+}
+private void search(String str){
+    ArrayList<ModelClass> filterList = new ArrayList<>();
+    for (ModelClass object:items2){
+        if (object.getTitle().toLowerCase().contains(str.toLowerCase())){
+            filterList.add(object);
+        }
+    }
+    CustomAdapter2 filteredAdapter = new CustomAdapter2(this, filterList);
+    recyclerView2.setAdapter(filteredAdapter);
+}
+    public String getCountOfDays(String createdDateString, String expireDateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+        Date createdConvertedDate = null, expireCovertedDate = null, todayWithZeroTime = null;
+        try {
+            createdConvertedDate = dateFormat.parse(createdDateString);
+            expireCovertedDate = dateFormat.parse(expireDateString);
+
+            Date today = new Date();
+
+            todayWithZeroTime = dateFormat.parse(dateFormat.format(today));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int cYear = 0, cMonth = 0, cDay = 0;
+
+        if (createdConvertedDate.after(todayWithZeroTime)) {
+            Calendar cCal = Calendar.getInstance();
+            cCal.setTime(createdConvertedDate);
+            cYear = cCal.get(Calendar.YEAR);
+            cMonth = cCal.get(Calendar.MONTH);
+            cDay = cCal.get(Calendar.DAY_OF_MONTH);
+
+        } else {
+            Calendar cCal = Calendar.getInstance();
+            cCal.setTime(todayWithZeroTime);
+            cYear = cCal.get(Calendar.YEAR);
+            cMonth = cCal.get(Calendar.MONTH);
+            cDay = cCal.get(Calendar.DAY_OF_MONTH);
+        }
 
 
+    /*Calendar todayCal = Calendar.getInstance();
+    int todayYear = todayCal.get(Calendar.YEAR);
+    int today = todayCal.get(Calendar.MONTH);
+    int todayDay = todayCal.get(Calendar.DAY_OF_MONTH);
+    */
+
+        Calendar eCal = Calendar.getInstance();
+        eCal.setTime(expireCovertedDate);
+
+        int eYear = eCal.get(Calendar.YEAR);
+        int eMonth = eCal.get(Calendar.MONTH);
+        int eDay = eCal.get(Calendar.DAY_OF_MONTH);
+
+        Calendar date1 = Calendar.getInstance();
+        Calendar date2 = Calendar.getInstance();
+
+        date1.clear();
+        date1.set(cYear, cMonth, cDay);
+        date2.clear();
+        date2.set(eYear, eMonth, eDay);
+
+        long diff = date2.getTimeInMillis() - date1.getTimeInMillis();
+
+        float dayCount = (float) diff / (24 * 60 * 60 * 1000);
+
+        return ("" + (int) dayCount + " Days");
+    }
+    private void reloadEvents(){
+        recyclerView2.removeAllViews();
+        mDataExhibition=FirebaseDatabase.getInstance().getReference("exhibitions");
+        mDataExhibition.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long x1=dataSnapshot.getChildrenCount();
+                s1=(int)x1;
+                l1=0;
+                mDataExhibition.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (final DataSnapshot pd1:dataSnapshot.getChildren()){
+                            final String name=pd1.getKey().toString();
+                            customExhibitionID.add(name);
+                            mDataExhibition.child(name).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                                    //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
+                                    for (final DataSnapshot pd1 : dataSnapshot1.getChildren()) {
+                                        if (pd1.getKey().toString().equals("Date")) {
+                                            customExhibitionDate.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Venue")) {
+                                            customExhibitionVenue.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Name")) {
+                                            customExhibitionName.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Time")) {
+                                            customExhibitionTime.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Cost")) {
+                                            customExhibitionCost.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Drinks")) {
+                                            customExhibitionDrinks.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Adult")) {
+                                            customExhibitionAdult.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Food")) {
+                                            customExhibitionFood.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Music")) {
+                                            customExhibitionMusic.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Intro")) {
+                                            customExhibitionIntro.add(pd1.getValue().toString());
+                                        }
+
+                                        //    Toast.makeText(MainActivity.this, Integer.toString(customExhibition.size()), Toast.LENGTH_SHORT).show();
+                                        if ( customExhibitionVenue.size()==s1&&customExhibitionName.size()==s1 && customExhibitionCost.size()==s1&& customExhibitionTime.size()==s1&& customExhibitionDate.size()==s1 && customExhibitionVenue.size()!=0) {
+                                            items2.clear();
+                                            for (int i = 0; i < customExhibitionVenue.size(); i++) {
+                                                //        Toast.makeText(MainActivity.this, customExhibition.get(s-2), Toast.LENGTH_SHORT).show();
+                                                items2.add(new ModelClass(MyData.informaldrawableArray[0], customExhibitionName.get(i), customExhibitionVenue.get(i), Integer.parseInt(customExhibitionCost.get(i)),customExhibitionDate.get(i),customExhibitionTime.get(i),customExhibitionAdult.get(i),customExhibitionDrinks.get(i),customExhibitionMusic.get(i),customExhibitionFood.get(i),customExhibitionIntro.get(i),customExhibitionID.get(i)));
+                                                adapter2.notifyDataSetChanged();
+                                                //Toast.makeText(MainActivity.this, customExhibitionName.get(i), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

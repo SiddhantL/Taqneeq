@@ -1,741 +1,542 @@
 /*
 package com.example.siddhantlad.taqneeq;
 
-import android.animation.Animator;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-*/
-/*import android.support.design.widget.FloatingActionButton;*//*
-
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.MotionEvent;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
-import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
-import com.oguzdev.circularfloatingactionmenu.library.animation.MenuAnimationHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+
+*/
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link Tab2.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link Tab2#newInstance} factory method to
+ * create an instance of this fragment.
+ *//*
+
+public class Tab2 extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    RecyclerView recyclerView;
     FirebaseAuth mAuth;
-    FirebaseUser user;
-    FloatingActionMenu actionMenu;
-    ArrayList<String> customEventName,customEventVenue,customEventCost,customEventDate,customEventTime,customEventDrinks,customEventAdult,customEventFood,customEventMusic,customEventIntro;
-    ArrayList<String> customExhibitionName,customExhibitionVenue,customExhibitionCost,customExhibitionDate,customExhibitionTime,customExhibitionDrinks,customExhibitionAdult,customExhibitionFood,customExhibitionMusic,customExhibitionIntro;
-    android.support.design.widget.FloatingActionButton fab, fab2;
-    ImageView img;
-    String livecontent;
-    int score,deduct,eventno,workshopno,informalno,s,l;
-    TextView live,coins;
-    Button scanbtn,backscan;
-    DatabaseReference mDatabase,info,mDataList,mDataExhibition,mDataWorkshop;
-    private IntentIntegrator qrScan;
+    ArrayList<String> ticketsEvent;
+    ArrayList<String> ticketType,entering,divided,customExhibitionDate,customExhibitionName,customExhibitionVenue,customExhibitionTime;
+    DatabaseReference mTicket,mDataExhibition;
+    ArrayList<TicketModelClass> items;
+    CustomTicketAdapter ticketAdapter;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+    private OnFragmentInteractionListener mListener;
+    String idName;
+    public Tab2() {
+        // Required empty public constructor
+    }
+
+    */
+/**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment Tab2.
+     *//*
+
+    // TODO: Rename and change types and number of parameters
+    public static Tab2 newInstance(String param1, String param2) {
+        Tab2 fragment = new Tab2();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_main);
-        deduct=0;
-        backscan=(Button)findViewById(R.id.button9);
-        backscan.setEnabled(false);
-        live=findViewById(R.id.textlive);
-        customEventName=new ArrayList<>();
-        customEventVenue=new ArrayList<>();
-        customEventCost=new ArrayList<>();
-        customEventDate=new ArrayList<>();
-        customEventTime=new ArrayList<>();
-        customEventAdult=new ArrayList<>();
-        customEventDrinks=new ArrayList<>();
-        customEventFood=new ArrayList<>();
-        customEventMusic=new ArrayList<>();
-        customEventIntro=new ArrayList<>();
-        customExhibitionName=new ArrayList<>();
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        final View view = inflater.inflate(R.layout.fragment_tab4, container, false);
+        recyclerView = view.findViewById(R.id.my_recycler_view);
+        ticketsEvent=new ArrayList<>();
+        ticketType=new ArrayList<>();
+        customExhibitionDate = new ArrayList<>();
         customExhibitionVenue=new ArrayList<>();
-        customExhibitionCost=new ArrayList<>();
-        customExhibitionDate=new ArrayList<>();
         customExhibitionTime=new ArrayList<>();
-        customExhibitionAdult=new ArrayList<>();
-        customExhibitionDrinks=new ArrayList<>();
-        customExhibitionFood=new ArrayList<>();
-        customExhibitionMusic=new ArrayList<>();
-        customExhibitionIntro=new ArrayList<>();
-        coins=(TextView)findViewById(R.id.textView11);
-        livecontent=new String();
-        mDatabase=FirebaseDatabase.getInstance().getReference("Live");
-        mDataList=FirebaseDatabase.getInstance().getReference();
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        customExhibitionName=new ArrayList<>();
+        entering=new ArrayList<>();
+        divided=new ArrayList<>();
+        items=new ArrayList<>();
+        mAuth=FirebaseAuth.getInstance();
+        ticketAdapter=new CustomTicketAdapter(getActivity(),items);
+        recyclerView.setAdapter(ticketAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mTicket = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("Tickets");
+        mDataExhibition = FirebaseDatabase.getInstance().getReference("exhibitions");
+        mTicket.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                livecontent="";
-                for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    String keyss= postSnapshot.getKey().toString().trim();
-                    final DatabaseReference dataref = mDatabase.child(keyss);
-                    dataref.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(final DataSnapshot pd:dataSnapshot.getChildren()){
+                    //Toast.makeText(getActivity(), pd.getKey().toString(), Toast.LENGTH_SHORT).show();
+                    ticketsEvent.add(pd.getKey());
+                    Toast.makeText(getActivity(), Integer.toString(ticketsEvent.size())+Integer.toString(customExhibitionName.size())+Integer.toString(ticketType.size())+Integer.toString(customExhibitionDate.size())+Integer.toString(entering.size()), Toast.LENGTH_SHORT).show();
+                    if (customExhibitionName.size()==customExhibitionDate.size() && customExhibitionName.size()==ticketType.size()&& customExhibitionDate.size()==entering.size() && customExhibitionName.size()==divided.size() && customExhibitionVenue.size()==customExhibitionTime.size() && customExhibitionVenue.size()==divided.size()){
+                        items.clear();
+                        for (int i=0;i<ticketsEvent.size();i++) {
+                            items.add(new TicketModelClass(customExhibitionName.get(i), customExhibitionDate.get(i), entering.get(i), ticketType.get(i), divided.get(i), ticketsEvent.get(i),customExhibitionVenue.get(i),customExhibitionTime.get(i)));
+                            //         Toast.makeText(getActivity(), customExhibitionName.get(i)+ customExhibitionDate.get(i)+ entering.get(i)+ ticketType.get(i)+ divided.get(i)+ ticketsEvent.get(i), Toast.LENGTH_SHORT).show();
+                            ticketAdapter.notifyDataSetChanged();
+                        }
+                    }
+                    idName=pd.getKey();
+                    mTicket.child(pd.getKey()).addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            livecontent=livecontent+" ⚪"+ dataSnapshot.getValue().toString().trim();
-                            live.setText(livecontent.toString());
+                        public void onDataChange(DataSnapshot dataSnapshot1) {
+                            for (final DataSnapshot pd1:dataSnapshot1.getChildren()){
+                                mTicket.child(idName).child(pd1.getKey()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (final DataSnapshot pd:dataSnapshot.getChildren()) {
+                                            if (pd.getKey().equals("Name")) {
+                                                ticketType.add(pd.getValue().toString());
+                                            } else if (pd.getKey().equals("Enters")) {
+                                                entering.add(pd.getValue().toString());
+                                            } else if (pd.getKey().equals("Divided")) {
+                                                divided.add(pd.getValue().toString());
+                                            }
+                                        }
+                                        //  Toast.makeText(getActivity(), Integer.toString(customExhibitionDate.size())+Integer.toString(customExhibitionName.size())+Integer.toString(ticketType.size())+Integer.toString(entering.size())+Integer.toString(ticketsEvent.size())+Integer.toString(divided.size()), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        public void onCancelled(DatabaseError databaseError) {
 
                         }
                     });
                 }
+
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-        info=FirebaseDatabase.getInstance().getReference("users");
-        info.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    //     Toast.makeText(MainActivity.this, postSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();//ID
-                    if (postSnapshot.getKey().toString().equals(mAuth.getCurrentUser().getUid())){
-                        //   Toast.makeText(MainActivity.this, "Yay", Toast.LENGTH_SHORT).show();
-                        info.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                                for (final DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
-                                    //     Toast.makeText(MainActivity.this, postSnapshot1.getKey().toString(), Toast.LENGTH_SHORT).show();
-                                    if (postSnapshot1.getKey().toString().equals("Score")){
-                                        //    Toast.makeText(MainActivity.this, postSnapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
-                                        coins.setText(postSnapshot1.getValue().toString());
-                                    }
-                                }
+        if (!ticketsEvent.isEmpty()) {
+            for (int i = 0; i < ticketsEvent.size(); i++) {
+                mDataExhibition.child(ticketsEvent.get(i)).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (final DataSnapshot pd1 : dataSnapshot.getChildren()) {
+                            if (pd1.getKey().toString().equals("Date")) {
+                                customExhibitionDate.add(pd1.getValue().toString());
+                                //   Toast.makeText(getActivity(), Integer.toString(customExhibitionDate.size()), Toast.LENGTH_SHORT).show();
+                            }else if (pd1.getKey().toString().equals("Name")) {
+                                customExhibitionName.add(pd1.getValue().toString());
+                            }else if (pd1.getKey().toString().equals("Venue")) {
+                                customExhibitionVenue.add(pd1.getValue().toString());
+                            }else if (pd1.getKey().toString().equals("Time")) {
+                                customExhibitionTime.add(pd1.getValue().toString());
                             }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        Window window = MainActivity.this.getWindow();
-        findViewById(R.id.textlive).setSelected(true);
-
-// clear FLAG_TRANSLUCENT_STATUS flag:
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-// add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-// finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(MainActivity.this,R.color.colorBlue));
-        img = findViewById(R.id.overlay);
-        scanbtn=findViewById(R.id.button3);
-        qrScan = new IntentIntegrator(this);
-        scanbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                qrScan.initiateScan();
-            }
-        });
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                actionMenu.close(true);
-                fab2.show();
-                fab.hide();
-                fab2.animate().translationY(-10).setListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {
-                        actionMenu.close(true);
+                        }
                     }
 
                     @Override
-                    public void onAnimationEnd(Animator animator) {
-                        img.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animator) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animator) {
+                    public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
             }
-        });
-        mAuth = FirebaseAuth.getInstance();
-        final RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativelayout);
-//
-        ImageView icon = new ImageView(this); // Create an icon
-        Drawable myDrawable1 = getResources().getDrawable(R.drawable.helplef);
-        Drawable myDrawableUser = getResources().getDrawable(R.drawable.userlef);
-        Drawable myDrawable2 = getResources().getDrawable(R.drawable.belllef);
-        Drawable myDrawable3 = getResources().getDrawable(R.drawable.ttlef);
-        Drawable myDrawable4 = getResources().getDrawable(R.drawable.trophylef);
-        Drawable myDrawables = getResources().getDrawable(R.drawable.tqlogolef);
-        icon.setImageDrawable(myDrawables);
+        }
+        return view;
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    */
+/**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     *//*
 */
 /*
-        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
-                .setContentView(icon)
-                .build();*//*
 
-        fab = findViewById(R.id.fabs);
-        fab2 = findViewById(R.id.fabs2);
-        fab.setImageDrawable(myDrawableUser);
-        fab2.setImageDrawable(myDrawables);
-        fab2.setOnClickListener(new View.OnClickListener() {
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
+}
+*//*
 
-            @Override
-            public void onClick(View view) {
 
-                float parentCenterX = relativeLayout.getX() + relativeLayout.getWidth() / 2;
-                float parentCenterY = relativeLayout.getY() + relativeLayout.getHeight() / 2;
-                fab2.animate().translationY(parentCenterY - fab2.getHeight() / 2 - 10).setListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {
-                    }
+package com.example.siddhantlad.taqneeq;
 
-                    @Override
-                    public void onAnimationEnd(Animator animator) {
-                        img.setVisibility(View.VISIBLE);
-                        fab2.hide();
-                        fab.show();
-                        try {
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
-                            actionMenu.open(true);
-                            fab.setEnabled(false);
-                            img.setEnabled(false);
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-                            new Handler().postDelayed(new Runnable() {
+import java.util.ArrayList;
 
-                                @Override
-                                public void run() {
-                                    // This method will be executed once the timer is over
-                                    fab.setEnabled(true);
-                                    img.setEnabled(true);
-                                }
-                            },600);
 
-                        }catch (Exception E){
-                        }
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animator) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animator) {
-
-                    }
-                });
-            }
-        });
-        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
-        SubActionButton.Builder itemBuilder2 = new SubActionButton.Builder(this);
-// repeat many times:
-        ImageView itemIcon = new ImageView(this);
-        itemIcon.setImageDrawable(myDrawable4);
-        SubActionButton button1 = itemBuilder.setContentView(itemIcon).setLayoutParams(new FrameLayout.LayoutParams(200, 200)).build();
-        ImageView itemIcon2 = new ImageView(this);
-        itemIcon2.setImageDrawable(myDrawable2);
-        SubActionButton button2 = itemBuilder.setContentView(itemIcon2).build();
-        ImageView itemIcon3 = new ImageView(this);
-        itemIcon3.setImageDrawable(myDrawable3);
-        SubActionButton button3 = itemBuilder.setContentView(itemIcon3).build();
-        ImageView itemIcon4 = new ImageView(this);
-        itemIcon4.setImageDrawable(myDrawable3);
-        SubActionButton button4 = itemBuilder.setContentView(itemIcon4).build();
-        ImageView itemIcon5 = new ImageView(this);
-        itemIcon.setImageDrawable(myDrawable3);
-        SubActionButton button5 = itemBuilder2.setContentView(itemIcon5).setLayoutParams(new FrameLayout.LayoutParams(1, 1)).build();
-        ImageView itemIcon6 = new ImageView(this);
-        itemIcon2.setImageDrawable(myDrawable4);
-        SubActionButton button6 = itemBuilder2.setContentView(itemIcon6).build();
-        ImageView itemIcon7 = new ImageView(this);
-        itemIcon3.setImageDrawable(myDrawable1);
-        SubActionButton button7 = itemBuilder2.setContentView(itemIcon7).build();
-        ImageView itemIcon8 = new ImageView(this);
-        itemIcon4.setImageDrawable(myDrawable2);
-        SubActionButton button8 = itemBuilder2.setContentView(itemIcon8).build();
-        final Intent helpsl=new Intent(MainActivity.this,HelpSlide.class);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                helpsl.putExtra("val",2);
-                startActivity(helpsl);
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                helpsl.putExtra("val",3);
-                startActivity(helpsl);
-            }
-        });
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                helpsl.putExtra("val",0);
-                startActivity(helpsl);
-            }
-        });
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                helpsl.putExtra("val",1);
-                startActivity(helpsl);
-            }
-        });
-        actionMenu = new FloatingActionMenu.Builder(this)
-                .addSubActionView(button1)
-                .addSubActionView(button2)
-                .addSubActionView(button5)
-                .addSubActionView(button6)
-                .addSubActionView(button7)
-                .addSubActionView(button8)
-                .addSubActionView(button3)
-                .addSubActionView(button4)
-                .setRadius(400)
-                .setAnimationHandler(new CustomFabAnim())
-                .setStartAngle(0)
-                .setEndAngle(360)
-                .attachTo(fab)
-                .build();
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 */
-/*                                       actionMenu.close(true);
-                                       fab2.show();
-                                       fab.hide();
-                                       fab2.animate().translationY(-10).setListener(new Animator.AnimatorListener() {
-                                           @Override
-                                           public void onAnimationStart(Animator animator) {
-                                               actionMenu.close(true);
-                                           }
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link Tab2.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link Tab2#newInstance} factory method to
+ * create an instance of this fragment.
+ *//*
 
-                                           @Override
-                                           public void onAnimationEnd(Animator animator) {
-                                               img.setVisibility(View.GONE);
-                                           }
+public class Tab2 extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    RecyclerView recyclerView;
+    FirebaseAuth mAuth;
+    ArrayList<String> ticketsEvent;
+    ArrayList<String> ticketType,entering,divided,customExhibitionDate,customExhibitionName,customExhibitionVenue,customExhibitionTime;
+    DatabaseReference mTicket,mDataExhibition;
+    ArrayList<TicketModelClass> items;
+    CustomTicketAdapter ticketAdapter;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+    private OnFragmentInteractionListener mListener;
+    String idName;
+    public Tab2() {
+        // Required empty public constructor
+    }
 
-                                           @Override
-                                           public void onAnimationCancel(Animator animator) {
+    */
+/**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment Tab2.
+     *//*
 
-                                           }
+    // TODO: Rename and change types and number of parameters
+    public static Tab2 newInstance(String param1, String param2) {
+        Tab2 fragment = new Tab2();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-                                           @Override
-                                           public void onAnimationRepeat(Animator animator) {
-
-                                           }
-                                       });*//*
-
-                startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
-            }
-        });
-        user=mAuth.getCurrentUser();
-        final ArrayList<ModelClass> items = new ArrayList<>();
-        final ArrayList<ModelClass> items2 = new ArrayList<>();
-        final ArrayList<ModelClass> items3 = new ArrayList<>();
-        final CustomAdapter adapter = new CustomAdapter(this, items);
-        final CustomAdapter2 adapter2 = new CustomAdapter2(this, items2);
-        final CustomAdapter3 adapter3 = new CustomAdapter3(this, items3);
-        RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
-        RecyclerView recyclerView2 = findViewById(R.id.my_recycler_view2);
-        RecyclerView recyclerView3 = findViewById(R.id.my_recycler_view3);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(adapter);
-        recyclerView2.setAdapter(adapter2);
-        recyclerView3.setAdapter(adapter3);
-
-// let's create 10 random items
-        mDataList=FirebaseDatabase.getInstance().getReference("events");
-        mDataList.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long x=dataSnapshot.getChildrenCount();
-                s=(int)x;
-        */
-/* for(final  DataSnapshot p:dataSnapshot.getChildren()){
-s=p.getChildrenCount();
-         }*//*
-
-                l=0;
-                mDataList.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (final DataSnapshot pd:dataSnapshot.getChildren()){
-                            final String name=pd.getKey().toString();
-                            mDataList.child(name).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
-                                    for (final DataSnapshot pd : dataSnapshot.getChildren()) {
-                                        if (pd.getKey().toString().equals("Date")) {
-                                            customEventDate.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Venue")) {
-                                            customEventVenue.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Name")) {
-                                            customEventName.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Time")) {
-                                            customEventTime.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Cost")) {
-                                            customEventCost.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Drinks")) {
-                                            customEventDrinks.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Adult")) {
-                                            customEventAdult.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Food")) {
-                                            customEventFood.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Music")) {
-                                            customEventMusic.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Intro")) {
-                                            customEventIntro.add(pd.getValue().toString());
-                                        }
-                                        //    Toast.makeText(MainActivity.this, Integer.toString(customEvent.size()), Toast.LENGTH_SHORT).show();
-
-                                        if ( customEventVenue.size()==s&&customEventName.size()==s && customEventCost.size()==s&& customEventTime.size()==s&& customEventDate.size()==s && customEventVenue.size()!=0) {
-                                            items.clear();
-                                            for (int i = 0; i < customEventVenue.size(); i++) {
-                                                //        Toast.makeText(MainActivity.this, customEvent.get(s-2), Toast.LENGTH_SHORT).show();
-                                                items.add(new ModelClass(MyData.drawableArray[i], customEventName.get(i), customEventVenue.get(i), Integer.parseInt(customEventCost.get(i)),customEventDate.get(i),customEventTime.get(i),customEventAdult.get(i),customEventDrinks.get(i),customEventMusic.get(i),customEventFood.get(i),customEventIntro.get(i)));
-                                                adapter.notifyDataSetChanged();
-                                                //Toast.makeText(MainActivity.this, customEventName.get(i), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        mDataExhibition=FirebaseDatabase.getInstance().getReference("exhibitions");
-        mDataExhibition.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long x=dataSnapshot.getChildrenCount();
-                s=(int)x;
-        */
-/* for(final  DataSnapshot p:dataSnapshot.getChildren()){
-s=p.getChildrenCount();
-         }*//*
-
-                l=0;
-                mDataExhibition.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (final DataSnapshot pd:dataSnapshot.getChildren()){
-                            final String name=pd.getKey().toString();
-                            mDataExhibition.child(name).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
-                                    for (final DataSnapshot pd : dataSnapshot.getChildren()) {
-                                        if (pd.getKey().toString().equals("Date")) {
-                                            customExhibitionDate.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Venue")) {
-                                            customExhibitionVenue.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Name")) {
-                                            customExhibitionName.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Time")) {
-                                            customExhibitionTime.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Cost")) {
-                                            customExhibitionCost.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Drinks")) {
-                                            customExhibitionDrinks.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Adult")) {
-                                            customExhibitionAdult.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Food")) {
-                                            customExhibitionFood.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Music")) {
-                                            customExhibitionMusic.add(pd.getValue().toString());
-                                        }else if (pd.getKey().toString().equals("Intro")) {
-                                            customExhibitionIntro.add(pd.getValue().toString());
-                                        }
-                                        //    Toast.makeText(MainActivity.this, Integer.toString(customExhibition.size()), Toast.LENGTH_SHORT).show();
-
-                                        if ( customExhibitionVenue.size()==s&&customExhibitionName.size()==s && customExhibitionCost.size()==s&& customExhibitionTime.size()==s&& customExhibitionDate.size()==s && customExhibitionVenue.size()!=0) {
-                                            items.clear();
-                                            for (int i = 0; i < customExhibitionVenue.size(); i++) {
-                                                //        Toast.makeText(MainActivity.this, customExhibition.get(s-2), Toast.LENGTH_SHORT).show();
-                                                items2.add(new ModelClass(MyData.drawableArray[i], customExhibitionName.get(i), customExhibitionVenue.get(i), Integer.parseInt(customExhibitionCost.get(i)),customExhibitionDate.get(i),customExhibitionTime.get(i),customExhibitionAdult.get(i),customExhibitionDrinks.get(i),customExhibitionMusic.get(i),customExhibitionFood.get(i),customExhibitionIntro.get(i)));
-                                                adapter2.notifyDataSetChanged();
-                                                //Toast.makeText(MainActivity.this, customExhibitionName.get(i), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-       */
-/* for (int j=0;j<5;j++){
-            items2.add(new ModelClass(MyData.informaldrawableArray[j], MyData.informalArray[j],MyData.roomArray2[j],MyData.scoreArray2[j],"","","Yes","Yes","No","No",""));
-            adapter2.notifyDataSetChanged();
-        }*//*
-
-        for (int k=0;k<5;k++){
-            items3.add(new ModelClass(MyData.workshopdrawableArray[k], MyData.workshopArray[k],MyData.roomArray3[k],MyData.scoreArray3[k],"","","No","No","No","No",""));
-            adapter3.notifyDataSetChanged();
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        final IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            //if qrcode has nothing in it
-            if (result.getContents() == null) {
-                Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
-            } else {
-                try {
-                    JSONObject obj = new JSONObject(result.getContents());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    //if (result.getContents().equals("Taqneeq-SNL-50")){
-
-                    //         Toast.makeText(this, "Hi", Toast.LENGTH_SHORT).show();
-                    final DatabaseReference eventdata=FirebaseDatabase.getInstance().getReference("participants");
-                    final DatabaseReference scandata=FirebaseDatabase.getInstance().getReference("Scan");
-                    scandata.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                if (postSnapshot.getKey().toString().equals(result.getContents())){
-                                    scandata.child(postSnapshot.getKey().toString()).addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            for (final DataSnapshot postSnapshot2 : dataSnapshot.getChildren()) {
-                                                if (Integer.parseInt(postSnapshot2.getValue().toString())<=Integer.parseInt(coins.getText().toString())){
-                                                    deduct=Integer.parseInt(postSnapshot2.getValue().toString());
-                                                    score=Integer.parseInt(coins.getText().toString())-deduct;
-                                                    info.child(mAuth.getCurrentUser().getUid()).child("Score").setValue(Integer.toString(score));
-                                                    deduct=0;
-                                                    final String eventcode = postSnapshot2.getValue().toString();
-                                                    final String eventName = postSnapshot2.getKey().toString();
-                                                    final String id = eventdata.push().getKey();
-                                                    eventdata.child(eventName).child(mAuth.getCurrentUser().getUid()).child("Name").setValue(mAuth.getCurrentUser().getDisplayName());
-                                                    final int scorechanged = Integer.parseInt(coins.getText().toString());
-                                                    eventdata.child(eventName).child(mAuth.getCurrentUser().getUid()).child("Score").setValue(Integer.toString(scorechanged));
-                                                    final DatabaseReference userdata = FirebaseDatabase.getInstance().getReference("users");
-                                                    userdata.addValueEventListener(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                            for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                                                final String name = postSnapshot.getKey().toString().trim();
-                                                                if (name.equals(mAuth.getCurrentUser().getUid())) {
-                                                                    final DatabaseReference dataref = userdata.child(name);
-                                                                    dataref.addValueEventListener(new ValueEventListener() {
-                                                                        @Override
-                                                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                            for (DataSnapshot postSnapshot1 : dataSnapshot.getChildren()) {
-                                                                                final String names = postSnapshot1.getKey().toString().trim();
-                                                                                dataref.child(names).addValueEventListener(new ValueEventListener() {
-                                                                                    @Override
-                                                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                                        if (dataSnapshot.getValue() != null) {
-                                                                                            if (names.equals("Phone")) {
-                                                                                                String phoneNum = dataSnapshot.getValue().toString().trim();
-                                                                                                eventdata.child(eventName).child(mAuth.getCurrentUser().getUid()).child("Phone").setValue(phoneNum);
-
-                                                                                            }
-                                                                                        }
-                                                                                    }
-
-                                                                                    @Override
-                                                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                                                    }
-                                                                                });
-                                                                            }
-                                                                        }
-
-                                                                        @Override
-                                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                                        }
-                                                                    });
-                                                                }
-                                                            }
-                                                        }
-
-                                                        @Override
-                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                        }
-                                                    });
-                                                }else{
-                                                    Toast.makeText(MainActivity.this, "Invalid Cash", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        final View view = inflater.inflate(R.layout.fragment_tab4, container, false);
+        recyclerView = view.findViewById(R.id.my_recycler_view);
+        ticketsEvent=new ArrayList<>();
+        ticketType=new ArrayList<>();
+        customExhibitionDate = new ArrayList<>();
+        customExhibitionVenue=new ArrayList<>();
+        customExhibitionTime=new ArrayList<>();
+        customExhibitionName=new ArrayList<>();
+        entering=new ArrayList<>();
+        divided=new ArrayList<>();
+        items=new ArrayList<>();
+        mAuth=FirebaseAuth.getInstance();
+        ticketAdapter=new CustomTicketAdapter(getActivity(),items);
+        recyclerView.setAdapter(ticketAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mTicket = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("Tickets");
+        mDataExhibition = FirebaseDatabase.getInstance().getReference("exhibitions");
+        mTicket.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(final DataSnapshot pd:dataSnapshot.getChildren()){
+                    //Toast.makeText(getActivity(), pd.getKey().toString(), Toast.LENGTH_SHORT).show();
+                    ticketsEvent.add(pd.getKey());
+                    if (!ticketsEvent.isEmpty()) {
+                        for (int i = 0; i < ticketsEvent.size(); i++) {
+                            mDataExhibition.child(ticketsEvent.get(i)).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (final DataSnapshot pd1 : dataSnapshot.getChildren()) {
+                                        if (pd1.getKey().toString().equals("Date")) {
+                                            customExhibitionDate.add(pd1.getValue().toString());
+                                            //   Toast.makeText(getActivity(), Integer.toString(customExhibitionDate.size()), Toast.LENGTH_SHORT).show();
+                                        }else if (pd1.getKey().toString().equals("Name")) {
+                                            customExhibitionName.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Venue")) {
+                                            customExhibitionVenue.add(pd1.getValue().toString());
+                                        }else if (pd1.getKey().toString().equals("Time")) {
+                                            customExhibitionTime.add(pd1.getValue().toString());
                                         }
+                                    }
+                                }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                        }
-                                    });
-                                    //
-
-                                    //
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
 
                                 }
+                            });
+                        }
+                    }
+                    idName=pd.getKey();
+                    mTicket.child(pd.getKey()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot1) {
+                            for (final DataSnapshot pd1:dataSnapshot1.getChildren()){
+                                mTicket.child(idName).child(pd1.getKey()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (final DataSnapshot pd:dataSnapshot.getChildren()) {
+                                            if (pd.getKey().equals("Name")) {
+                                                ticketType.add(pd.getValue().toString());
+                                            } else if (pd.getKey().equals("Enters")) {
+                                                entering.add(pd.getValue().toString());
+                                            } else if (pd.getKey().equals("Divided")) {
+                                                divided.add(pd.getValue().toString());
+                                            }
+                                        }
+                                        //  Toast.makeText(getActivity(), Integer.toString(customExhibitionDate.size())+Integer.toString(customExhibitionName.size())+Integer.toString(ticketType.size())+Integer.toString(entering.size())+Integer.toString(ticketsEvent.size())+Integer.toString(divided.size()), Toast.LENGTH_SHORT).show();
+                                        if (customExhibitionName.size()==customExhibitionDate.size() && customExhibitionName.size()==ticketType.size()&& customExhibitionDate.size()==entering.size() && customExhibitionName.size()==divided.size() && customExhibitionVenue.size()==customExhibitionTime.size() && customExhibitionVenue.size()==divided.size()){
+                                            items.clear();
+                                            for (int i=0;i<ticketsEvent.size();i++) {
+                                                items.add(new TicketModelClass(customExhibitionName.get(i), customExhibitionDate.get(i), entering.get(i), ticketType.get(i), divided.get(i), ticketsEvent.get(i),customExhibitionVenue.get(i),customExhibitionTime.get(i)));
+                                                //         Toast.makeText(getActivity(), customExhibitionName.get(i)+ customExhibitionDate.get(i)+ entering.get(i)+ ticketType.get(i)+ divided.get(i)+ ticketsEvent.get(i), Toast.LENGTH_SHORT).show();
+                                                ticketAdapter.notifyDataSetChanged();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
                             }
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        public void onCancelled(DatabaseError databaseError) {
 
                         }
                     });
-                    info=FirebaseDatabase.getInstance().getReference("users");
-                    info.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                //     Toast.makeText(MainActivity.this, postSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();//ID
-                                if (postSnapshot.getKey().toString().equals(mAuth.getCurrentUser().getUid())){
-                                    //   Toast.makeText(MainActivity.this, "Yay", Toast.LENGTH_SHORT).show();
-                                    info.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                                            for (final DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
-                                                //     Toast.makeText(MainActivity.this, postSnapshot1.getKey().toString(), Toast.LENGTH_SHORT).show();
-                                                if (postSnapshot1.getKey().toString().equals("Score")){
-                                                    //    Toast.makeText(MainActivity.this, postSnapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
-                                                    //  coins.setText(postSnapshot1.getValue().toString());
-                                                    score=Integer.parseInt(postSnapshot1.getValue().toString());
-                                                }
-
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                        }
-                                    });
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-
-
                 }
 
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        */
+/*RecyclerView recyclerView = view.findViewById(R.id.my_recycler_view);
+         *//*
+*/
+/*   final ArrayList<AlertModelClass> items = new ArrayList<>();
+        FirebaseAuth mAuth=FirebaseAuth.getInstance();
+        final ArrayList<String> tickets=new ArrayList<String>();
+        DatabaseReference mTicket=FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("Tickets");
+        mTicket.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    tickets.add(postSnapshot.getKey().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });*//*
+*/
+/*
+
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(mLayoutManager);
+        final ArrayList<AlertModelClass> items = new ArrayList<>();
+        final CustomAlertAdapter adapter = new CustomAlertAdapter(getActivity(), items);
+        recyclerView.setAdapter(adapter);
+        final DatabaseReference mData=FirebaseDatabase.getInstance().getReference("alerts");
+        mData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    items.clear();
+                    final String eventname = postSnapshot.getKey().toString().trim();
+                    final DatabaseReference dataref = mData.child(eventname);
+                    dataref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                            if (dataSnapshot2.getValue() != null) {
+                                String alert = dataSnapshot2.getValue().toString().trim();
+                                    items.add(new AlertModelClass(alert, eventname,"CR-101",20,R.drawable.testeventimage1));
+                                    adapter.notifyDataSetChanged();
+
+                                }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+*//*
+
+        return view;
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 
-}*/
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    */
+/**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     *//*
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
+    }
+}
+*/
