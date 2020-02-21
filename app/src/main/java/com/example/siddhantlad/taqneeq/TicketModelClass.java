@@ -9,8 +9,9 @@ public class TicketModelClass {
     private String id;
     private String venue;
     private String time;
+    private String ticketID;
 
-    public TicketModelClass(String name, String date, String entering, String type, String divided, String id, String venue, String time) {
+    public TicketModelClass(String name, String date, String entering, String type, String divided, String id, String venue, String time,String ticketID) {
         this.name=name;
         this.date = date;
         this.entering = entering;
@@ -19,6 +20,7 @@ public class TicketModelClass {
         this.id=id;
         this.venue=venue;
         this.time=time;
+        this.ticketID=ticketID;
     }
 
     public String getName() {
@@ -46,5 +48,9 @@ public class TicketModelClass {
 
     public String getVenue() {
         return venue;
+    }
+
+    public String getTicketID() {
+        return ticketID;
     }
 }

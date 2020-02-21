@@ -49,7 +49,7 @@ public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.CustomVi
             @Override
             public void onSuccess(Uri uri) {
                 String url = uri.toString();
-                Glide.with(context).load(url).into(holder.itemImage);
+                Glide.with(context.getApplicationContext()).load(url).into(holder.itemImage);
             }
         });
         holder.itemInfo1.setImageDrawable(null);

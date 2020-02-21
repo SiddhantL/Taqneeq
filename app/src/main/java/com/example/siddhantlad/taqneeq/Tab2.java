@@ -41,7 +41,7 @@ public class Tab2 extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     RecyclerView recyclerView;
     FirebaseAuth mAuth;
-    ArrayList<String> ticketsEvent;
+    ArrayList<String> ticketsEvent,ticketID;
     ArrayList<String> ticketType,entering,divided,customExhibitionDate,customExhibitionName,customExhibitionVenue,customExhibitionTime;
     DatabaseReference mTicket,mDataExhibition;
     ArrayList<TicketModelClass> items;
@@ -96,6 +96,7 @@ public class Tab2 extends Fragment {
         customExhibitionVenue=new ArrayList<>();
         customExhibitionTime=new ArrayList<>();
         customExhibitionName=new ArrayList<>();
+        ticketID=new ArrayList<>();
         entering=new ArrayList<>();
         divided=new ArrayList<>();
         items=new ArrayList<>();
@@ -147,6 +148,7 @@ public class Tab2 extends Fragment {
                                             public void onDataChange(DataSnapshot dataSnapshot) {
                                                 for (final DataSnapshot pd : dataSnapshot.getChildren()) {
                                                     if (pd.getKey().equals("Name")) {
+                                                        ticketID.add(pd1.getKey());
                                                         ticketType.add(pd.getValue().toString());
                                                     } else if (pd.getKey().equals("Enters")) {
                                                         entering.add(pd.getValue().toString());
@@ -155,12 +157,12 @@ public class Tab2 extends Fragment {
                                                     }
                                                 }
                                                 // Toast.makeText(getActivity(), Integer.toString(ticketsEvent.size())+Integer.toString(customExhibitionName.size())+Integer.toString(ticketType.size()), Toast.LENGTH_SHORT).show();
-
-                                                if (customExhibitionName.size() == customExhibitionDate.size() && customExhibitionName.size() == ticketType.size() && customExhibitionDate.size() == entering.size() && customExhibitionName.size() == divided.size() && customExhibitionVenue.size() == customExhibitionTime.size() && customExhibitionVenue.size() == divided.size()) {
+                                                Toast.makeText(getActivity(), Integer.toString(ticketID.size()), Toast.LENGTH_SHORT).show();
+                                                if (customExhibitionName.size() == customExhibitionDate.size() && customExhibitionName.size() == ticketType.size() && customExhibitionDate.size() == entering.size() && customExhibitionName.size() == divided.size() && customExhibitionVenue.size() == customExhibitionTime.size() && customExhibitionVenue.size() == divided.size() && ticketID.size()==ticketsEvent.size()) {
                                                     items.clear();
                                                     recyclerView.removeAllViews();
                                                     for (int i = 0; i < ticketsEvent.size(); i++) {
-                                                        items.add(new TicketModelClass(customExhibitionName.get(i), customExhibitionDate.get(i), entering.get(i), ticketType.get(i), divided.get(i), ticketsEvent.get(i), customExhibitionVenue.get(i), customExhibitionTime.get(i)));
+                                                        items.add(new TicketModelClass(customExhibitionName.get(i), customExhibitionDate.get(i), entering.get(i), ticketType.get(i), divided.get(i), ticketsEvent.get(i), customExhibitionVenue.get(i), customExhibitionTime.get(i), ticketID.get(i)));
                                                         //         Toast.makeText(getActivity(), customExhibitionName.get(i)+ customExhibitionDate.get(i)+ entering.get(i)+ ticketType.get(i)+ divided.get(i)+ ticketsEvent.get(i), Toast.LENGTH_SHORT).show();
                                                         ticketAdapter.notifyDataSetChanged();
                                                     }

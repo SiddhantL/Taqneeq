@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="#ffffff"
+        android:elevation="10dp">
+
+        <LinearLayout
+            android:id="@+id/incdec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date"
+            android:layout_toEndOf="@+id/textView16"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/decreaseBtn"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_blue_light"
+                android:padding="0dp"
+                android:text="-"
+                android:textSize="36sp" />
+
+            <Button
+                android:id="@+id/increaseBtn"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:background="@android:color/holo_blue_light"
+                android:padding="0dp"
+                android:text="+"
+                android:textSize="36sp" />
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/enters"
+        android:layout_toEndOf="@+id/textView16">
+
+        <TextView
+            android:id="@+id/item_dateplaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_enters"
+            android:layout_toEndOf="@+id/item_image"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:paddingLeft="5dp"
+            android:text="Cost:"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/item_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:paddingRight="5dp"
+            android:text="10 ₹"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="188dp"
+        android:layout_height="170dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="1"
+        android:background="@drawable/gradientnew"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="80sp" />
+
+    <RelativeLayout
+        android:id="@+id/layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/textView16">
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat"
+            android:maxLines="1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="EVENT NAME"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/enters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_title"
+        android:layout_toEndOf="@+id/textView16">
+
+        <TextView
+            android:id="@+id/item_entersplaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_enters"
+            android:layout_toEndOf="@+id/item_image"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:paddingLeft="5dp"
+            android:text="Enters:"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/item_enters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:paddingRight="5dp"
+            android:text="4 People"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</RelativeLayout>

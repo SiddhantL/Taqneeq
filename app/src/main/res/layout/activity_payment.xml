@@ -1,43 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00b1e1"
-    >
+    android:background="@android:color/holo_purple">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"
         android:gravity="center"
-        >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-            >
+            android:layout_height="110dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_alignParentBottom="true"
                 android:background="#E2E2E2"
-                android:gravity="center"
-                >
+                android:gravity="center">
 
                 <TextView
+                    android:id="@+id/orderid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="35dp"
-                    android:id="@+id/orderid"
                     android:paddingBottom="0dp"
-                    android:textSize="12sp"
+                    android:paddingTop="35dp"
                     android:text="Order #RZP42"
-                    />
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -51,64 +46,72 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="15dp"
+            android:layout_height="wrap_content"
             android:background="#f2f2f2"
             android:gravity="center"
-            >
+            android:orientation="vertical"
+            android:paddingTop="15dp">
 
             <TextView
+                android:id="@+id/nameEvent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/montserrat"
                 android:paddingBottom="5dp"
                 android:paddingTop="0dp"
-                android:id="@+id/nameEvent"
                 android:text="Event Tickets"
                 android:textColor="@android:color/black"
-                android:textSize="20sp" />
+                android:textSize="24sp" />
 
             <TextView
+                android:id="@+id/inr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/montserrat"
+                android:paddingBottom="0dp"
                 android:paddingTop="0dp"
-                android:paddingBottom="0dp"
-                android:textSize="12sp"
                 android:text="INR 1.00"
-                />
+                android:textColor="@android:color/black"
+                android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/enters"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="0dp"
-                android:textSize="12sp"
-                android:textStyle="italic"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:textColor="@android:color/holo_red_dark"
-                android:gravity="center_horizontal"
-                android:text="Transaction is for testing purpose and your deducted amount will get refunded in 3-5 business days "
-                />
+                android:fontFamily="@font/montserrat"
+                android:text="Enters 2"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/nameoftix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="Name Of Ticket"
+                android:textColor="@android:color/black" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I agree to the Terms and Conditions" />
 
             <Button
                 android:id="@+id/btn_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
                 android:layout_gravity="center_horizontal"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/green_button"
-                android:textSize="14sp"
-                android:textColor="#fcfcfc"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="Purchase"
-                />
+                android:textColor="#fcfcfc"
+                android:textSize="14sp" />
 
         </LinearLayout>
 

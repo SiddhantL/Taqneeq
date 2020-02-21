@@ -1,6 +1,8 @@
 package com.example.siddhantlad.taqneeq;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +15,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 public class TicketActivity extends AppCompatActivity {
     String name;
-    String id,enter,venue,date,time;
-    ImageView imageEvent;
+    String id,enter,venue,date,time,ticketID;
+    ImageView imageEvent,qrCode;
     TextView dateTV,entersTV,timeTV,venueTV,idTV;
     String timeformat,day;
     @Override
@@ -38,6 +44,24 @@ public class TicketActivity extends AppCompatActivity {
         venue=mIntent.getStringExtra("Venue");
         time=mIntent.getStringExtra("Time");
         enter=mIntent.getStringExtra("Enters");
+        ticketID=mIntent.getStringExtra("ticketID");
+        QRCodeWriter writer = new QRCodeWriter();
+        qrCode=findViewById(R.id.imageView13);
+        try {
+            BitMatrix bitMatrix = writer.encode(ticketID, BarcodeFormat.QR_CODE, 1000, 1000);
+            int width = bitMatrix.getWidth();
+            int height = bitMatrix.getHeight();
+            Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+                }
+            }
+            qrCode.setImageBitmap(bmp);
+
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
         String setampm;
         setampm = new String();
         String hour = time.substring(0,2);

@@ -141,7 +141,7 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
         buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent pay=new Intent(EventDisplay.this,PaymentActivity.class);
+                Intent pay=new Intent(EventDisplay.this,TicketSelector.class);
                 pay.putExtra("ID",ID);
                 pay.putExtra("Name",titles);
                 pay.putExtra("Date",dates);

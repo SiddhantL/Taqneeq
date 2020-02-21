@@ -51,6 +51,7 @@ public class CustomTicketAdapter extends RecyclerView.Adapter<CustomTicketAdapte
                 ticketShow.putExtra("Time",items.get(position).getTime());
                 ticketShow.putExtra("Enters",items.get(position).getEntering());
                 ticketShow.putExtra("ID",items.get(position).getId());
+                ticketShow.putExtra("ticketID",items.get(position).getTicketID());
                 context.startActivity(ticketShow);
             }
         });
@@ -58,7 +59,7 @@ public class CustomTicketAdapter extends RecyclerView.Adapter<CustomTicketAdapte
             @Override
             public void onSuccess(Uri uri) {
                 String url = uri.toString();
-                Glide.with(context).load(url).into(holder.itemImage);
+                Glide.with(context.getApplicationContext()).load(url).into(holder.itemImage);
             }
         });
        /* holder.itemTitle.setText(items.get(position).getTitle());

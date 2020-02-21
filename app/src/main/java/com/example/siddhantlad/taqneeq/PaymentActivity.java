@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +26,9 @@ public class PaymentActivity extends Activity implements PaymentResultListener {
     String name;
     DatabaseReference tickets,userdata;
     FirebaseAuth mAuth;
-    String id,date,venue,time,enters;
+    TextView costTV,entersTV,nameTixTV;
+    CheckBox checkBoxtc;
+    String id,date,venue,time,enters,cost,ticketsnum,nameOfTix;
     DatabaseReference ticketUser,mTicket;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,16 +38,26 @@ public class PaymentActivity extends Activity implements PaymentResultListener {
         mAuth= FirebaseAuth.getInstance();
         TextView orderID=findViewById(R.id.orderid);
         TextView nameEvent=findViewById(R.id.nameEvent);
+        costTV=findViewById(R.id.inr);
+        entersTV=findViewById(R.id.enters);
+        nameTixTV=findViewById(R.id.nameoftix);
+        checkBoxtc=findViewById(R.id.checkBox);
         name=mIntent.getStringExtra("Name");
         id=mIntent.getStringExtra("ID");
         date=mIntent.getStringExtra("Date");
         time=mIntent.getStringExtra("Time");
         enters=mIntent.getStringExtra("Enters");
         venue=mIntent.getStringExtra("Venue");
+        cost=mIntent.getStringExtra("Cost");
+        nameOfTix=mIntent.getStringExtra("nameOfTix");
+        ticketsnum=mIntent.getStringExtra("Tickets");
         tickets= FirebaseDatabase.getInstance().getReference("Tickets");
         userdata= FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("Tickets");
         nameEvent.setText(name);
-        orderID.setText("Order ID #"+id);
+        orderID.setText("Order ID #"+id.substring(1));
+        entersTV.setText("Enters "+enters);
+        costTV.setText(cost+"₹");
+        nameTixTV.setText(nameOfTix);
         /*
          To ensure faster loading of the Checkout form,
           call this method as early as possible in your checkout flow.
@@ -57,7 +70,11 @@ public class PaymentActivity extends Activity implements PaymentResultListener {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startPayment();
+                if (checkBoxtc.isChecked()) {
+                    startPayment();
+                }else{
+                    Toast.makeText(PaymentActivity.this, "Agree To The Terms & Conditions to Purchase Tickets", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -73,11 +90,11 @@ public class PaymentActivity extends Activity implements PaymentResultListener {
         try {
             JSONObject options = new JSONObject();
             options.put("name", name+" Tickets");
-            options.put("description", "1 Ticket");
+            options.put("description", ticketsnum+" Ticket/"+enters+" Entries");
             //You can omit the image option to fetch the image from dashboard
             options.put("image", "https://i.ibb.co/wJpX2Fw/squareeventry.png");
             options.put("currency", "INR");
-            options.put("amount", "1500");
+            options.put("amount", Integer.toString(Integer.parseInt(cost)*100));
 
             JSONObject preFill = new JSONObject();
             preFill.put("email", "");
