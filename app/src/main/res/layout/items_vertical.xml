@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="1dp"
+    android:layout_marginBottom="2dp"
     android:background="#ffffff"
     android:elevation="10dp">
 
     <ImageView
-        android:id="@+id/item_image"
+        android:id="@+id/item_images"
         android:layout_width="188dp"
         android:layout_height="120dp"
         android:layout_alignParentStart="true"
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@id/item_image">
+        android:layout_toEndOf="@+id/item_images">
 
         <TextView
             android:id="@+id/item_title"
@@ -40,8 +40,7 @@
             android:paddingRight="5dp"
             android:text="BIRTHDAY PARTY"
             android:textColor="#000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18dp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -49,33 +48,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_title"
-        android:layout_toEndOf="@id/item_image">
+        android:layout_toEndOf="@+id/item_images">
 
         <TextView
-            android:id="@+id/item_enters"
+            android:id="@+id/item_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/item_enters"
-            android:layout_toEndOf="@+id/item_image"
+            android:layout_below="@+id/item_date"
+            android:layout_toEndOf="@+id/item_images"
             android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
             android:maxLines="1"
             android:paddingLeft="5dp"
             android:text="21/11/2019"
             android:textColor="#FF0000"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/item_enters"
+            android:id="@+id/item_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
             android:maxLines="1"
             android:paddingRight="5dp"
             android:text="   08:30 pm"
             android:textColor="#FF0000"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -83,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/enters"
-        android:layout_toEndOf="@id/item_image">
+        android:layout_toEndOf="@+id/item_images">
 
         <TextView
             android:id="@+id/item_cost"
@@ -91,21 +92,22 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="30dp"
-            android:layout_toEndOf="@+id/item_image"
+            android:layout_toEndOf="@+id/item_images"
             android:layout_weight="0.25"
             android:drawableRight="@drawable/coinlef"
             android:ellipsize="end"
+            android:fontFamily="@font/montserrat"
             android:maxLines="1"
             android:paddingLeft="5dp"
             android:text="50000"
             android:textColor="#08B3B9"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <ImageView
             android:id="@+id/item_info3"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_below="@+id/item_enters"
+            android:layout_below="@+id/item_date"
             android:layout_toStartOf="@+id/item_info2"
             android:layout_weight="0.25"
             app:srcCompat="@drawable/foodlef" />
@@ -114,7 +116,7 @@
             android:id="@+id/item_info4"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_below="@+id/item_enters"
+            android:layout_below="@+id/item_date"
             android:layout_toStartOf="@+id/item_info3"
             android:layout_weight="0.25"
             app:srcCompat="@drawable/musiclef" />
@@ -124,8 +126,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/item_enters"
-            android:layout_marginRight="5dp"
+            android:layout_below="@+id/item_date"
             android:layout_weight="0.25"
             app:srcCompat="@drawable/adultlef" />
 
@@ -133,11 +134,12 @@
             android:id="@+id/item_info2"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_below="@+id/item_enters"
+            android:layout_below="@+id/item_date"
             android:layout_toStartOf="@+id/item_info1"
             android:layout_weight="0.25"
             app:srcCompat="@drawable/alcohollef" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/item_score2"
         android:layout_width="wrap_content"
@@ -149,24 +151,27 @@
         android:textColor="#08B3B9"
         android:textSize="16sp"
         android:visibility="gone" />
+
     <RelativeLayout
         android:id="@+id/venue_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/costlay"
-        android:layout_toEndOf="@id/item_image">
+        android:layout_toEndOf="@+id/item_images">
 
         <TextView
             android:id="@+id/item_venue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:ellipsize="end"
+            android:fontFamily="@font/montserrat"
             android:maxLines="1"
             android:text="Venue: Mumbai, Andheri"
             android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="16dp" />
     </RelativeLayout>
 
 </RelativeLayout>

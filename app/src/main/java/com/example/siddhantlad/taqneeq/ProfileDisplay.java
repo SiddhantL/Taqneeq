@@ -58,8 +58,10 @@ TextView names,coinss,num,won,email;
         coinss=(findViewById(R.id.txt5));
         num=(findViewById(R.id.txt4));
         won=(findViewById(R.id.txt2));
-        names.setText((mAuth.getCurrentUser().getDisplayName()).toUpperCase());
-        email.setText("EMAIL: "+(mAuth.getCurrentUser().getEmail()).toUpperCase());
+        if (names!=null) {
+            names.setText((mAuth.getCurrentUser().getDisplayName()).toUpperCase());
+            email.setText("EMAIL: " + (mAuth.getCurrentUser().getEmail()).toUpperCase());
+        }
         final DatabaseReference userdata= FirebaseDatabase.getInstance().getReference("users");
         userdata.addValueEventListener(new ValueEventListener() {
             @Override

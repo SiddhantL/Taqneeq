@@ -33,12 +33,12 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginEnd="109dp"
                 android:layout_marginTop="2dp"
-                android:fontFamily="serif-monospace"
+                android:fontFamily="@font/montserrat"
                 android:paddingBottom="30dp"
                 android:text="Powered By\nSNL Tech."
                 android:textAlignment="center"
-                android:textColor="#4f4f4f"
-                android:textSize="16sp"
+                android:textColor="#000000"
+                android:textSize="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider2" />
@@ -66,7 +66,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:background="#26777777" />
+                android:background="#22222277" />
 
             <View
                 android:id="@+id/divider3"
@@ -76,7 +76,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:background="#26777777"
+                android:background="#22222277"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/my_recycler_view" />
@@ -90,7 +90,7 @@
                 android:paddingTop="10dp"
                 android:text="FEATURED"
                 android:textColor="#353535"
-                android:textSize="24sp" />
+                android:textSize="24dp" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -101,7 +101,7 @@
                 android:paddingLeft="16dp"
                 android:text="EVENTS"
                 android:textColor="#353535"
-                android:textSize="24sp"
+                android:textSize="24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/my_recycler_view" />
 
@@ -109,14 +109,14 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/imageView10"
+                android:layout_below="@+id/divider3"
                 android:layout_centerHorizontal="true"
-                android:fontFamily="serif"
+                android:fontFamily="@font/montserrat"
                 android:paddingBottom="5dp"
                 android:text=" DEVELOPED BY \n SIDDHANT LAD\n siddhantnlad@gmail.com"
                 android:textAlignment="center"
                 android:textColor="#000000"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider2" />
@@ -128,16 +128,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView9"
                 android:layout_centerHorizontal="true"
-                android:background="#5e5d5d" />
-
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_alignTop="@+id/divider3"
-                android:layout_centerHorizontal="true"
-                android:elevation="6dp"
-                app:srcCompat="@drawable/snlnew" />
+                android:background="#222222" />
 
             <SearchView
                 android:id="@+id/search"
@@ -171,7 +162,7 @@
         android:layout_height="100dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/gradienttheme"
+        android:background="@drawable/blackgradient"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -208,7 +199,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="78dp"
         android:background="@drawable/circular_button"
-        android:backgroundTint="#000000"
+        android:backgroundTint="@android:color/holo_blue_light"
         android:padding="5dp"
         android:paddingTop="5dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -230,7 +221,7 @@
             android:singleLine="true"
             android:text="LIVE: "
             android:textColor="#ff0000"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:textStyle="bold" />
 
         <TextView
@@ -246,8 +237,8 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="⚪Brought To You BY SNL Tech Created By Siddhant Lad"
-            android:textColor="#ffffff"
-            android:textSize="18sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18dp" />
     </RelativeLayout>
 
     <ImageView
@@ -256,7 +247,7 @@
         android:layout_height="43dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:background="#AF09C0"
+        android:background="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -310,7 +301,8 @@
         android:paddingRight="5dp"
         android:text="0"
         android:textColor="#ffffff"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/button9"
@@ -319,7 +311,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_sub_action"
-        android:backgroundTint="#9616FF"
+        android:backgroundTint="#434343"
         android:saveEnabled="false" />
 
     <Button
@@ -329,136 +321,378 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="7.5dp"
-        android:background="@drawable/round"
+        android:background="@drawable/addevent"
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/scrollview"
+        android:background="#434343" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/button4"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="16dp"
+        app:srcCompat="@drawable/profile" />
+
 
 </RelativeLayout>
 
-    <!--<?xml version="1.0" encoding="utf-8"?>
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/relativelayout"
+   <!--Purple Theme
+   <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2"
+    tools:context=".MainActivity">
+
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageView3"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button2">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/textView9"
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="109dp"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/montserrat"
+                android:paddingBottom="30dp"
+                android:text="Powered By\nSNL Tech."
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/my_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView5"
+                android:scrollbars="vertical" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/my_recycler_view2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView8" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="300dp"
+                android:layout_height="2dp"
+                android:layout_below="@+id/my_recycler_view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="#22222277" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="300dp"
+                android:layout_height="2dp"
+                android:layout_below="@+id/my_recycler_view2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="#22222277"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/my_recycler_view" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:paddingLeft="16dp"
+                android:paddingTop="10dp"
+                android:text="FEATURED"
+                android:textColor="#353535"
+                android:textSize="24dp" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/divider"
+                android:paddingLeft="16dp"
+                android:text="EVENTS"
+                android:textColor="#353535"
+                android:textSize="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/my_recycler_view" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/divider3"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/montserrat"
+                android:paddingBottom="5dp"
+                android:text=" DEVELOPED BY \n SIDDHANT LAD\n siddhantnlad@gmail.com"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="80dp"
+                android:layout_height="2dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView9"
+                android:layout_centerHorizontal="true"
+                android:background="#222222" />
+
+            <SearchView
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_above="@+id/my_recycler_view2"
+                android:layout_toEndOf="@+id/textView8"
+                android:layoutDirection="rtl" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabs2"
+        android:layout_width="61dp"
+        android:layout_height="61dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:scaleType="center"
+        android:visibility="visible"
+        app:backgroundTint="#ffffff"
+        app:fabCustomSize="52dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/tqlogo" />
+
+
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#E8EDEE"
-        tools:context=".MainActivity">
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/gradienttheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v7.widget.CardView
-            android:layout_width="397dp"
-            android:layout_height="419dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/button3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button2"></android.support.v7.widget.CardView>
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabs2"
-            android:layout_width="50dp"
-            android:layout_height="61dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="10dp"
-            android:clickable="true"
-            android:scaleType="center"
-            android:visibility="visible"
-            app:backgroundTint="#ffffff"
-            app:fabCustomSize="50dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/tqlogo" />
+    &lt;!&ndash; <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/button4"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-condensed"
+        android:text="TAQNEEQ 12.0"
+        android:textColor="#ffffff"
+        android:textSize="35sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button4"
+        app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;
+<ImageView
+android:id="@+id/imgtq"
+android:layout_width="160dp"
+android:layout_height="85dp"
+android:layout_alignParentTop="true"
+android:layout_centerHorizontal="true"
+android:adjustViewBounds="true"
+android:src="@drawable/logoeventry"
+app:layout_constraintRight_toRightOf="parent"
+app:layout_constraintStart_toEndOf="@+id/button4"
+app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:background="@drawable/gradient"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+<RelativeLayout
+android:id="@+id/button2"
+android:layout_width="300dp"
+android:layout_height="wrap_content"
+android:layout_alignParentTop="true"
+android:layout_centerHorizontal="true"
+android:layout_marginTop="78dp"
+android:background="@drawable/circular_button"
+android:backgroundTint="@color/Black"
+android:padding="5dp"
+android:paddingTop="5dp"
+app:layout_constraintLeft_toLeftOf="parent"
+app:layout_constraintRight_toRightOf="parent"
+app:layout_constraintTop_toBottomOf="@+id/imgtq">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-condensed"
-            android:text="TAQNEEQ 12.0"
-            android:textColor="#ffffff"
-            android:textSize="35sp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button4"
-            app:layout_constraintTop_toTopOf="parent" />
+<TextView
+    android:id="@+id/textlive1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginStart="12dp"
+    android:ellipsize="marquee"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:marqueeRepeatLimit="marquee_forever"
+    android:scrollHorizontally="true"
+    android:singleLine="true"
+    android:text="LIVE: "
+    android:textColor="#ff0000"
+    android:textSize="18dp"
+    android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circular_button"
-            android:backgroundTint="#000000"
-            android:text="LIVE: Game Of Codes"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+<TextView
+    android:id="@+id/textlive"
+    android:layout_width="199dp"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_toEndOf="@+id/textlive1"
+    android:ellipsize="marquee"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:marqueeRepeatLimit="marquee_forever"
+    android:scrollHorizontally="true"
+    android:singleLine="true"
+    android:text="⚪Brought To You BY SNL Tech Created By Siddhant Lad"
+    android:textColor="@android:color/white"
+    android:textSize="18dp" />
+</RelativeLayout>
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:background="#0093E9"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+<ImageView
+android:id="@+id/imageView3"
+android:layout_width="match_parent"
+android:layout_height="43dp"
+android:layout_alignParentBottom="true"
+android:layout_alignParentStart="true"
+android:background="#AF09C0"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/round"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-        <ImageView
-            android:id="@+id/overlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#CC000000"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabs"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="16dp"
-            android:backgroundTint="#ffffff"
-            android:clickable="true"
-            android:scaleType="center"
-            android:visibility="invisible"
-            app:fabCustomSize="80dp"
-            app:srcCompat="@drawable/tqlogo"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+<ImageView
+android:id="@+id/overlay"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#CC000000"
+android:visibility="gone"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toTopOf="parent" />
+
+<android.support.design.widget.FloatingActionButton
+android:id="@+id/fabs"
+android:layout_width="80dp"
+android:layout_height="80dp"
+android:layout_alignParentStart="true"
+android:layout_centerVertical="true"
+android:layout_marginLeft="16dp"
+android:backgroundTint="#ffffff"
+android:clickable="true"
+android:scaleType="center"
+android:visibility="invisible"
+app:fabCustomSize="80dp"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toTopOf="parent"
+app:srcCompat="@drawable/userlef" />
 
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="50dp"
-            android:layout_height="61dp"
-            android:layout_marginStart="16dp"
-            android:text="Button"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="10dp" />
+<Button
+android:id="@+id/button4"
+android:layout_width="52dp"
+android:layout_height="52dp"
+android:layout_alignParentStart="true"
+android:layout_alignParentTop="true"
+android:layout_marginLeft="16dp"
+android:layout_marginTop="12dp"
+android:visibility="invisible"
+app:layout_constraintStart_toStartOf="parent"
+tools:layout_editor_absoluteY="10dp" />
 
-    </android.support.constraint.ConstraintLayout>-->
+<TextView
+android:id="@+id/textView11"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_alignBaseline="@+id/button4"
+android:layout_alignParentEnd="true"
+android:drawableRight="@drawable/coinlef"
+android:paddingLeft="8dp"
+android:paddingRight="5dp"
+android:text="0"
+android:textColor="#ffffff"
+android:textSize="18sp"
+android:visibility="invisible" />
+
+<Button
+android:id="@+id/button9"
+android:layout_width="65dp"
+android:layout_height="65dp"
+android:layout_alignParentBottom="true"
+android:layout_centerHorizontal="true"
+android:background="@drawable/button_sub_action"
+android:backgroundTint="#5E36CF"
+android:saveEnabled="false" />
+
+<Button
+android:id="@+id/button3"
+android:layout_width="50dp"
+android:layout_height="50dp"
+android:layout_alignParentBottom="true"
+android:layout_centerHorizontal="true"
+android:layout_marginBottom="7.5dp"
+android:background="@drawable/addeventpurple"
+android:elevation="2dp"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+app:layout_constraintStart_toStartOf="parent" />
+
+<View
+android:id="@+id/divider4"
+android:layout_width="match_parent"
+android:layout_height="3dp"
+android:layout_alignParentStart="true"
+android:layout_below="@+id/scrollview"
+android:background="#5E36CF" />
+
+<ImageView
+android:id="@+id/imageView10"
+android:layout_width="40dp"
+android:layout_height="50dp"
+android:layout_alignBottom="@+id/button4"
+android:layout_alignParentEnd="true"
+android:layout_marginRight="16dp"
+app:srcCompat="@drawable/profile" />
+
+
+    </RelativeLayout>-->

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -203,7 +204,7 @@ String timeformat,day;
 
         public CustomViewHolder(View view) {
             super(view);
-            itemImage = view.findViewById(R.id.item_image);
+            itemImage = view.findViewById(R.id.item_images);
             itemInfo1 = view.findViewById(R.id.item_info1);
             itemInfo2 = view.findViewById(R.id.item_info2);
             itemInfo4 = view.findViewById(R.id.item_info4);
@@ -211,8 +212,8 @@ String timeformat,day;
             itemTitle = view.findViewById(R.id.item_title);
             itemVenue = view.findViewById(R.id.item_venue);
             itemCost = view.findViewById(R.id.item_cost);
-            itemDate = view.findViewById(R.id.item_enters);
-            itemTime = view.findViewById(R.id.item_enters);
+            itemDate = view.findViewById(R.id.item_date);
+            itemTime = view.findViewById(R.id.item_time);
         }
     }
 }

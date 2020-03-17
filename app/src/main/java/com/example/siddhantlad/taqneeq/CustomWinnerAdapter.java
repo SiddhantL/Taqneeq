@@ -99,9 +99,9 @@ public class CustomWinnerAdapter extends RecyclerView.Adapter<CustomWinnerAdapte
 
         public CustomViewHolder(View view) {
             super(view);
-            itemImage = view.findViewById(R.id.item_image);
+            itemImage = view.findViewById(R.id.item_images);
             itemTitle = view.findViewById(R.id.item_title);
-            itemRoom = view.findViewById(R.id.item_enters);
+            itemRoom = view.findViewById(R.id.item_date);
             itemScore = view.findViewById(R.id.item_cost);
            winner1 = view.findViewById(R.id.textView6);
             winner2 = view.findViewById(R.id.textView10);

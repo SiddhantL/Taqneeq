@@ -41,7 +41,7 @@ public class Tab2 extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     RecyclerView recyclerView;
     FirebaseAuth mAuth;
-    ArrayList<String> ticketsEvent,ticketID;
+    ArrayList<String> ticketsEvent,ticketID,ticketSoloEvent;
     ArrayList<String> ticketType,entering,divided,customExhibitionDate,customExhibitionName,customExhibitionVenue,customExhibitionTime;
     DatabaseReference mTicket,mDataExhibition;
     ArrayList<TicketModelClass> items;
@@ -56,14 +56,14 @@ public class Tab2 extends Fragment {
     }
 
 
-/**
- * Use this factory method to create a new instance of
- * this fragment using the provided parameters.
- *
- * @param param1 Parameter 1.
- * @param param2 Parameter 2.
- * @return A new instance of fragment Tab2.
- */
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment Tab2.
+     */
 
     // TODO: Rename and change types and number of parameters
     public static Tab2 newInstance(String param1, String param2) {
@@ -92,6 +92,7 @@ public class Tab2 extends Fragment {
         recyclerView = view.findViewById(R.id.my_recycler_view);
         ticketsEvent=new ArrayList<>();
         ticketType=new ArrayList<>();
+        ticketSoloEvent=new ArrayList<>();
         customExhibitionDate = new ArrayList<>();
         customExhibitionVenue=new ArrayList<>();
         customExhibitionTime=new ArrayList<>();
@@ -107,6 +108,93 @@ public class Tab2 extends Fragment {
         mTicket = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("Tickets");
         mDataExhibition = FirebaseDatabase.getInstance().getReference("exhibitions");
         mTicket.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+           for (final DataSnapshot pd:dataSnapshot.getChildren()){
+               for (int i=0;i<(int)pd.getChildrenCount();i++){
+                   ticketsEvent.add(pd.getKey());
+               }
+               ticketSoloEvent.add(pd.getKey());
+           }
+           if (!ticketSoloEvent.isEmpty()) {
+               for (int i = 0; i < ticketSoloEvent.size(); i++) {
+                   final int finalI = i;
+                   mTicket.child(ticketSoloEvent.get(i)).addValueEventListener(new ValueEventListener() {
+                       @Override
+                       public void onDataChange(DataSnapshot dataSnapshot) {
+                           for (final DataSnapshot pushTix : dataSnapshot.getChildren()) {
+                               ticketID.add(pushTix.getKey());
+                               mTicket.child(ticketSoloEvent.get(finalI)).child(pushTix.getKey()).addValueEventListener(new ValueEventListener() {
+                                   @Override
+                                   public void onDataChange(DataSnapshot dataSnapshot) {
+                                       for (final DataSnapshot pd : dataSnapshot.getChildren()) {
+                                           if (pd.getKey().equals("Name")) {
+                                               ticketType.add(pd.getValue().toString());
+                                             //  Toast.makeText(getActivity(), Integer.toString(ticketsEvent.size())+" "+Integer.toString(customExhibitionName.size())+" "+Integer.toString(ticketType.size()), Toast.LENGTH_SHORT).show();
+                                               if (customExhibitionName.size() == customExhibitionDate.size() && customExhibitionName.size() == ticketType.size() && customExhibitionDate.size() == entering.size() && customExhibitionName.size() == divided.size() && customExhibitionVenue.size() == customExhibitionTime.size() && customExhibitionVenue.size() == divided.size() && ticketID.size()==ticketsEvent.size()) {
+                                                   items.clear();
+                                                   recyclerView.removeAllViews();
+                                                   for (int i = 0; i < ticketsEvent.size(); i++) {
+                                                       items.add(new TicketModelClass(customExhibitionName.get(i), customExhibitionDate.get(i), entering.get(i), ticketType.get(i), divided.get(i), ticketsEvent.get(i), customExhibitionVenue.get(i), customExhibitionTime.get(i), ticketID.get(i)));
+                                                       //         Toast.makeText(getActivity(), customExhibitionName.get(i)+ customExhibitionDate.get(i)+ entering.get(i)+ ticketType.get(i)+ divided.get(i)+ ticketsEvent.get(i), Toast.LENGTH_SHORT).show();
+                                                       ticketAdapter.notifyDataSetChanged();
+                                                   }
+                                               }
+                                           } else if (pd.getKey().equals("Enters")) {
+                                               entering.add(pd.getValue().toString());
+                                           } else if (pd.getKey().equals("Divided")) {
+                                               divided.add(pd.getValue().toString());
+                                           }
+                                       }
+                                   }
+
+                                   @Override
+                                   public void onCancelled(DatabaseError databaseError) {
+
+                                   }
+                               });
+                           }
+                       }
+
+                       @Override
+                       public void onCancelled(DatabaseError databaseError) {
+
+                       }
+                   });
+               }
+              }
+                for (int i = 0; i < ticketsEvent.size(); i++) {
+                    mDataExhibition.child(ticketsEvent.get(i)).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (final DataSnapshot pd1 : dataSnapshot.getChildren()) {
+                                if (pd1.getKey().toString().equals("Date")) {
+                                    customExhibitionDate.add(pd1.getValue().toString());
+                                    //   Toast.makeText(getActivity(), Integer.toString(customExhibitionDate.size()), Toast.LENGTH_SHORT).show();
+                                } else if (pd1.getKey().toString().equals("Name")) {
+                                    customExhibitionName.add(pd1.getValue().toString());
+                                } else if (pd1.getKey().toString().equals("Venue")) {
+                                    customExhibitionVenue.add(pd1.getValue().toString());
+                                } else if (pd1.getKey().toString().equals("Time")) {
+                                    customExhibitionTime.add(pd1.getValue().toString());
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        /*mTicket.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(final DataSnapshot pd:dataSnapshot.getChildren()){
@@ -157,7 +245,7 @@ public class Tab2 extends Fragment {
                                                     }
                                                 }
                                                 // Toast.makeText(getActivity(), Integer.toString(ticketsEvent.size())+Integer.toString(customExhibitionName.size())+Integer.toString(ticketType.size()), Toast.LENGTH_SHORT).show();
-                                                Toast.makeText(getActivity(), Integer.toString(ticketID.size()), Toast.LENGTH_SHORT).show();
+                                        //        Toast.makeText(getActivity(), Integer.toString(ticketID.size()), Toast.LENGTH_SHORT).show();
                                                 if (customExhibitionName.size() == customExhibitionDate.size() && customExhibitionName.size() == ticketType.size() && customExhibitionDate.size() == entering.size() && customExhibitionName.size() == divided.size() && customExhibitionVenue.size() == customExhibitionTime.size() && customExhibitionVenue.size() == divided.size() && ticketID.size()==ticketsEvent.size()) {
                                                     items.clear();
                                                     recyclerView.removeAllViews();
@@ -195,7 +283,7 @@ public class Tab2 extends Fragment {
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.my_recycler_view);
-   final ArrayList<AlertModelClass> items = new ArrayList<>();
+        final ArrayList<AlertModelClass> items = new ArrayList<>();
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
         final ArrayList<String> tickets=new ArrayList<String>();
         DatabaseReference mTicket=FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("Tickets");
@@ -211,7 +299,7 @@ public class Tab2 extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
         return view;
     }
 

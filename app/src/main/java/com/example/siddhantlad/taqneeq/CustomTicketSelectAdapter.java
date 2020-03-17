@@ -1,22 +1,14 @@
 package com.example.siddhantlad.taqneeq;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
@@ -55,7 +47,7 @@ public class CustomTicketSelectAdapter extends RecyclerView.Adapter<CustomTicket
 
         holder.itemTitle.setText(items.get(position).getName());
         holder.itemEnters.setText(items.get(position).getEnters());
-        holder.itemCost.setText(items.get(position).getCost());
+        holder.itemCost.setText(items.get(position).getCost()+" ₹");
         holder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +106,7 @@ public class CustomTicketSelectAdapter extends RecyclerView.Adapter<CustomTicket
             itemCost = view.findViewById(R.id.item_cost);
             itemTitle = view.findViewById(R.id.item_title);
             count = view.findViewById(R.id.textView16);
-            itemEnters = view.findViewById(R.id.item_enters);
+            itemEnters = view.findViewById(R.id.item_date);
             increase = view.findViewById(R.id.increaseBtn);
             decrease = view.findViewById(R.id.decreaseBtn);
         }

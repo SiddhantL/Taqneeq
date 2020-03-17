@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     Button loginbtn;
     EditText userEmailEdit,UserPasswordEdit;
     FirebaseUser user;
+    TextView skip,register;
     //String Fields
     public static String userEmailString;
     String userPasswordString;
@@ -53,11 +54,25 @@ public class LoginActivity extends AppCompatActivity {
 // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(LoginActivity.this,R.color.Black));
 //Assign ID's
-loginbtn=(Button)findViewById(R.id.loginbtn);
-userEmailEdit=(EditText)findViewById(R.id.EmailEdittext);
+        skip=findViewById(R.id.textView14);
+        register=findViewById(R.id.textView15);
+        loginbtn=findViewById(R.id.loginbtn);
+        userEmailEdit=(EditText)findViewById(R.id.EmailEdittext);
         UserPasswordEdit=(EditText)findViewById(R.id.PasswordeditText);
         //Assign Instances
         mAuth= FirebaseAuth.getInstance();
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            }
+        });
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+            }
+        });
         mAuthListener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {

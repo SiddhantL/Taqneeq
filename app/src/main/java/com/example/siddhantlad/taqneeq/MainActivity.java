@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -73,85 +74,103 @@ public class MainActivity extends AppCompatActivity {
     SearchView searchView;
     ScrollView scrollView;
     FloatingActionMenu actionMenu;
-    ArrayList<ModelClass> items,items2;
+    ArrayList<ModelClass> items, items2;
     RecyclerView recyclerView2;
     CustomAdapter2 adapter2;
+    ArrayList<String> saved;
+    DatabaseReference mDataEvent;
     View divider;
-    ArrayList<String> customEventName,customEventVenue,customEventCost,customEventDate,customEventTime,customEventDrinks,customEventAdult,customEventFood,customEventMusic,customEventIntro,customEventID;
-    ArrayList<String> customExhibitionName,customExhibitionVenue,customExhibitionCost,customExhibitionDate,customExhibitionTime,customExhibitionDrinks,customExhibitionAdult,customExhibitionFood,customExhibitionMusic,customExhibitionIntro,customExhibitionID;
-    ArrayList<String> customWorkshopName,customWorkshopVenue,customWorkshopCost,customWorkshopDate,customWorkshopTime,customWorkshopDrinks,customWorkshopAdult,customWorkshopFood,customWorkshopMusic,customWorkshopIntro,customWorkshopID;
+    ArrayList<String> customEventName, customEventVenue, customEventCost, customEventDate, customEventTime, customEventDrinks, customEventAdult, customEventFood, customEventMusic, customEventIntro, customEventID;
+    ArrayList<String> customExhibitionName, customExhibitionVenue, customExhibitionCost, customExhibitionDate, customExhibitionTime, customExhibitionDrinks, customExhibitionAdult, customExhibitionFood, customExhibitionMusic, customExhibitionIntro, customExhibitionID;
+    ArrayList<String> customWorkshopName, customWorkshopVenue, customWorkshopCost, customWorkshopDate, customWorkshopTime, customWorkshopDrinks, customWorkshopAdult, customWorkshopFood, customWorkshopMusic, customWorkshopIntro, customWorkshopID;
     android.support.design.widget.FloatingActionButton fab, fab2;
     ImageView img;
     String livecontent;
-    int score,deduct,eventno,workshopno,informalno,s,l,s1,l1,s2,l2;
-    TextView live,coins;
-    Button scanbtn,backscan;
-    DatabaseReference mDatabase,info,mDataList,mDataExhibition,mDataWorkshop;
+    int score, deduct,s, s1;
+    TextView live, coins;
+    Button scanbtn, backscan;
+    ImageView profileBut;
+    DatabaseReference mDatabase, info, mDataList, mDataExhibition;
     private IntentIntegrator qrScan;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
-        deduct=0;
-        searchView=findViewById(R.id.search);
-        scrollView=findViewById(R.id.scrollview);
-        backscan=findViewById(R.id.button9);
+        deduct = 0;
+        searchView = findViewById(R.id.search);
+        scrollView = findViewById(R.id.scrollview);
+        backscan = findViewById(R.id.button9);
         backscan.setEnabled(false);
-        live=findViewById(R.id.textlive);
-        customEventName=new ArrayList<>();
-        customEventVenue=new ArrayList<>();
-        customEventCost=new ArrayList<>();
-        customEventDate=new ArrayList<>();
-        customEventTime=new ArrayList<>();
-        customEventAdult=new ArrayList<>();
-        customEventDrinks=new ArrayList<>();
-        customEventFood=new ArrayList<>();
-        customEventMusic=new ArrayList<>();
-        customEventIntro=new ArrayList<>();
-        customEventID=new ArrayList<>();
-        divider=findViewById(R.id.divider);
-        customExhibitionName=new ArrayList<>();
-        customExhibitionVenue=new ArrayList<>();
-        customExhibitionCost=new ArrayList<>();
-        customExhibitionDate=new ArrayList<>();
-        customExhibitionTime=new ArrayList<>();
-        customExhibitionAdult=new ArrayList<>();
-        customExhibitionDrinks=new ArrayList<>();
-        customExhibitionFood=new ArrayList<>();
-        customExhibitionMusic=new ArrayList<>();
-        customExhibitionIntro=new ArrayList<>();
-        customExhibitionID=new ArrayList<>();
-        customWorkshopName=new ArrayList<>();
-        customWorkshopVenue=new ArrayList<>();
-        customWorkshopCost=new ArrayList<>();
-        customWorkshopDate=new ArrayList<>();
-        customWorkshopTime=new ArrayList<>();
-        customWorkshopAdult=new ArrayList<>();
-        customWorkshopDrinks=new ArrayList<>();
-        customWorkshopFood=new ArrayList<>();
-        customWorkshopMusic=new ArrayList<>();
-        customWorkshopIntro=new ArrayList<>();
-        customWorkshopID=new ArrayList<>();
-        coins=(TextView)findViewById(R.id.textView11);
+        profileBut = findViewById(R.id.imageView10);
+        mAuth = FirebaseAuth.getInstance();
+//Display Profile of User
+        profileBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mAuth.getCurrentUser() != null) {
+                    startActivity(new Intent(MainActivity.this, ProfileDisplay.class));
+                } else {
+                    Toast.makeText(MainActivity.this, "Register to Continue", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+                }
+            }
+        });
+
+        live = findViewById(R.id.textlive);
+        customEventName = new ArrayList<>();
+        customEventVenue = new ArrayList<>();
+        customEventCost = new ArrayList<>();
+        customEventDate = new ArrayList<>();
+        customEventTime = new ArrayList<>();
+        customEventAdult = new ArrayList<>();
+        customEventDrinks = new ArrayList<>();
+        customEventFood = new ArrayList<>();
+        customEventMusic = new ArrayList<>();
+        customEventIntro = new ArrayList<>();
+        customEventID = new ArrayList<>();
+        divider = findViewById(R.id.divider);
+        customExhibitionName = new ArrayList<>();
+        customExhibitionVenue = new ArrayList<>();
+        customExhibitionCost = new ArrayList<>();
+        customExhibitionDate = new ArrayList<>();
+        customExhibitionTime = new ArrayList<>();
+        customExhibitionAdult = new ArrayList<>();
+        customExhibitionDrinks = new ArrayList<>();
+        customExhibitionFood = new ArrayList<>();
+        customExhibitionMusic = new ArrayList<>();
+        customExhibitionIntro = new ArrayList<>();
+        customExhibitionID = new ArrayList<>();
+        customWorkshopName = new ArrayList<>();
+        customWorkshopVenue = new ArrayList<>();
+        customWorkshopCost = new ArrayList<>();
+        customWorkshopDate = new ArrayList<>();
+        customWorkshopTime = new ArrayList<>();
+        customWorkshopAdult = new ArrayList<>();
+        customWorkshopDrinks = new ArrayList<>();
+        customWorkshopFood = new ArrayList<>();
+        customWorkshopMusic = new ArrayList<>();
+        customWorkshopIntro = new ArrayList<>();
+        customWorkshopID = new ArrayList<>();
+        coins = (TextView) findViewById(R.id.textView11);
         SharedPreferences settings = getSharedPreferences("coinVal", 0);
         String coinVals = settings.getString("coinVal", "0");
         coins.setText(coinVals);
-        livecontent=new String();
-        mDatabase=FirebaseDatabase.getInstance().getReference("Live");
-        mDataList=FirebaseDatabase.getInstance().getReference();
-
+        livecontent = new String();
+        mDatabase = FirebaseDatabase.getInstance().getReference("Live");
+        mDataList = FirebaseDatabase.getInstance().getReference();
+//Show Live Indicator
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                livecontent="";
+                livecontent = "";
                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    String keyss= postSnapshot.getKey().toString().trim();
+                    String keyss = postSnapshot.getKey().toString().trim();
                     final DatabaseReference dataref = mDatabase.child(keyss);
                     dataref.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            livecontent=livecontent+" ⚪"+ dataSnapshot.getValue().toString().trim();
+                            livecontent = livecontent + " ⚪" + dataSnapshot.getValue().toString().trim();
                             live.setText(livecontent.toString());
                         }
 
@@ -168,45 +187,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        info=FirebaseDatabase.getInstance().getReference("users");
-        info.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    //     Toast.makeText(MainActivity.this, postSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();//ID
-                    if (postSnapshot.getKey().toString().equals(mAuth.getCurrentUser().getUid())){
-                        //   Toast.makeText(MainActivity.this, "Yay", Toast.LENGTH_SHORT).show();
-                        info.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                                for (final DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
-                                    //     Toast.makeText(MainActivity.this, postSnapshot1.getKey().toString(), Toast.LENGTH_SHORT).show();
-                                    if (postSnapshot1.getKey().toString().equals("Score")){
-                                        //    Toast.makeText(MainActivity.this, postSnapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
-                                        coins.setText(postSnapshot1.getValue().toString());
-                                        SharedPreferences settings = getSharedPreferences("coinVal", 0);
-                                        SharedPreferences.Editor editor=settings.edit();
-                                        editor.putString("coinVal",coins.getText().toString());
-                                        editor.commit();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        info = FirebaseDatabase.getInstance().getReference("users");
         Window window = MainActivity.this.getWindow();
+        //Start Movement of Indicator
         findViewById(R.id.textlive).setSelected(true);
 
 // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -216,16 +199,18 @@ public class MainActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
 // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(MainActivity.this,R.color.colorBlue));
+        window.setStatusBarColor(ContextCompat.getColor(MainActivity.this, R.color.colorBlue));
         img = findViewById(R.id.overlay);
-        scanbtn=findViewById(R.id.button3);
+        scanbtn = findViewById(R.id.button3);
         qrScan = new IntentIntegrator(this);
+        //Scan Tickets
         scanbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 qrScan.initiateScan();
             }
         });
+        //Menu Scroll Animation
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -257,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         });
         mAuth = FirebaseAuth.getInstance();
         final RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativelayout);
-//
+
         ImageView icon = new ImageView(this); // Create an icon
         Drawable myDrawable1 = getResources().getDrawable(R.drawable.helplef);
         Drawable myDrawableUser = getResources().getDrawable(R.drawable.userlef);
@@ -266,10 +251,7 @@ public class MainActivity extends AppCompatActivity {
         Drawable myDrawable4 = getResources().getDrawable(R.drawable.trophylef);
         Drawable myDrawables = getResources().getDrawable(R.drawable.tqlogolef);
         icon.setImageDrawable(myDrawables);
-/*
-        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
-                .setContentView(icon)
-                .build();*/
+
         fab = findViewById(R.id.fabs);
         fab2 = findViewById(R.id.fabs2);
         fab.setImageDrawable(myDrawableUser);
@@ -305,9 +287,9 @@ public class MainActivity extends AppCompatActivity {
                                     fab.setEnabled(true);
                                     img.setEnabled(true);
                                 }
-                            },600);
+                            }, 600);
 
-                        }catch (Exception E){
+                        } catch (Exception E) {
                         }
                     }
 
@@ -350,33 +332,55 @@ public class MainActivity extends AppCompatActivity {
         ImageView itemIcon8 = new ImageView(this);
         itemIcon4.setImageDrawable(myDrawable2);
         SubActionButton button8 = itemBuilder2.setContentView(itemIcon8).build();
-        final Intent helpsl=new Intent(MainActivity.this,HelpSlide.class);
+        final Intent helpsl = new Intent(MainActivity.this, HelpSlide.class);
+
+        //FragmentActivity Display
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                helpsl.putExtra("val",2);
-                startActivity(helpsl);
+                if (mAuth.getCurrentUser() != null) {
+                    helpsl.putExtra("val", 2);
+                    startActivity(helpsl);
+                } else {
+                    Toast.makeText(MainActivity.this, "Register to Continue", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+                }
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                helpsl.putExtra("val",3);
-                startActivity(helpsl);
+                if (mAuth.getCurrentUser() != null) {
+                    helpsl.putExtra("val", 3);
+                    startActivity(helpsl);
+                } else {
+                    Toast.makeText(MainActivity.this, "Register to Continue", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+                }
             }
         });
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                helpsl.putExtra("val",0);
-                startActivity(helpsl);
+                if (mAuth.getCurrentUser() != null) {
+                    helpsl.putExtra("val", 0);
+                    startActivity(helpsl);
+                } else {
+                    Toast.makeText(MainActivity.this, "Register to Continue", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+                }
             }
         });
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                helpsl.putExtra("val",1);
-                startActivity(helpsl);
+                if (mAuth.getCurrentUser() != null) {
+                    helpsl.putExtra("val", 1);
+                    startActivity(helpsl);
+                } else {
+                    Toast.makeText(MainActivity.this, "Register to Continue", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+                }
             }
         });
         actionMenu = new FloatingActionMenu.Builder(this)
@@ -395,36 +399,17 @@ public class MainActivity extends AppCompatActivity {
                 .attachTo(fab)
                 .build();
 
+//Display Profile
         fab.setOnClickListener(new View.OnClickListener() {
                                    @Override
                                    public void onClick(View view) {
-/*                                       actionMenu.close(true);
-                                       fab2.show();
-                                       fab.hide();
-                                       fab2.animate().translationY(-10).setListener(new Animator.AnimatorListener() {
-                                           @Override
-                                           public void onAnimationStart(Animator animator) {
-                                               actionMenu.close(true);
-                                           }
-
-                                           @Override
-                                           public void onAnimationEnd(Animator animator) {
-                                               img.setVisibility(View.GONE);
-                                           }
-
-                                           @Override
-                                           public void onAnimationCancel(Animator animator) {
-
-                                           }
-
-                                           @Override
-                                           public void onAnimationRepeat(Animator animator) {
-
-                                           }
-                                       });*/
-startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
-                                   }
-                               });
+if (mAuth.getCurrentUser()!=null) {
+    startActivity(new Intent(MainActivity.this, ProfileDisplay.class));
+}else {
+    Toast.makeText(MainActivity.this, "Register to Continue", Toast.LENGTH_SHORT).show();
+    startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+}
+}});
         user=mAuth.getCurrentUser();
         items = new ArrayList<>();
         items2 = new ArrayList<>();
@@ -432,101 +417,96 @@ startActivity(new Intent(MainActivity.this,ProfileDisplay.class));
         final CustomAdapter adapter = new CustomAdapter(this, items);
          adapter2 = new CustomAdapter2(this, items2);
         final CustomAdapter3 adapter3 = new CustomAdapter3(this, items3);
+        //Placeholder display
         for (int i = 0; i < 5; i++) {
-            //        Toast.makeText(MainActivity.this, customEvent.get(s-2), Toast.LENGTH_SHORT).show();
             items.add(new ModelClass(MyData.drawableArray[i], "Loading...", "Venue: India", 0,"00/00/0000","00:00","Yes","Yes","Yes","Yes","This is a Loading Message...",""));
             adapter.notifyDataSetChanged();
-            //Toast.makeText(MainActivity.this, customEventName.get(i), Toast.LENGTH_SHORT).show();
         }
         for (int i = 0; i < 5; i++) {
-            //        Toast.makeText(MainActivity.this, customEvent.get(s-2), Toast.LENGTH_SHORT).show();
             items2.add(new ModelClass(MyData.drawableArray[i], "Loading...", "Venue: India", 0,"00/00/0000","00:00","Yes","Yes","Yes","Yes","This is a Loading Message...",""));
             adapter2.notifyDataSetChanged();
-            //Toast.makeText(MainActivity.this, customEventName.get(i), Toast.LENGTH_SHORT).show();
         }
         for (int i = 0; i < 5; i++) {
-            //        Toast.makeText(MainActivity.this, customEvent.get(s-2), Toast.LENGTH_SHORT).show();
             items3.add(new ModelClass(MyData.drawableArray[i], "Loading...", "Venue: India", 0,"00/00/0000","00:00","Yes","Yes","Yes","Yes","This is a Loading Message...",""));
             adapter3.notifyDataSetChanged();
-            //Toast.makeText(MainActivity.this, customEventName.get(i), Toast.LENGTH_SHORT).show();
         }
         RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView2 = findViewById(R.id.my_recycler_view2);
-       // RecyclerView recyclerView3 = findViewById(R.id.my_recycler_view3);
-        recyclerView.setNestedScrollingEnabled(false);
+       recyclerView.setNestedScrollingEnabled(false);
         recyclerView2.setNestedScrollingEnabled(false);
-        //recyclerView3.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        //recyclerView3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         recyclerView2.setAdapter(adapter2);
-        //recyclerView3.setAdapter(adapter3);
-
-// let's create 10 random items
-        mDataList=FirebaseDatabase.getInstance().getReference("events");
-mDataList.addValueEventListener(new ValueEventListener() {
-    @Override
-    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-      long x=dataSnapshot.getChildrenCount();
-      s=(int)x;
-        /* for(final  DataSnapshot p:dataSnapshot.getChildren()){
-s=p.getChildrenCount();
-         }*/
-        l=0;
+        mDataEvent=FirebaseDatabase.getInstance().getReference("exhibitions");
+        mDataList = FirebaseDatabase.getInstance().getReference("Featured");
+        saved=new ArrayList<>();
         mDataList.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-           for (final DataSnapshot pd:dataSnapshot.getChildren()){
-               final String name=pd.getKey().toString();
-               customEventID.add(name);
-               mDataList.child(name).addValueEventListener(new ValueEventListener() {
-                   @Override
-                   public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                  //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
-                       for (final DataSnapshot pd : dataSnapshot.getChildren()) {
-                           if (pd.getKey().toString().equals("Date")) {
-                               customEventDate.add(pd.getValue().toString());
-                             }else if (pd.getKey().toString().equals("Venue")) {
-                               customEventVenue.add(pd.getValue().toString());
-                               }else if (pd.getKey().toString().equals("Name")) {
-                               customEventName.add(pd.getValue().toString());
-                           }else if (pd.getKey().toString().equals("Time")) {
-                               customEventTime.add(pd.getValue().toString());
-                           }else if (pd.getKey().toString().equals("Cost")) {
-                               customEventCost.add(pd.getValue().toString());
-                           }else if (pd.getKey().toString().equals("Drinks")) {
-                               customEventDrinks.add(pd.getValue().toString());
-                           }else if (pd.getKey().toString().equals("Adult")) {
-                               customEventAdult.add(pd.getValue().toString());
-                           }else if (pd.getKey().toString().equals("Food")) {
-                               customEventFood.add(pd.getValue().toString());
-                           }else if (pd.getKey().toString().equals("Music")) {
-                               customEventMusic.add(pd.getValue().toString());
-                           }else if (pd.getKey().toString().equals("Intro")) {
-                               customEventIntro.add(pd.getValue().toString());
-                           }
-                       //    Toast.makeText(MainActivity.this, Integer.toString(customEvent.size()), Toast.LENGTH_SHORT).show();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot pd : dataSnapshot.getChildren()) {
+                    saved.add(pd.getKey().toString());
+                    s = saved.size();
+                }
+                if (!saved.isEmpty()) {
+                    for (int i = 0; i < saved.size(); i++) {
+                        mDataEvent.child(saved.get(i)).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (final DataSnapshot pd1 : dataSnapshot.getChildren()) {
+                                    if (pd1.getKey().toString().equals("Date")) {
+                                   //     Toast.makeText(MainActivity.this, pd1.getKey(), Toast.LENGTH_SHORT).show();
+                                        customEventDate.add(pd1.getValue().toString());
+                                    } else if (pd1.getKey().toString().equals("Venue")) {
+                                        customEventVenue.add(pd1.getValue().toString());
+                                    } else if (pd1.getKey().toString().equals("Name")) {
+                                        customEventName.add(pd1.getValue().toString());
+                                    } else if (pd1.getKey().toString().equals("Time")) {
+                                        customEventTime.add(pd1.getValue().toString());
+                                    } else if (pd1.getKey().toString().equals("Cost")) {
+                                        customEventCost.add(pd1.getValue().toString());
+                                    } else if (pd1.getKey().toString().equals("Drinks")) {
+                                        customEventDrinks.add(pd1.getValue().toString());
+                                    } else if (pd1.getKey().toString().equals("Adult")) {
+                                        customEventAdult.add(pd1.getValue().toString());
+                                    } else if (pd1.getKey().toString().equals("Food")) {
+                                        customEventFood.add(pd1.getValue().toString());
+                                    } else if (pd1.getKey().toString().equals("Music")) {
+                                        customEventMusic.add(pd1.getValue().toString());
+                                    } else if (pd1.getKey().toString().equals("Intro")) {
+                                        customEventIntro.add(pd1.getValue().toString());
+                                    }
 
-                           if ( customEventVenue.size()==s&&customEventName.size()==s && customEventCost.size()==s&& customEventTime.size()==s&& customEventDate.size()==s && customEventVenue.size()!=0) {
-                               items.clear();
-                               for (int i = 0; i < customEventVenue.size(); i++) {
-                                   //        Toast.makeText(MainActivity.this, customEvent.get(s-2), Toast.LENGTH_SHORT).show();
-                                   items.add(new ModelClass(MyData.drawableArray[i], customEventName.get(i), customEventVenue.get(i), Integer.parseInt(customEventCost.get(i)),customEventDate.get(i),customEventTime.get(i),customEventAdult.get(i),customEventDrinks.get(i),customEventMusic.get(i),customEventFood.get(i),customEventIntro.get(i),customEventID.get(i)));
-                                   adapter.notifyDataSetChanged();
-                                  //Toast.makeText(MainActivity.this, customEventName.get(i), Toast.LENGTH_SHORT).show();
-                               }
-                           }
-                       }
-                   }
+                                }
+                                if (customEventVenue.size() == s && customEventName.size() == s && customEventCost.size() == s && customEventTime.size() == s && customEventDate.size() == s && customEventVenue.size() != 0) {
+                                   items.clear();
+                                    for (int i = 0; i < customEventVenue.size(); i++) {
+                                        items.add(new ModelClass(MyData.informaldrawableArray[0],
+                                                customEventName.get(i),
+                                                customEventVenue.get(i),
+                                                Integer.parseInt(customEventCost.get(i)),
+                                                customEventDate.get(i),
+                                                customEventTime.get(i),
+                                                customEventAdult.get(i),
+                                                customEventDrinks.get(i),
+                                                customEventMusic.get(i),
+                                                customEventFood.get(i),
+                                                customEventIntro.get(i),
+                                                saved.get(i)));
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }
+                            }
 
-                   @Override
-                   public void onCancelled(@NonNull DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                   }
-               });
+                            }
+                        });
 
-           }
+                    }
+
+                }
 
             }
 
@@ -535,24 +515,18 @@ s=p.getChildrenCount();
 
             }
         });
-
-    }
-
-    @Override
-    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-    }
-});
+        //Adding Events to RecyclerView
         mDataExhibition=FirebaseDatabase.getInstance().getReference("exhibitions");
         mDataExhibition.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Get Number of events
                 long x1=dataSnapshot.getChildrenCount();
                 s1=(int)x1;
-                l1=0;
                 mDataExhibition.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //Save Data Packets of Each Event in Separate ArrayLists
                         for (final DataSnapshot pd1:dataSnapshot.getChildren()){
                             final String name=pd1.getKey().toString();
                             customExhibitionID.add(name);
@@ -582,15 +556,12 @@ s=p.getChildrenCount();
                                         }else if (pd1.getKey().toString().equals("Intro")) {
                                             customExhibitionIntro.add(pd1.getValue().toString());
                                         }
-
-                                        //    Toast.makeText(MainActivity.this, Integer.toString(customExhibition.size()), Toast.LENGTH_SHORT).show();
+                                        //When the Arraylist Size is same as number of events display all saved events
                                         if ( customExhibitionVenue.size()==s1&&customExhibitionName.size()==s1 && customExhibitionCost.size()==s1&& customExhibitionTime.size()==s1&& customExhibitionDate.size()==s1 && customExhibitionVenue.size()!=0) {
                                             items2.clear();
                                             for (int i = 0; i < customExhibitionVenue.size(); i++) {
-                                                //        Toast.makeText(MainActivity.this, customExhibition.get(s-2), Toast.LENGTH_SHORT).show();
                                                 items2.add(new ModelClass(MyData.informaldrawableArray[0], customExhibitionName.get(i), customExhibitionVenue.get(i), Integer.parseInt(customExhibitionCost.get(i)),customExhibitionDate.get(i),customExhibitionTime.get(i),customExhibitionAdult.get(i),customExhibitionDrinks.get(i),customExhibitionMusic.get(i),customExhibitionFood.get(i),customExhibitionIntro.get(i),customExhibitionID.get(i)));
                                                 adapter2.notifyDataSetChanged();
-                                                //Toast.makeText(MainActivity.this, customExhibitionName.get(i), Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     }
@@ -618,94 +589,7 @@ s=p.getChildrenCount();
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });/*
-        mDataWorkshop=FirebaseDatabase.getInstance().getReference("workshops");
-        mDataWorkshop.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long x2=dataSnapshot.getChildrenCount();
-                s2=(int)x2;
-                l2=0;
-                mDataWorkshop.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
-                        for (final DataSnapshot pd2:dataSnapshot2.getChildren()){
-                            final String name=pd2.getKey().toString();
-                            customWorkshopID.add(name);
-                            mDataWorkshop.child(name).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                                    //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
-                                    for (final DataSnapshot pd2 : dataSnapshot1.getChildren()) {
-                                        if(pd2.getKey().toString().equals("")){
-
-                                        }else if (pd2.getKey().toString().equals("Date")) {
-                                            customWorkshopDate.add(pd2.getValue().toString());
-                                        }else if (pd2.getKey().toString().equals("Venue")) {
-                                            customWorkshopVenue.add(pd2.getValue().toString());
-                                        }else if (pd2.getKey().toString().equals("Name")) {
-                                            customWorkshopName.add(pd2.getValue().toString());
-                                        }else if (pd2.getKey().toString().equals("Time")) {
-                                            customWorkshopTime.add(pd2.getValue().toString());
-                                        }else if (pd2.getKey().toString().equals("Cost")) {
-                                            customWorkshopCost.add(pd2.getValue().toString());
-                                        }else if (pd2.getKey().toString().equals("Drinks")) {
-                                            customWorkshopDrinks.add(pd2.getValue().toString());
-                                        }else if (pd2.getKey().toString().equals("Adult")) {
-                                            customWorkshopAdult.add(pd2.getValue().toString());
-                                        }else if (pd2.getKey().toString().equals("Food")) {
-                                            customWorkshopFood.add(pd2.getValue().toString());
-                                        }else if (pd2.getKey().toString().equals("Music")) {
-                                            customWorkshopMusic.add(pd2.getValue().toString());
-                                        }else if (pd2.getKey().toString().equals("Intro")) {
-                                            customWorkshopIntro.add(pd2.getValue().toString());
-                                        }
-
-                                        //    Toast.makeText(MainActivity.this, Integer.toString(customWorkshop.size()), Toast.LENGTH_SHORT).show();
-                                        if ( customWorkshopVenue.size()==s2&&customWorkshopName.size()==s2 && customWorkshopCost.size()==s2&& customWorkshopTime.size()==s2&& customWorkshopDate.size()==s2 && customWorkshopVenue.size()!=0) {
-                                            items3.clear();
-                                            for (int i = 0; i < customWorkshopVenue.size(); i++) {
-                                                //        Toast.makeText(MainActivity.this, customWorkshop.get(s-2), Toast.LENGTH_SHORT).show();
-                                                items3.add(new ModelClass(MyData.workshopdrawableArray[i], customWorkshopName.get(i), customWorkshopVenue.get(i), Integer.parseInt(customWorkshopCost.get(i)),"12/10/2020",customWorkshopTime.get(i),customWorkshopAdult.get(i),customWorkshopDrinks.get(i),customWorkshopMusic.get(i),customWorkshopFood.get(i),customWorkshopIntro.get(i),customWorkshopID.get(i)));
-                                                adapter3.notifyDataSetChanged();
-                                                //Toast.makeText(MainActivity.this, customWorkshopName.get(i), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-     /*   for (int j=0;j<5;j++){
-            items2.add(new ModelClass(MyData.informaldrawableArray[j], MyData.informalArray[j],MyData.roomArray2[j],MyData.scoreArray2[j],"","","Yes","Yes","No","No",""));
-            adapter2.notifyDataSetChanged();
-        }*/
-       /* for (int k=0;k<5;k++){
-            items3.add(new ModelClass(MyData.workshopdrawableArray[k], MyData.workshopArray[k],MyData.roomArray3[k],MyData.scoreArray3[k],"","","No","No","No","No",""));
-            adapter3.notifyDataSetChanged();
-
-        }*/
+        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -719,9 +603,6 @@ s=p.getChildrenCount();
                     JSONObject obj = new JSONObject(result.getContents());
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    //if (result.getContents().equals("Taqneeq-SNL-50")){
-
-               //         Toast.makeText(this, "Hi", Toast.LENGTH_SHORT).show();
                      final DatabaseReference eventdata=FirebaseDatabase.getInstance().getReference("participants");
                         final DatabaseReference scandata=FirebaseDatabase.getInstance().getReference("Scan");
                      scandata.addValueEventListener(new ValueEventListener() {
@@ -829,8 +710,6 @@ s=p.getChildrenCount();
                                            for (final DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
                                           //     Toast.makeText(MainActivity.this, postSnapshot1.getKey().toString(), Toast.LENGTH_SHORT).show();
                                            if (postSnapshot1.getKey().toString().equals("Score")){
-                                           //    Toast.makeText(MainActivity.this, postSnapshot1.getValue().toString(), Toast.LENGTH_SHORT).show();
-                                         //  coins.setText(postSnapshot1.getValue().toString());
                                          score=Integer.parseInt(postSnapshot1.getValue().toString());
 
                                                }
@@ -970,7 +849,6 @@ private void search(String str){
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 long x1=dataSnapshot.getChildrenCount();
                 s1=(int)x1;
-                l1=0;
                 mDataExhibition.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -981,6 +859,8 @@ private void search(String str){
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
                                     //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
+                               //   EventData data=new EventData();
+                             //       items.add(data);
                                     for (final DataSnapshot pd1 : dataSnapshot1.getChildren()) {
                                         if (pd1.getKey().toString().equals("Date")) {
                                             customExhibitionDate.add(pd1.getValue().toString());

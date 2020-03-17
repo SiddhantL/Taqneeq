@@ -224,13 +224,13 @@ public class CustomTicketAdapter extends RecyclerView.Adapter<CustomTicketAdapte
 
         public CustomViewHolder(View view) {
             super(view);
-            itemImage = view.findViewById(R.id.item_image);
+            itemImage = view.findViewById(R.id.item_images);
             itemInfo1 = view.findViewById(R.id.item_info1);
             itemInfo2 = view.findViewById(R.id.item_info2);
             itemInfo4 = view.findViewById(R.id.item_info4);
             itemInfo3 = view.findViewById(R.id.item_info3);
             itemEventName = view.findViewById(R.id.item_title);
-            itemEnters = view.findViewById(R.id.item_enters);
+            itemEnters = view.findViewById(R.id.item_date);
             itemTicketName = view.findViewById(R.id.item_ticketname);
             itemDate = view.findViewById(R.id.item_date);
             // itemTime = view.findViewById(R.id.item_date);

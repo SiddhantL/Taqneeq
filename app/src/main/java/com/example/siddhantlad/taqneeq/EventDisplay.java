@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -35,12 +42,17 @@ import java.util.List;
 
 public class EventDisplay extends AppCompatActivity implements OnMapReadyCallback{
     private Button buttonScan;
+    Button like,share;
     String addr="";
 double lat,lon;
+FirebaseAuth mAuth;
     ImageView pic;
     String ID;
+    Boolean alreadyLiked;
     ArrayList<String> savedEvents;
-TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
+TextView content,title,cost,date,time,day,venue;
+CheckBox drinks,adults,musics,foods;
+    DatabaseReference liked;
     //qr code scanner object
     private IntentIntegrator qrScan;
 
@@ -52,7 +64,63 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
 //        saveEvent(savedInstanceState);
         ViewPager viewPager = findViewById(R.id.viewpager);
         Intent mIntent = getIntent();
+        like=findViewById(R.id.button11);
+        share=findViewById(R.id.button12);
         ID=mIntent.getStringExtra("ID");
+        mAuth=FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser()!=null) {
+            liked = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("Saved");
+            try {
+                liked.child(ID).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() != null) {
+                            if (dataSnapshot.getValue().equals(ID)) {
+                                alreadyLiked = true;
+                                like.setBackgroundResource(R.drawable.liked);
+                            }
+                        } else {
+                            alreadyLiked = false;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            } catch (Exception e) {
+            }
+        }
+            like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mAuth.getCurrentUser() != null) {
+                        if (alreadyLiked) {
+                            liked.child(ID).removeValue();
+                            like.setBackgroundResource(R.drawable.like);
+                        } else {
+                            liked.child(ID).setValue(ID);
+                            like.setBackgroundResource(R.drawable.liked);
+                        }
+                    } else {
+                        Toast.makeText(EventDisplay.this, "Register to Continue", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(EventDisplay.this,RegisterActivity.class));
+                    }
+                }
+            });
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey There! I want you to check out this event on the evEntry App to view it open the link from WhatsApp and select evEntry to open the link with: "+"http://evEntry.epizy.com/events/"+ID);
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+            }
+        });
         ImageAdapter adapter = new ImageAdapter(this,ID);
         viewPager.setAdapter(adapter);
         content=findViewById(R.id.textView);
@@ -89,11 +157,23 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
             date.setText("Date: " + dates);
             time.setText("Time: "+times);
             day.setText("Day: "+days);
-            adults.setText(" Adult: "+adult);
+            if (adult.equals("Yes")){
+                adults.setChecked(true);
+            }
+            if (food.equals("Yes")){
+                foods.setChecked(true);
+            }
+            if (music.equals("Yes")){
+                musics.setChecked(true);
+            }
+            if (drink.equals("Yes")){
+                drinks.setChecked(true);
+            }
+           /* adults.setText(" Adult: "+adult);
             drinks.setText(" Drinks: "+drink);
             foods.setText(" Food: "+food);
             musics.setText(" Music: "+music);
-            venue.setText(venues);
+           */ venue.setText(venues);
             addr=venues;
             Geocoder gc = new Geocoder(EventDisplay.this);
             if(gc.isPresent()){
@@ -138,19 +218,25 @@ TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
         qrScan = new IntentIntegrator(this);
 
         //attaching onclick listener
-        buttonScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent pay=new Intent(EventDisplay.this,TicketSelector.class);
-                pay.putExtra("ID",ID);
-                pay.putExtra("Name",titles);
-                pay.putExtra("Date",dates);
-                pay.putExtra("Venue",venues);
-                pay.putExtra("Time",times);
-                pay.putExtra("Enters","1");
-                startActivity(pay);
-            }
-        });
+
+            buttonScan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mAuth.getCurrentUser() != null) {
+                        Intent pay = new Intent(EventDisplay.this, TicketSelector.class);
+                        pay.putExtra("ID", ID);
+                        pay.putExtra("Name", titles);
+                        pay.putExtra("Date", dates);
+                        pay.putExtra("Venue", venues);
+                        pay.putExtra("Time", times);
+                        pay.putExtra("Enters", "1");
+                        startActivity(pay);
+                    } else {
+                        Toast.makeText(EventDisplay.this, "Register to Continue", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(EventDisplay.this,RegisterActivity.class));
+                    }
+                }
+            });
 
 
     }

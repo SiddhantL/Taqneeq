@@ -84,7 +84,10 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".TicketSelector"></activity>
+        <activity android:name=".TicketSelector" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".NumberVerification" />
+        <activity android:name=".VerifyPhoneActivity"></activity>
     </application>
 
 </manifest>

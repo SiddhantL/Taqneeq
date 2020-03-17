@@ -12,11 +12,11 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        android:background="@drawable/gradienttheme"
+        android:background="@drawable/blackgradient"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <!--<TextView
@@ -33,12 +33,13 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="160dp"
-                android:layout_height="85dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
+                android:id="@+id/logo"
+                android:layout_width="180dp"
+                android:layout_height="70dp"
+                android:layout_centerInParent="true"
                 android:gravity="center"
                 android:src="@drawable/logoeventry" />
+
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 

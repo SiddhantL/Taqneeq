@@ -203,7 +203,7 @@ public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.CustomVi
 
         public CustomViewHolder(View view) {
             super(view);
-            itemImage = view.findViewById(R.id.item_image);
+            itemImage = view.findViewById(R.id.item_images);
             itemInfo1 = view.findViewById(R.id.item_info1);
             itemInfo2 = view.findViewById(R.id.item_info2);
             itemInfo4 = view.findViewById(R.id.item_info4);
@@ -211,8 +211,8 @@ public class CustomAdapter2 extends RecyclerView.Adapter<CustomAdapter2.CustomVi
             itemTitle = view.findViewById(R.id.item_title);
             itemVenue = view.findViewById(R.id.item_venue);
             itemCost = view.findViewById(R.id.item_cost);
-            itemDate = view.findViewById(R.id.item_enters);
-            itemTime = view.findViewById(R.id.item_enters);
+            itemDate = view.findViewById(R.id.item_date);
+            itemTime = view.findViewById(R.id.item_time);
         }
     }
 }

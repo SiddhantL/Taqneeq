@@ -24,6 +24,7 @@ public class PaymentActivity extends Activity implements PaymentResultListener {
     private static final String TAG = PaymentActivity.class.getSimpleName();
     //https://github.com/razorpay/razorpay-android-sample-app
     String name;
+    String IDtix;
     DatabaseReference tickets,userdata;
     FirebaseAuth mAuth;
     TextView costTV,entersTV,nameTixTV;
@@ -122,18 +123,20 @@ public class PaymentActivity extends Activity implements PaymentResultListener {
             Intent tix=new Intent(PaymentActivity.this,TicketActivity.class);
             mTicket=FirebaseDatabase.getInstance().getReference("Tickets").child(id);
             ticketUser=FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("Tickets").child(id);
-            String pushTicketID=mTicket.push().getKey();
-            ticketUser.child(pushTicketID).child("Divided").setValue("No");
-            ticketUser.child(pushTicketID).child("Enters").setValue(enters);
-            ticketUser.child(pushTicketID).child("Name").setValue("Ticket Type");
-            ticketUser.child(pushTicketID).child("Payment ID").setValue(razorpayPaymentID);
-            mTicket.child(pushTicketID).setValue(enters);
+                String pushTicketID = mTicket.push().getKey();
+                IDtix=pushTicketID;
+                ticketUser.child(pushTicketID).child("Divided").setValue("No");
+                ticketUser.child(pushTicketID).child("Enters").setValue(enters);
+                ticketUser.child(pushTicketID).child("Name").setValue(name);
+                ticketUser.child(pushTicketID).child("Payment ID").setValue(razorpayPaymentID);
+                mTicket.child(pushTicketID).setValue(enters);
             tix.putExtra("Name",name);
             tix.putExtra("Date",date);
             tix.putExtra("Venue",venue);
             tix.putExtra("Time",time);
             tix.putExtra("Enters",enters);
             tix.putExtra("ID",id);
+            tix.putExtra("ticketID",IDtix);
             startActivity(tix);
         } catch (Exception e) {
             Log.e(TAG, "An Error Occurred", e);

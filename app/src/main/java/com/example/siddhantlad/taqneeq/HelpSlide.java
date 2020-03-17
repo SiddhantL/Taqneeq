@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class HelpSlide extends AppCompatActivity implements Tab1.OnFragmentInteractionListener,Tab2.OnFragmentInteractionListener,Tab3.OnFragmentInteractionListener,Tab4.OnFragmentInteractionListener {
 
@@ -51,7 +52,6 @@ public class HelpSlide extends AppCompatActivity implements Tab1.OnFragmentInter
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 

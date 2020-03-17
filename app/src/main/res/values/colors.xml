@@ -11,4 +11,6 @@
     <color name="BlueCustom">#12ffff</color>
     <color name="subtleRed">#b04040</color>
     <color name="white">#ffffff</color>
+    <color name="placeholder_bg">#DDDDDD</color>
+    <color name="live_scroll">#73EEFF</color>
 </resources>

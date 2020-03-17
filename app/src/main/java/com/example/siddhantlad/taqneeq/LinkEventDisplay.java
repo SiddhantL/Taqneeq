@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,12 +25,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class LinkEventDisplay extends AppCompatActivity implements OnMapReadyCallback {
@@ -37,7 +42,13 @@ public class LinkEventDisplay extends AppCompatActivity implements OnMapReadyCal
     double lat,lon;
     DatabaseReference eventData;
     ImageView pic;
-    TextView content,title,cost,date,time,day,drinks,adults,musics,foods,venue;
+    FirebaseAuth mAuth;
+    Button like,share;
+    DatabaseReference liked;
+    Boolean alreadyLiked;
+    TextView content,title,cost,date,time,day,venue;
+    String days;
+    CheckBox drinks,adults,musics,foods;
     //qr code scanner object
     String adultstr,costingstr,datestr,drinkstr,foodstr,introstr,musicstr,namestr,timestr,venuestr;
     @Override
@@ -46,59 +57,159 @@ public class LinkEventDisplay extends AppCompatActivity implements OnMapReadyCal
         setContentView(R.layout.activity_link_event_display);
         Window window = LinkEventDisplay.this.getWindow();
         ViewPager viewPager = findViewById(R.id.viewpager);
-        eventData= FirebaseDatabase.getInstance().getReference("exhibitions");
+        eventData = FirebaseDatabase.getInstance().getReference("exhibitions");
         Intent mIntent = getIntent();
-        final String ID=mIntent.getStringExtra("UID");
+        final String ID = mIntent.getStringExtra("UID");
 
-        ImageAdapter adapter = new ImageAdapter(this,ID);
+        ImageAdapter adapter = new ImageAdapter(this, ID);
         viewPager.setAdapter(adapter);
-        content=findViewById(R.id.textView);
-        pic=findViewById(R.id.eventpic);
-        title=findViewById(R.id.textView12);
-        cost=findViewById(R.id.t1);
-        date=findViewById(R.id.t2);
-        time=findViewById(R.id.t3);
-        day=findViewById(R.id.t4);
-        adults=findViewById(R.id.c1);
-        drinks=findViewById(R.id.c2);
-        venue=findViewById(R.id.textView20);
-        foods=findViewById(R.id.c3);
-        musics=findViewById(R.id.c4);
+        content = findViewById(R.id.textView);
+        pic = findViewById(R.id.eventpic);
+        title = findViewById(R.id.textView12);
+        cost = findViewById(R.id.t1);
+        date = findViewById(R.id.t2);
+        time = findViewById(R.id.t3);
+        day = findViewById(R.id.t4);
+        adults = findViewById(R.id.c1);
+        drinks = findViewById(R.id.c2);
+        venue = findViewById(R.id.textView20);
+        foods = findViewById(R.id.c3);
+        musics = findViewById(R.id.c4);
+        like = findViewById(R.id.button11);
+        share = findViewById(R.id.button12);
         int position = mIntent.getIntExtra("position", 0);
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            liked = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("Saved");
+            try {
+                liked.child(ID).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getValue() != null) {
+                            if (dataSnapshot.getValue().equals(ID)) {
+                                alreadyLiked = true;
+                                like.setBackgroundResource(R.drawable.liked);
+                            }
+                        } else {
+                            alreadyLiked = false;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            } catch (Exception e) {
+            }
+        }
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mAuth.getCurrentUser() != null) {
+                    if (alreadyLiked) {
+                        liked.child(ID).removeValue();
+                        like.setBackgroundResource(R.drawable.like);
+                    } else {
+                        liked.child(ID).setValue(ID);
+                        like.setBackgroundResource(R.drawable.liked);
+                    }
+                } else {
+                    Toast.makeText(LinkEventDisplay.this, "Register to Continue", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LinkEventDisplay.this, RegisterActivity.class));
+                }
+            }
+        });
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey There! I want you to check out this event on the evEntry App to view it open the link from WhatsApp and select evEntry to open the link with: " + "http://evEntry.epizy.com/events/" + ID);
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+            }
+        });
         eventData.child(ID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (final DataSnapshot pd : dataSnapshot.getChildren()) {
                     if (pd.getKey().toString().equals("Adult")) {
-                        adultstr=pd.getValue().toString();
-                        adults.setText(" Adult: "+adultstr);
-                    }else if (pd.getKey().toString().equals("Date")) {
-                        datestr=pd.getValue().toString();
-                        date.setText("Date: "+datestr);
-                    }else if (pd.getKey().toString().equals("Drinks")) {
-                        drinkstr=pd.getValue().toString();
-                        drinks.setText(" Drinks: "+drinkstr);
-                    }else if (pd.getKey().toString().equals("Food")) {
-                        foodstr=pd.getValue().toString();
-                        foods.setText(" Food: "+foodstr);
-                    }else if (pd.getKey().toString().equals("Intro")) {
-                        introstr=pd.getValue().toString();
+                        adultstr = pd.getValue().toString();
+                    } else if (pd.getKey().toString().equals("Date")) {
+                        datestr = pd.getValue().toString();
+                        date.setText("Date: " + datestr);
+                    } else if (pd.getKey().toString().equals("Drinks")) {
+                        drinkstr = pd.getValue().toString();
+                    } else if (pd.getKey().toString().equals("Food")) {
+                        foodstr = pd.getValue().toString();
+                    } else if (pd.getKey().toString().equals("Intro")) {
+                        introstr = pd.getValue().toString();
                         content.setText(introstr);
-                    }else if (pd.getKey().toString().equals("Music")) {
-                        musicstr=pd.getValue().toString();
-                        musics.setText(" Music: "+musicstr);
-                    }else if (pd.getKey().toString().equals("Name")) {
-                        namestr=pd.getValue().toString();
+                    } else if (pd.getKey().toString().equals("Music")) {
+                        musicstr = pd.getValue().toString();
+                    } else if (pd.getKey().toString().equals("Name")) {
+                        namestr = pd.getValue().toString();
                         title.setText(namestr);
-                    }else if (pd.getKey().toString().equals("Time")) {
-                        timestr=pd.getValue().toString();
-                        time.setText("Time: "+timestr);
-                    }else if (pd.getKey().toString().equals("Venue")) {
-                        venuestr=pd.getValue().toString();
-                        venue.setText("Venue: "+venuestr);
-                    }else if (pd.getKey().toString().equals("Cost")) {
-                        costingstr=pd.getValue().toString();
-                        cost.setText("Cost:" +costingstr);
+                    } else if (pd.getKey().toString().equals("Time")) {
+                        timestr = pd.getValue().toString();
+                        time.setText("Time: " + timestr);
+                    } else if (pd.getKey().toString().equals("Venue")) {
+                        venuestr = pd.getValue().toString();
+                        venue.setText(venuestr);
+                    } else if (pd.getKey().toString().equals("Cost")) {
+                        costingstr = pd.getValue().toString();
+                        cost.setText("Cost:" + costingstr);
+                    }
+                    if (musicstr != null) {
+                        if (adultstr.equals("Yes")) {
+                            adults.setChecked(true);
+                        }
+                        if (foodstr.equals("Yes")) {
+                            foods.setChecked(true);
+                        }
+                        if (musicstr.equals("Yes")) {
+                            musics.setChecked(true);
+                        }
+                        if (drinkstr.equals("Yes")) {
+                            drinks.setChecked(true);
+                        }
+                    }
+
+                    if (datestr!=null) {
+                        String year = datestr.substring(6, 10);
+                        String month = (datestr.substring(3, 5));
+                        String dates = (datestr.substring(0, 2));
+                        days = new String();
+                        //Toast.makeText(context, Integer.parseInt(date)+"/"+Integer.parseInt(month)+"/"+Integer.parseInt(year), Toast.LENGTH_SHORT).show();
+                        Calendar calendar = new GregorianCalendar(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(dates)); // Note that Month value is 0-based. e.g., 0 for January.
+                        int result = calendar.get(Calendar.DAY_OF_WEEK);
+                        switch (result) {
+                            case Calendar.MONDAY:
+                                days = "Monday";
+                                break;
+                            case Calendar.TUESDAY:
+                                days = "Tuesday";
+                                break;
+                            case Calendar.WEDNESDAY:
+                                days = "Wednesday";
+                                break;
+                            case Calendar.THURSDAY:
+                                days = "Thursday";
+                                break;
+                            case Calendar.FRIDAY:
+                                days = "Friday";
+                                break;
+                            case Calendar.SATURDAY:
+                                days = "Saturday";
+                                break;
+                            case Calendar.SUNDAY:
+                                days = "Sunday";
+                                break;
+                        }
+                        day.setText("Day: "+days);
                     }
                 }
             }

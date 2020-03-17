@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@drawable/blackgradient">
 
     <Button
         android:id="@+id/button"
@@ -28,46 +29,61 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/item_info"
-                android:layout_width="34dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/item_info6"
-                android:layout_toStartOf="@+id/item_info6"
-                app:srcCompat="@drawable/adultlef" />
-
-            <ImageView
-                android:id="@+id/item_info8"
-                android:layout_width="1dp"
-                android:layout_height="30dp"
+            <LinearLayout
+                android:id="@+id/category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/item_info"
-                android:layout_centerHorizontal="true"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/foodlef" />
-
-            <ImageView
-                android:id="@+id/item_info5"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/item_info"
-                android:layout_toEndOf="@+id/item_info7"
-                app:srcCompat="@drawable/alcohollef" />
-
-            <ImageView
-                android:id="@+id/item_info6"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
                 android:layout_below="@+id/rlayout"
-                android:layout_toStartOf="@+id/item_info7"
-                app:srcCompat="@drawable/musiclef" />
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/item_info7"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignStart="@+id/item_info8"
-                android:layout_alignTop="@+id/item_info"
-                app:srcCompat="@drawable/foodlef" />
+                <ImageView
+                    android:id="@+id/item_info8"
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:layout_alignTop="@+id/item_info"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/foodlef" />
+
+                <ImageView
+                    android:id="@+id/item_info5"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignTop="@+id/item_info"
+                    android:layout_toEndOf="@+id/item_info7"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/alcohollef" />
+
+                <ImageView
+                    android:id="@+id/item_info7"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignStart="@+id/item_info8"
+                    android:layout_alignTop="@+id/item_info"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/foodlefwhite" />
+
+                <ImageView
+                    android:id="@+id/item_info6"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/rlayout"
+                    android:layout_toStartOf="@+id/item_info7"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/adultlefwhite" />
+
+                <ImageView
+                    android:id="@+id/item_info"
+                    android:layout_width="34dp"
+                    android:layout_height="30dp"
+                    android:layout_alignTop="@+id/item_info6"
+                    android:layout_toStartOf="@+id/item_info6"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/musiclef" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView"
@@ -75,10 +91,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="false"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/item_info5"
+                android:layout_below="@+id/category"
                 android:layout_margin="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/relativecircular"
+                android:fontFamily="@font/montserrat"
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -86,7 +103,7 @@
                 android:text="@string/text"
                 android:textAlignment="center"
                 android:textColor="@color/Black"
-                android:textSize="14sp" />
+                android:textSize="20dp" />
 
             <ImageView
                 android:id="@+id/eventpic"
@@ -105,26 +122,27 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/viewpager"
                 android:layout_centerHorizontal="true"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="@font/montserrat"
                 android:text="Linux Kernel"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="36dp"
                 android:visibility="visible" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentStart="false"
                 android:layout_below="@+id/map"
+                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:text="Category-:"
+                android:fontFamily="@font/montserrat"
+                android:text="Category"
                 android:textAlignment="center"
-                android:textColor="@color/Black"
-                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textSize="18dp"
                 android:textStyle="bold" />
 
             <fragment
@@ -134,29 +152,57 @@
                 android:layout_height="250dp"
                 android:layout_below="@id/textView20"
                 tools:context="com.example.siddhantlad.taqneeq.EventDisplay" />
+
             <TextView
                 android:id="@+id/textView19"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView"
-                android:layout_centerHorizontal="false"
-                android:layout_marginBottom="5dp"
+                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:text="Venue-:"
+                android:fontFamily="@font/montserrat"
+                android:text="Venue"
                 android:textAlignment="center"
-                android:textColor="@color/Black"
-                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button11"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/textView12"
+                android:layout_marginBottom="5dp"
+                android:layout_toStartOf="@+id/divider7"
+                android:background="@drawable/like" />
+
+            <Button
+                android:id="@+id/button12"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignStart="@+id/divider7"
+                android:layout_below="@+id/textView12"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/share" />
+
+            <View
+                android:id="@+id/divider6"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/textView12"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="108dp"
+                android:background="?android:attr/listDivider" />
 
             <RelativeLayout
                 android:id="@+id/rlayout"
                 android:layout_width="252dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView12"
+                android:layout_below="@+id/button11"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/relativecirculardisplay"
+                android:background="@drawable/relativecirculardisplayblack"
                 android:padding="10dp">
 
                 <TextView
@@ -166,8 +212,9 @@
                     android:drawableRight="@drawable/coinlef"
                     android:fontFamily="sans-serif-smallcaps"
                     android:text="Cost:"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold" />
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/t2"
@@ -176,7 +223,8 @@
                     android:layout_below="@id/t1"
                     android:fontFamily="sans-serif-smallcaps"
                     android:text="Date:"
-                    android:textColor="#ffffff"
+                    android:textColor="#000"
+                    android:textSize="19dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -186,7 +234,8 @@
                     android:layout_below="@id/t2"
                     android:fontFamily="sans-serif-smallcaps"
                     android:text="Time:"
-                    android:textColor="#ffffff"
+                    android:textColor="#000"
+                    android:textSize="19dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -196,81 +245,85 @@
                     android:layout_below="@id/t3"
                     android:fontFamily="sans-serif-smallcaps"
                     android:text="Day:"
-                    android:textColor="#ffffff"
+                    android:textColor="#000"
+                    android:textSize="19dp"
                     android:textStyle="bold" />
+
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/c3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/c2"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="5dp"
-                android:drawableLeft="@drawable/foodlef"
-                android:text=" Food: Yes"
-                android:textColor="@color/Black"
-                android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/c2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/c1"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="5dp"
-                android:drawableLeft="@drawable/alcohollef"
-                android:text=" Drinks: Yes"
-                android:textColor="@color/Black"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/c4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/c3"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:drawableLeft="@drawable/musiclef"
-                android:text=" Music: Yes"
-                android:textColor="@color/Black"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/c1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView4"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="5dp"
-                android:drawableLeft="@drawable/adultlef"
-                android:text=" Adult: Yes"
-                android:textColor="@color/Black"
-                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView19"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:text="72 Lad Mansion Bhaudaji Road, Matunga, Mumbai- 400019"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/montserrat"
+                android:text="ABC"
                 android:textAlignment="center"
-                android:textColor="@color/Black"
-                android:textSize="18sp" />
+                android:textColor="@color/white"
+                android:textSize="20dp" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="205dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"/>
+                android:layout_height="220dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <View
+                android:id="@+id/divider7"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/textView4"
+                android:layout_centerHorizontal="true"
+                android:background="?android:attr/listDivider" />
+
+            <CheckBox
+                android:id="@+id/c3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/textView4"
+                android:layout_toLeftOf="@+id/divider7"
+                android:clickable="false"
+                android:buttonTint="@color/white"
+                android:drawableRight="@drawable/foodlefwhite" />
+
+            <CheckBox
+                android:id="@+id/c1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/divider7"
+                android:clickable="false"
+                android:buttonTint="@color/white"
+                android:drawableRight="@drawable/whiteadultlef" />
+
+            <CheckBox
+                android:id="@+id/c4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="false"
+                android:layout_toRightOf="@+id/c1"
+                android:clickable="false"
+                android:buttonTint="@color/white"
+                android:drawableRight="@drawable/musiclef" />
+
+            <CheckBox
+                android:id="@+id/c2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="false"
+                android:layout_toLeftOf="@+id/c3"
+                android:clickable="false"
+                android:buttonTint="@color/white"
+                android:drawableRight="@drawable/alcohollef" />
+
         </RelativeLayout>
     </ScrollView>
 
