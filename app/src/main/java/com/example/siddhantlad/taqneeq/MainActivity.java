@@ -74,15 +74,13 @@ public class MainActivity extends AppCompatActivity {
     SearchView searchView;
     ScrollView scrollView;
     FloatingActionMenu actionMenu;
-    ArrayList<ModelClass> items, items2;
+    ArrayList<ModelClass2> items;
+    ArrayList<ModelClass2> items2;
     RecyclerView recyclerView2;
-    CustomAdapter2 adapter2;
+    CustomAdapter3 adapter2;
     ArrayList<String> saved;
     DatabaseReference mDataEvent;
     View divider;
-    ArrayList<String> customEventName, customEventVenue, customEventCost, customEventDate, customEventTime, customEventDrinks, customEventAdult, customEventFood, customEventMusic, customEventIntro, customEventID;
-    ArrayList<String> customExhibitionName, customExhibitionVenue, customExhibitionCost, customExhibitionDate, customExhibitionTime, customExhibitionDrinks, customExhibitionAdult, customExhibitionFood, customExhibitionMusic, customExhibitionIntro, customExhibitionID;
-    ArrayList<String> customWorkshopName, customWorkshopVenue, customWorkshopCost, customWorkshopDate, customWorkshopTime, customWorkshopDrinks, customWorkshopAdult, customWorkshopFood, customWorkshopMusic, customWorkshopIntro, customWorkshopID;
     android.support.design.widget.FloatingActionButton fab, fab2;
     ImageView img;
     String livecontent;
@@ -110,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (mAuth.getCurrentUser() != null) {
                     startActivity(new Intent(MainActivity.this, ProfileDisplay.class));
-                } else {
+                }else{
                     Toast.makeText(MainActivity.this, "Register to Continue", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(MainActivity.this,RegisterActivity.class));
                 }
@@ -118,40 +116,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         live = findViewById(R.id.textlive);
-        customEventName = new ArrayList<>();
-        customEventVenue = new ArrayList<>();
-        customEventCost = new ArrayList<>();
-        customEventDate = new ArrayList<>();
-        customEventTime = new ArrayList<>();
-        customEventAdult = new ArrayList<>();
-        customEventDrinks = new ArrayList<>();
-        customEventFood = new ArrayList<>();
-        customEventMusic = new ArrayList<>();
-        customEventIntro = new ArrayList<>();
-        customEventID = new ArrayList<>();
         divider = findViewById(R.id.divider);
-        customExhibitionName = new ArrayList<>();
-        customExhibitionVenue = new ArrayList<>();
-        customExhibitionCost = new ArrayList<>();
-        customExhibitionDate = new ArrayList<>();
-        customExhibitionTime = new ArrayList<>();
-        customExhibitionAdult = new ArrayList<>();
-        customExhibitionDrinks = new ArrayList<>();
-        customExhibitionFood = new ArrayList<>();
-        customExhibitionMusic = new ArrayList<>();
-        customExhibitionIntro = new ArrayList<>();
-        customExhibitionID = new ArrayList<>();
-        customWorkshopName = new ArrayList<>();
-        customWorkshopVenue = new ArrayList<>();
-        customWorkshopCost = new ArrayList<>();
-        customWorkshopDate = new ArrayList<>();
-        customWorkshopTime = new ArrayList<>();
-        customWorkshopAdult = new ArrayList<>();
-        customWorkshopDrinks = new ArrayList<>();
-        customWorkshopFood = new ArrayList<>();
-        customWorkshopMusic = new ArrayList<>();
-        customWorkshopIntro = new ArrayList<>();
-        customWorkshopID = new ArrayList<>();
         coins = (TextView) findViewById(R.id.textView11);
         SharedPreferences settings = getSharedPreferences("coinVal", 0);
         String coinVals = settings.getString("coinVal", "0");
@@ -401,38 +366,63 @@ public class MainActivity extends AppCompatActivity {
 
 //Display Profile
         fab.setOnClickListener(new View.OnClickListener() {
-                                   @Override
-                                   public void onClick(View view) {
-if (mAuth.getCurrentUser()!=null) {
-    startActivity(new Intent(MainActivity.this, ProfileDisplay.class));
-}else {
-    Toast.makeText(MainActivity.this, "Register to Continue", Toast.LENGTH_SHORT).show();
-    startActivity(new Intent(MainActivity.this,RegisterActivity.class));
-}
-}});
+            @Override
+            public void onClick(View view) {
+                if (mAuth.getCurrentUser()!=null) {
+                    startActivity(new Intent(MainActivity.this, ProfileDisplay.class));
+                }else {
+                    Toast.makeText(MainActivity.this, "Register to Continue", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,RegisterActivity.class));
+                }
+            }});
         user=mAuth.getCurrentUser();
         items = new ArrayList<>();
         items2 = new ArrayList<>();
         final ArrayList<ModelClass> items3 = new ArrayList<>();
-        final CustomAdapter adapter = new CustomAdapter(this, items);
-         adapter2 = new CustomAdapter2(this, items2);
-        final CustomAdapter3 adapter3 = new CustomAdapter3(this, items3);
+        final CustomAdapter4 adapter = new CustomAdapter4(this, items);
+        adapter2 = new CustomAdapter3(this, items2);
+        // final CustomAdapter3 adapter3 = new CustomAdapter3(this, items3);
         //Placeholder display
         for (int i = 0; i < 5; i++) {
-            items.add(new ModelClass(MyData.drawableArray[i], "Loading...", "Venue: India", 0,"00/00/0000","00:00","Yes","Yes","Yes","Yes","This is a Loading Message...",""));
+            EventData data=new EventData();
+            data.setAdult("Yes");
+            data.setCost("0");
+            data.setDate("00/00/0000");
+            data.setDrinks("Yes");
+            data.setFood("Yes");
+            data.setID("");
+            data.setIntro("This is a Loading Message...");
+            data.setMusic("Yes");
+            data.setName("Loading...");
+            data.setTime("00:00");
+            data.setVenue("Venue: India");
+            items.add(new ModelClass2(data));
             adapter.notifyDataSetChanged();
         }
-        for (int i = 0; i < 5; i++) {
-            items2.add(new ModelClass(MyData.drawableArray[i], "Loading...", "Venue: India", 0,"00/00/0000","00:00","Yes","Yes","Yes","Yes","This is a Loading Message...",""));
+        for (int i = 0; i < 10; i++) {
+            EventData data=new EventData();
+            data.setAdult("Yes");
+            data.setCost("0");
+            data.setDate("00/00/0000");
+            data.setDrinks("Yes");
+            data.setFood("Yes");
+            data.setID("");
+            data.setIntro("This is a Loading Message...");
+            data.setMusic("Yes");
+            data.setName("Loading...");
+            data.setTime("00:00");
+            data.setVenue("Venue: India");
+           items2.add(new ModelClass2(data));
+           //items2.add(new ModelClass2(MyData.drawableArray[i], "Loading...", "Venue: India", 0,"00/00/0000","00:00","Yes","Yes","Yes","Yes","This is a Loading Message...",""));
             adapter2.notifyDataSetChanged();
         }
         for (int i = 0; i < 5; i++) {
             items3.add(new ModelClass(MyData.drawableArray[i], "Loading...", "Venue: India", 0,"00/00/0000","00:00","Yes","Yes","Yes","Yes","This is a Loading Message...",""));
-            adapter3.notifyDataSetChanged();
+          //  adapter3.notifyDataSetChanged();
         }
-        RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
+        final RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView2 = findViewById(R.id.my_recycler_view2);
-       recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView2.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -449,54 +439,27 @@ if (mAuth.getCurrentUser()!=null) {
                     s = saved.size();
                 }
                 if (!saved.isEmpty()) {
+                    items.clear();
                     for (int i = 0; i < saved.size(); i++) {
                         mDataEvent.child(saved.get(i)).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (final DataSnapshot pd1 : dataSnapshot.getChildren()) {
-                                    if (pd1.getKey().toString().equals("Date")) {
-                                   //     Toast.makeText(MainActivity.this, pd1.getKey(), Toast.LENGTH_SHORT).show();
-                                        customEventDate.add(pd1.getValue().toString());
-                                    } else if (pd1.getKey().toString().equals("Venue")) {
-                                        customEventVenue.add(pd1.getValue().toString());
-                                    } else if (pd1.getKey().toString().equals("Name")) {
-                                        customEventName.add(pd1.getValue().toString());
-                                    } else if (pd1.getKey().toString().equals("Time")) {
-                                        customEventTime.add(pd1.getValue().toString());
-                                    } else if (pd1.getKey().toString().equals("Cost")) {
-                                        customEventCost.add(pd1.getValue().toString());
-                                    } else if (pd1.getKey().toString().equals("Drinks")) {
-                                        customEventDrinks.add(pd1.getValue().toString());
-                                    } else if (pd1.getKey().toString().equals("Adult")) {
-                                        customEventAdult.add(pd1.getValue().toString());
-                                    } else if (pd1.getKey().toString().equals("Food")) {
-                                        customEventFood.add(pd1.getValue().toString());
-                                    } else if (pd1.getKey().toString().equals("Music")) {
-                                        customEventMusic.add(pd1.getValue().toString());
-                                    } else if (pd1.getKey().toString().equals("Intro")) {
-                                        customEventIntro.add(pd1.getValue().toString());
-                                    }
-
+                                final String name=dataSnapshot.getKey().toString();
+                                EventData data=new EventData();
+                                data.setAdult(dataSnapshot.child("Adult").getValue(String.class));
+                                data.setCost(dataSnapshot.child("Cost").getValue().toString());
+                                data.setDate(dataSnapshot.child("Date").getValue(String.class));
+                                data.setDrinks(dataSnapshot.child("Drinks").getValue(String.class));
+                                data.setFood(dataSnapshot.child("Food").getValue(String.class));
+                                data.setID(name);
+                                data.setIntro(dataSnapshot.child("Intro").getValue(String.class));
+                                data.setMusic(dataSnapshot.child("Music").getValue(String.class));
+                                data.setName(dataSnapshot.child("Name").getValue(String.class));
+                                data.setTime(dataSnapshot.child("Time").getValue(String.class));
+                                data.setVenue(dataSnapshot.child("Venue").getValue(String.class));
+                                items.add(new ModelClass2(data));
+                                adapter.notifyDataSetChanged();
                                 }
-                                if (customEventVenue.size() == s && customEventName.size() == s && customEventCost.size() == s && customEventTime.size() == s && customEventDate.size() == s && customEventVenue.size() != 0) {
-                                   items.clear();
-                                    for (int i = 0; i < customEventVenue.size(); i++) {
-                                        items.add(new ModelClass(MyData.informaldrawableArray[0],
-                                                customEventName.get(i),
-                                                customEventVenue.get(i),
-                                                Integer.parseInt(customEventCost.get(i)),
-                                                customEventDate.get(i),
-                                                customEventTime.get(i),
-                                                customEventAdult.get(i),
-                                                customEventDrinks.get(i),
-                                                customEventMusic.get(i),
-                                                customEventFood.get(i),
-                                                customEventIntro.get(i),
-                                                saved.get(i)));
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                }
-                            }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -517,80 +480,33 @@ if (mAuth.getCurrentUser()!=null) {
         });
         //Adding Events to RecyclerView
         mDataExhibition=FirebaseDatabase.getInstance().getReference("exhibitions");
-        mDataExhibition.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //Get Number of events
-                long x1=dataSnapshot.getChildrenCount();
-                s1=(int)x1;
-                mDataExhibition.addValueEventListener(new ValueEventListener() {
-                    @Override
+        mDataExhibition.addListenerForSingleValueEvent(new ValueEventListener() {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         //Save Data Packets of Each Event in Separate ArrayLists
+                        items2.clear();
                         for (final DataSnapshot pd1:dataSnapshot.getChildren()){
                             final String name=pd1.getKey().toString();
-                            customExhibitionID.add(name);
-                            mDataExhibition.child(name).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                                    //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
-                                    for (final DataSnapshot pd1 : dataSnapshot1.getChildren()) {
-                                      if (pd1.getKey().toString().equals("Date")) {
-                                            customExhibitionDate.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Venue")) {
-                                            customExhibitionVenue.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Name")) {
-                                            customExhibitionName.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Time")) {
-                                            customExhibitionTime.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Cost")) {
-                                            customExhibitionCost.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Drinks")) {
-                                            customExhibitionDrinks.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Adult")) {
-                                            customExhibitionAdult.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Food")) {
-                                            customExhibitionFood.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Music")) {
-                                            customExhibitionMusic.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Intro")) {
-                                            customExhibitionIntro.add(pd1.getValue().toString());
-                                        }
-                                        //When the Arraylist Size is same as number of events display all saved events
-                                        if ( customExhibitionVenue.size()==s1&&customExhibitionName.size()==s1 && customExhibitionCost.size()==s1&& customExhibitionTime.size()==s1&& customExhibitionDate.size()==s1 && customExhibitionVenue.size()!=0) {
-                                            items2.clear();
-                                            for (int i = 0; i < customExhibitionVenue.size(); i++) {
-                                                items2.add(new ModelClass(MyData.informaldrawableArray[0], customExhibitionName.get(i), customExhibitionVenue.get(i), Integer.parseInt(customExhibitionCost.get(i)),customExhibitionDate.get(i),customExhibitionTime.get(i),customExhibitionAdult.get(i),customExhibitionDrinks.get(i),customExhibitionMusic.get(i),customExhibitionFood.get(i),customExhibitionIntro.get(i),customExhibitionID.get(i)));
-                                                adapter2.notifyDataSetChanged();
-                                            }
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-
-                        }
-
+                            EventData data=new EventData();
+                            data.setAdult(pd1.child("Adult").getValue(String.class));
+                            data.setCost(pd1.child("Cost").getValue().toString());
+                            data.setDate(pd1.child("Date").getValue(String.class));
+                            data.setDrinks(pd1.child("Drinks").getValue(String.class));
+                            data.setFood(pd1.child("Food").getValue(String.class));
+                            data.setID(name);
+                            data.setIntro(pd1.child("Intro").getValue(String.class));
+                            data.setMusic(pd1.child("Music").getValue(String.class));
+                            data.setName(pd1.child("Name").getValue(String.class));
+                            data.setTime(pd1.child("Time").getValue(String.class));
+                            data.setVenue(pd1.child("Venue").getValue(String.class));
+                            items2.add(new ModelClass2(data));
+                            adapter2.notifyDataSetChanged();}
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
                     }
                 });
 
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         final IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -599,29 +515,29 @@ if (mAuth.getCurrentUser()!=null) {
             if (result.getContents() == null) {
                 Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
             } else {
-                 try {
+                try {
                     JSONObject obj = new JSONObject(result.getContents());
                 } catch (JSONException e) {
                     e.printStackTrace();
-                     final DatabaseReference eventdata=FirebaseDatabase.getInstance().getReference("participants");
-                        final DatabaseReference scandata=FirebaseDatabase.getInstance().getReference("Scan");
-                     scandata.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                    if (postSnapshot.getKey().toString().equals(result.getContents())){
-                                        scandata.child(postSnapshot.getKey().toString()).addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                for (final DataSnapshot postSnapshot2 : dataSnapshot.getChildren()) {
-                                                     if (Integer.parseInt(postSnapshot2.getValue().toString())<=Integer.parseInt(coins.getText().toString())){
-                                                   deduct=Integer.parseInt(postSnapshot2.getValue().toString());
-                                                         score=Integer.parseInt(coins.getText().toString())-deduct;
-                                                         info.child(mAuth.getCurrentUser().getUid()).child("Score").setValue(Integer.toString(score));
-                                                         deduct=0;
+                    final DatabaseReference eventdata=FirebaseDatabase.getInstance().getReference("participants");
+                    final DatabaseReference scandata=FirebaseDatabase.getInstance().getReference("Scan");
+                    scandata.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                if (postSnapshot.getKey().toString().equals(result.getContents())){
+                                    scandata.child(postSnapshot.getKey().toString()).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for (final DataSnapshot postSnapshot2 : dataSnapshot.getChildren()) {
+                                                if (Integer.parseInt(postSnapshot2.getValue().toString())<=Integer.parseInt(coins.getText().toString())){
+                                                    deduct=Integer.parseInt(postSnapshot2.getValue().toString());
+                                                    score=Integer.parseInt(coins.getText().toString())-deduct;
+                                                    info.child(mAuth.getCurrentUser().getUid()).child("Score").setValue(Integer.toString(score));
+                                                    deduct=0;
                                                     final String eventcode = postSnapshot2.getValue().toString();
-                                                         final String eventName = postSnapshot2.getKey().toString();
-                                                         final String id = eventdata.push().getKey();
+                                                    final String eventName = postSnapshot2.getKey().toString();
+                                                    final String id = eventdata.push().getKey();
                                                     eventdata.child(eventName).child(mAuth.getCurrentUser().getUid()).child("Name").setValue(mAuth.getCurrentUser().getDisplayName());
                                                     final int scorechanged = Integer.parseInt(coins.getText().toString());
                                                     eventdata.child(eventName).child(mAuth.getCurrentUser().getUid()).child("Score").setValue(Integer.toString(scorechanged));
@@ -673,86 +589,86 @@ if (mAuth.getCurrentUser()!=null) {
                                                         }
                                                     });
                                                 }else{
-                                                         Toast.makeText(MainActivity.this, "Invalid Cash", Toast.LENGTH_SHORT).show();
-                                                     }
+                                                    Toast.makeText(MainActivity.this, "Invalid Cash", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
+                                        }
 
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                            }
-                                        });
-                                       //
+                                        }
+                                    });
+                                    //
 
-                                        //
+                                    //
 
-                                    }
                                 }
                             }
+                        }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                        }
+                    });
+                    info=FirebaseDatabase.getInstance().getReference("users");
+                    info.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                //     Toast.makeText(MainActivity.this, postSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();//ID
+                                if (postSnapshot.getKey().toString().equals(mAuth.getCurrentUser().getUid())){
+                                    //   Toast.makeText(MainActivity.this, "Yay", Toast.LENGTH_SHORT).show();
+                                    info.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                                            for (final DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
+                                                //     Toast.makeText(MainActivity.this, postSnapshot1.getKey().toString(), Toast.LENGTH_SHORT).show();
+                                                if (postSnapshot1.getKey().toString().equals("Score")){
+                                                    score=Integer.parseInt(postSnapshot1.getValue().toString());
+
+                                                }
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                }
                             }
-                        });
-                        info=FirebaseDatabase.getInstance().getReference("users");
-                        info.addValueEventListener(new ValueEventListener() {
-                       @Override
-                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                           for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                          //     Toast.makeText(MainActivity.this, postSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();//ID
-                               if (postSnapshot.getKey().toString().equals(mAuth.getCurrentUser().getUid())){
-                               //   Toast.makeText(MainActivity.this, "Yay", Toast.LENGTH_SHORT).show();
-                                   info.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-                                       @Override
-                                       public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                                           for (final DataSnapshot postSnapshot1 : dataSnapshot1.getChildren()) {
-                                          //     Toast.makeText(MainActivity.this, postSnapshot1.getKey().toString(), Toast.LENGTH_SHORT).show();
-                                           if (postSnapshot1.getKey().toString().equals("Score")){
-                                         score=Integer.parseInt(postSnapshot1.getValue().toString());
+                        }
 
-                                               }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                           }
-                                       }
-
-                                       @Override
-                                       public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                       }
-                                   });
-                               }
-                           }
-                       }
-
-                       @Override
-                       public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                       }
-                   });
+                        }
+                    });
 
 
 
-                    }
+                }
 
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-@Override
+    @Override
     protected void onStart(){
         super.onStart();
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    scrollView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            scrollView.smoothScrollTo(0, divider.getBottom());
-                        }
-                    });
+                scrollView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        scrollView.smoothScrollTo(0, divider.getBottom());
+                    }
+                });
 
             }
         });
@@ -770,17 +686,17 @@ if (mAuth.getCurrentUser()!=null) {
                 }
             });
         }
-}
-private void search(String str){
-    ArrayList<ModelClass> filterList = new ArrayList<>();
-    for (ModelClass object:items2){
-        if (object.getTitle().toLowerCase().contains(str.toLowerCase())){
-            filterList.add(object);
-        }
     }
-    CustomAdapter2 filteredAdapter = new CustomAdapter2(this, filterList);
-    recyclerView2.setAdapter(filteredAdapter);
-}
+    private void search(String str){
+        ArrayList<ModelClass2> filterList = new ArrayList<>();
+        for (ModelClass2 object:items2){
+            if (object.getData().getName().toLowerCase().contains(str.toLowerCase())){
+                filterList.add(object);
+            }
+        }
+        CustomAdapter3 filteredAdapter = new CustomAdapter3(this, filterList);
+        recyclerView2.setAdapter(filteredAdapter);
+    }
     public String getCountOfDays(String createdDateString, String expireDateString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
@@ -840,85 +756,5 @@ private void search(String str){
         float dayCount = (float) diff / (24 * 60 * 60 * 1000);
 
         return ("" + (int) dayCount + " Days");
-    }
-    private void reloadEvents(){
-        recyclerView2.removeAllViews();
-        mDataExhibition=FirebaseDatabase.getInstance().getReference("exhibitions");
-        mDataExhibition.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long x1=dataSnapshot.getChildrenCount();
-                s1=(int)x1;
-                mDataExhibition.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (final DataSnapshot pd1:dataSnapshot.getChildren()){
-                            final String name=pd1.getKey().toString();
-                            customExhibitionID.add(name);
-                            mDataExhibition.child(name).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                                    //    Toast.makeText(MainActivity.this, dataSnapshot.getKey().toString(), Toast.LENGTH_SHORT).show();
-                               //   EventData data=new EventData();
-                             //       items.add(data);
-                                    for (final DataSnapshot pd1 : dataSnapshot1.getChildren()) {
-                                        if (pd1.getKey().toString().equals("Date")) {
-                                            customExhibitionDate.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Venue")) {
-                                            customExhibitionVenue.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Name")) {
-                                            customExhibitionName.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Time")) {
-                                            customExhibitionTime.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Cost")) {
-                                            customExhibitionCost.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Drinks")) {
-                                            customExhibitionDrinks.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Adult")) {
-                                            customExhibitionAdult.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Food")) {
-                                            customExhibitionFood.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Music")) {
-                                            customExhibitionMusic.add(pd1.getValue().toString());
-                                        }else if (pd1.getKey().toString().equals("Intro")) {
-                                            customExhibitionIntro.add(pd1.getValue().toString());
-                                        }
-
-                                        //    Toast.makeText(MainActivity.this, Integer.toString(customExhibition.size()), Toast.LENGTH_SHORT).show();
-                                        if ( customExhibitionVenue.size()==s1&&customExhibitionName.size()==s1 && customExhibitionCost.size()==s1&& customExhibitionTime.size()==s1&& customExhibitionDate.size()==s1 && customExhibitionVenue.size()!=0) {
-                                            items2.clear();
-                                            for (int i = 0; i < customExhibitionVenue.size(); i++) {
-                                                //        Toast.makeText(MainActivity.this, customExhibition.get(s-2), Toast.LENGTH_SHORT).show();
-                                                items2.add(new ModelClass(MyData.informaldrawableArray[0], customExhibitionName.get(i), customExhibitionVenue.get(i), Integer.parseInt(customExhibitionCost.get(i)),customExhibitionDate.get(i),customExhibitionTime.get(i),customExhibitionAdult.get(i),customExhibitionDrinks.get(i),customExhibitionMusic.get(i),customExhibitionFood.get(i),customExhibitionIntro.get(i),customExhibitionID.get(i)));
-                                                adapter2.notifyDataSetChanged();
-                                                //Toast.makeText(MainActivity.this, customExhibitionName.get(i), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 }

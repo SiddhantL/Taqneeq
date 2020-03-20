@@ -22,12 +22,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.CustomViewHolder> {
+public class CustomAdapter4 extends RecyclerView.Adapter<CustomAdapter4.CustomViewHolder> {
 
     private Context context;
     private ArrayList<ModelClass2> items;
     String timeformat,day;
-    public CustomAdapter3(Context context, ArrayList<ModelClass2> items) {
+    public CustomAdapter4(Context context, ArrayList<ModelClass2> items) {
         this.context = context;
         this.items = items;
     }
@@ -35,164 +35,164 @@ public class CustomAdapter3 extends RecyclerView.Adapter<CustomAdapter3.CustomVi
     @NonNull
     @Override
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.items_vertical, parent, false));
+        return new CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.items, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull final CustomViewHolder holder, final int position) {
-       // holder.itemTitle.setText(items.get(position).getData().getName());
+        // holder.itemTitle.setText(items.get(position).getData().getName());
         if (items.get(position).getData().getVenue()!=null){
-          //  Toast.makeText(context, items.get(position).getData().getName(), Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(context, items.get(position).getData().getName(), Toast.LENGTH_SHORT).show();
             holder.itemTitle.setText(items.get(position).getData().getName());
-        holder.itemVenue.setText(items.get(position).getData().getVenue().toString());
-        holder.itemCost.setText(items.get(position).getData().getCost());
-        FirebaseStorage stor=FirebaseStorage.getInstance();
-        String idEvent=items.get(position).getData().getID().toString();
-        holder.itemImage.setImageResource(MyData.informaldrawableArray[1]);
-        stor.getReference().child(idEvent+"/"+idEvent+Integer.toString(1)+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                String url = uri.toString();
-                Glide.with(context.getApplicationContext()).load(url).into(holder.itemImage);
-            }
-        });
-        holder.itemInfo1.setImageDrawable(null);
-        holder.itemInfo2.setImageDrawable(null);
-        holder.itemInfo3.setImageDrawable(null);
-        holder.itemInfo4.setImageDrawable(null);
-        String hour = items.get(position).getData().getTime().toString().substring(0,2);
-        final String minute = items.get(position).getData().getTime().toString().substring(3,5);
-        ArrayList<String> info = new ArrayList<>();
-        Drawable adult = ResourcesCompat.getDrawable(context.getResources(), R.drawable.adultlef, null);
-        Drawable drinks = ResourcesCompat.getDrawable(context.getResources(), R.drawable.alcohollef, null);
-        Drawable music = ResourcesCompat.getDrawable(context.getResources(), R.drawable.musiclef, null);
-        Drawable food = ResourcesCompat.getDrawable(context.getResources(), R.drawable.foodlef, null);
-        if (items.get(position).getData().getAdult().equals("Yes")) {
-            info.add("Adult");
-        }
-        if (items.get(position).getData().getDrinks().equals("Yes")) {
-            info.add("Drinks");
-        }
-        if (items.get(position).getData().getMusic().equals("Yes")) {
-            info.add("Music");
-        }
-        if (items.get(position).getData().getFood().equals("Yes")) {
-            info.add("Food");
-        }
-        for (int k = 0; k < info.size(); k++) {
-            if (info.get(k).equals("Adult")) {
-                if (k == 0) {
-                    holder.itemInfo1.setImageDrawable(adult);
-                } else if (k == 1) {
-                    holder.itemInfo2.setImageDrawable(adult);
-                } else if (k == 2) {
-                    holder.itemInfo3.setImageDrawable(adult);
-                } else if (k == 3) {
-                    holder.itemInfo4.setImageDrawable(adult);
-                }
-            } else if (info.get(k).equals("Drinks")) {
-                if (k == 0) {
-                    holder.itemInfo1.setImageDrawable(drinks);
-                } else if (k == 1) {
-                    holder.itemInfo2.setImageDrawable(drinks);
-                } else if (k == 2) {
-                    holder.itemInfo3.setImageDrawable(drinks);
-                } else if (k == 3) {
-                    holder.itemInfo4.setImageDrawable(drinks);
-                }
-            } else if (info.get(k).equals("Music")) {
-                if (k == 0) {
-                    holder.itemInfo1.setImageDrawable(music);
-                } else if (k == 1) {
-                    holder.itemInfo2.setImageDrawable(music);
-                } else if (k == 2) {
-                    holder.itemInfo3.setImageDrawable(music);
-                } else if (k == 3) {
-                    holder.itemInfo4.setImageDrawable(music);
-                }
-            } else if (info.get(k).equals("Food")) {
-                if (k == 0) {
-                    holder.itemInfo1.setImageDrawable(food);
-                } else if (k == 1) {
-                    holder.itemInfo2.setImageDrawable(food);
-                } else if (k == 2) {
-                    holder.itemInfo3.setImageDrawable(food);
-                } else if (k == 3) {
-                    holder.itemInfo4.setImageDrawable(food);
-                }
-            }
-        }
-        String setampm;
-        setampm = new String();
-        int ampm = Integer.parseInt(hour);
-        if (ampm > 12) {
-            setampm = "pm";
-            ampm = ampm - 12;
-        } else if (ampm < 12) {
-            setampm = "am";
-
-        }
-        holder.itemDate.setText(items.get(position).getData().getDate().toString());
-        holder.itemTime.setText(Integer.toString(ampm) + ":" + minute + setampm);
-        timeformat = Integer.toString(ampm) + ":" + minute + setampm;
-        final String finalSetampm = setampm;
-        final int finalAmpm = ampm;
-        if (!items.get(position).getData().getID().equals("")) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.itemVenue.setText(items.get(position).getData().getVenue().toString());
+            holder.itemCost.setText(items.get(position).getData().getCost());
+            FirebaseStorage stor=FirebaseStorage.getInstance();
+            String idEvent=items.get(position).getData().getID().toString();
+            holder.itemImage.setImageResource(MyData.informaldrawableArray[1]);
+            stor.getReference().child(idEvent+"/"+idEvent+Integer.toString(1)+".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, EventDisplay.class);
-                    intent.putExtra("position", position);
-                    intent.putExtra("section", 1);
-                    intent.putExtra("costing", items.get(position).getData().getCost());
-                    intent.putExtra("date", items.get(position).getData().getDate());
-                    intent.putExtra("intro", items.get(position).getData().getIntro());
-                    intent.putExtra("title", items.get(position).getData().getName());
-                    intent.putExtra("ID", items.get(position).getData().getID());
-                    //Toast.makeText(context, items.get(position).getData().getDate(), Toast.LENGTH_SHORT).show();
-                    String year = items.get(position).getData().getDate().toString().substring(6, 10);
-                    String month = (items.get(position).getData().getDate().toString().substring(3, 5));
-                    String date = (items.get(position).getData().getDate().toString().substring(0, 2));
-                    day = new String();
-                    //Toast.makeText(context, Integer.parseInt(date)+"/"+Integer.parseInt(month)+"/"+Integer.parseInt(year), Toast.LENGTH_SHORT).show();
-                    Calendar calendar = new GregorianCalendar(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(date)); // Note that Month value is 0-based. e.g., 0 for January.
-                    int result = calendar.get(Calendar.DAY_OF_WEEK);
-                    switch (result) {
-                        case Calendar.MONDAY:
-                            day = "Monday";
-                            break;
-                        case Calendar.TUESDAY:
-                            day = "Tuesday";
-                            break;
-                        case Calendar.WEDNESDAY:
-                            day = "Wednesday";
-                            break;
-                        case Calendar.THURSDAY:
-                            day = "Thursday";
-                            break;
-                        case Calendar.FRIDAY:
-                            day = "Friday";
-                            break;
-                        case Calendar.SATURDAY:
-                            day = "Saturday";
-                            break;
-                        case Calendar.SUNDAY:
-                            day = "Sunday";
-                            break;
-                    }
-                    intent.putExtra("time", Integer.toString(finalAmpm) + ":" + minute + finalSetampm);
-                    intent.putExtra("day", day);
-                    intent.putExtra("drinks", items.get(position).getData().getDrinks());
-                    intent.putExtra("adult", items.get(position).getData().getAdult());
-                    intent.putExtra("music", items.get(position).getData().getMusic());
-                    intent.putExtra("food", items.get(position).getData().getFood());
-                    intent.putExtra("venue", items.get(position).getData().getVenue());
-                    context.startActivity(intent);
-
+                public void onSuccess(Uri uri) {
+                    String url = uri.toString();
+                    Glide.with(context.getApplicationContext()).load(url).into(holder.itemImage);
                 }
             });
-        }else{
-        }
+            holder.itemInfo1.setImageDrawable(null);
+            holder.itemInfo2.setImageDrawable(null);
+            holder.itemInfo3.setImageDrawable(null);
+            holder.itemInfo4.setImageDrawable(null);
+            String hour = items.get(position).getData().getTime().toString().substring(0,2);
+            final String minute = items.get(position).getData().getTime().toString().substring(3,5);
+            ArrayList<String> info = new ArrayList<>();
+            Drawable adult = ResourcesCompat.getDrawable(context.getResources(), R.drawable.adultlef, null);
+            Drawable drinks = ResourcesCompat.getDrawable(context.getResources(), R.drawable.alcohollef, null);
+            Drawable music = ResourcesCompat.getDrawable(context.getResources(), R.drawable.musiclef, null);
+            Drawable food = ResourcesCompat.getDrawable(context.getResources(), R.drawable.foodlef, null);
+            if (items.get(position).getData().getAdult().equals("Yes")) {
+                info.add("Adult");
+            }
+            if (items.get(position).getData().getDrinks().equals("Yes")) {
+                info.add("Drinks");
+            }
+            if (items.get(position).getData().getMusic().equals("Yes")) {
+                info.add("Music");
+            }
+            if (items.get(position).getData().getFood().equals("Yes")) {
+                info.add("Food");
+            }
+            for (int k = 0; k < info.size(); k++) {
+                if (info.get(k).equals("Adult")) {
+                    if (k == 0) {
+                        holder.itemInfo1.setImageDrawable(adult);
+                    } else if (k == 1) {
+                        holder.itemInfo2.setImageDrawable(adult);
+                    } else if (k == 2) {
+                        holder.itemInfo3.setImageDrawable(adult);
+                    } else if (k == 3) {
+                        holder.itemInfo4.setImageDrawable(adult);
+                    }
+                } else if (info.get(k).equals("Drinks")) {
+                    if (k == 0) {
+                        holder.itemInfo1.setImageDrawable(drinks);
+                    } else if (k == 1) {
+                        holder.itemInfo2.setImageDrawable(drinks);
+                    } else if (k == 2) {
+                        holder.itemInfo3.setImageDrawable(drinks);
+                    } else if (k == 3) {
+                        holder.itemInfo4.setImageDrawable(drinks);
+                    }
+                } else if (info.get(k).equals("Music")) {
+                    if (k == 0) {
+                        holder.itemInfo1.setImageDrawable(music);
+                    } else if (k == 1) {
+                        holder.itemInfo2.setImageDrawable(music);
+                    } else if (k == 2) {
+                        holder.itemInfo3.setImageDrawable(music);
+                    } else if (k == 3) {
+                        holder.itemInfo4.setImageDrawable(music);
+                    }
+                } else if (info.get(k).equals("Food")) {
+                    if (k == 0) {
+                        holder.itemInfo1.setImageDrawable(food);
+                    } else if (k == 1) {
+                        holder.itemInfo2.setImageDrawable(food);
+                    } else if (k == 2) {
+                        holder.itemInfo3.setImageDrawable(food);
+                    } else if (k == 3) {
+                        holder.itemInfo4.setImageDrawable(food);
+                    }
+                }
+            }
+            String setampm;
+            setampm = new String();
+            int ampm = Integer.parseInt(hour);
+            if (ampm > 12) {
+                setampm = "pm";
+                ampm = ampm - 12;
+            } else if (ampm < 12) {
+                setampm = "am";
+
+            }
+            holder.itemDate.setText(items.get(position).getData().getDate().toString());
+            holder.itemTime.setText(Integer.toString(ampm) + ":" + minute + setampm);
+            timeformat = Integer.toString(ampm) + ":" + minute + setampm;
+            final String finalSetampm = setampm;
+            final int finalAmpm = ampm;
+            if (!items.get(position).getData().getID().equals("")) {
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, EventDisplay.class);
+                        intent.putExtra("position", position);
+                        intent.putExtra("section", 1);
+                        intent.putExtra("costing", items.get(position).getData().getCost());
+                        intent.putExtra("date", items.get(position).getData().getDate());
+                        intent.putExtra("intro", items.get(position).getData().getIntro());
+                        intent.putExtra("title", items.get(position).getData().getName());
+                        intent.putExtra("ID", items.get(position).getData().getID());
+                        //Toast.makeText(context, items.get(position).getData().getDate(), Toast.LENGTH_SHORT).show();
+                        String year = items.get(position).getData().getDate().toString().substring(6, 10);
+                        String month = (items.get(position).getData().getDate().toString().substring(3, 5));
+                        String date = (items.get(position).getData().getDate().toString().substring(0, 2));
+                        day = new String();
+                        //Toast.makeText(context, Integer.parseInt(date)+"/"+Integer.parseInt(month)+"/"+Integer.parseInt(year), Toast.LENGTH_SHORT).show();
+                        Calendar calendar = new GregorianCalendar(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(date)); // Note that Month value is 0-based. e.g., 0 for January.
+                        int result = calendar.get(Calendar.DAY_OF_WEEK);
+                        switch (result) {
+                            case Calendar.MONDAY:
+                                day = "Monday";
+                                break;
+                            case Calendar.TUESDAY:
+                                day = "Tuesday";
+                                break;
+                            case Calendar.WEDNESDAY:
+                                day = "Wednesday";
+                                break;
+                            case Calendar.THURSDAY:
+                                day = "Thursday";
+                                break;
+                            case Calendar.FRIDAY:
+                                day = "Friday";
+                                break;
+                            case Calendar.SATURDAY:
+                                day = "Saturday";
+                                break;
+                            case Calendar.SUNDAY:
+                                day = "Sunday";
+                                break;
+                        }
+                        intent.putExtra("time", Integer.toString(finalAmpm) + ":" + minute + finalSetampm);
+                        intent.putExtra("day", day);
+                        intent.putExtra("drinks", items.get(position).getData().getDrinks());
+                        intent.putExtra("adult", items.get(position).getData().getAdult());
+                        intent.putExtra("music", items.get(position).getData().getMusic());
+                        intent.putExtra("food", items.get(position).getData().getFood());
+                        intent.putExtra("venue", items.get(position).getData().getVenue());
+                        context.startActivity(intent);
+
+                    }
+                });
+            }else{
+            }
         }
     }
     @Override

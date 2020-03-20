@@ -40,17 +40,16 @@ public class Tab3 extends Fragment{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    ArrayList<ModelClass> items2;
+    ArrayList<ModelClass2> items2;
     RecyclerView recyclerView;
 int s1;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    CustomAdapter2 adapter2;
+    CustomAdapter3 adapter2;
     DatabaseReference mDataExhibition,mSaved;
     private OnFragmentInteractionListener mListener;
     ArrayList<String> saved;
-    ArrayList<String> customExhibitionID,customExhibitionDate,customExhibitionVenue,customExhibitionTime,customExhibitionName,customExhibitionCost,customExhibitionDrinks,customExhibitionAdult,customExhibitionFood,customExhibitionMusic,customExhibitionIntro;
     public Tab3() {
         // Required empty public constructor
     }
@@ -88,23 +87,12 @@ int s1;
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tab3, container, false);
         //--------------------------------------------------------------------------------
-        customExhibitionName = new ArrayList<>();
-        customExhibitionVenue = new ArrayList<>();
-        customExhibitionCost = new ArrayList<>();
-        customExhibitionDate = new ArrayList<>();
-        customExhibitionTime = new ArrayList<>();
-        customExhibitionAdult = new ArrayList<>();
-        customExhibitionDrinks = new ArrayList<>();
-        customExhibitionFood = new ArrayList<>();
-        customExhibitionMusic = new ArrayList<>();
-        customExhibitionIntro = new ArrayList<>();
-        customExhibitionID = new ArrayList<>();
         saved = new ArrayList<String>();
         mDataExhibition = FirebaseDatabase.getInstance().getReference("exhibitions");
         items2 = new ArrayList<>();
         recyclerView = view.findViewById(R.id.my_recycler_view2);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        adapter2 = new CustomAdapter2(getActivity(), items2);
+        adapter2 = new CustomAdapter3(getActivity(), items2);
         recyclerView.setAdapter(adapter2);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mSaved = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid()).child("Saved");
@@ -120,49 +108,22 @@ int s1;
                             mDataExhibition.child(saved.get(i)).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (final DataSnapshot pd1 : dataSnapshot.getChildren()) {
-                                        if (pd1.getKey().toString().equals("Date")) {
-                                            customExhibitionDate.add(pd1.getValue().toString());
-                                       } else if (pd1.getKey().toString().equals("Venue")) {
-                                            customExhibitionVenue.add(pd1.getValue().toString());
-                                        } else if (pd1.getKey().toString().equals("Name")) {
-                                            customExhibitionName.add(pd1.getValue().toString());
-                                        } else if (pd1.getKey().toString().equals("Time")) {
-                                            customExhibitionTime.add(pd1.getValue().toString());
-                                        } else if (pd1.getKey().toString().equals("Cost")) {
-                                            customExhibitionCost.add(pd1.getValue().toString());
-                                        } else if (pd1.getKey().toString().equals("Drinks")) {
-                                            customExhibitionDrinks.add(pd1.getValue().toString());
-                                        } else if (pd1.getKey().toString().equals("Adult")) {
-                                            customExhibitionAdult.add(pd1.getValue().toString());
-                                        } else if (pd1.getKey().toString().equals("Food")) {
-                                            customExhibitionFood.add(pd1.getValue().toString());
-                                        } else if (pd1.getKey().toString().equals("Music")) {
-                                            customExhibitionMusic.add(pd1.getValue().toString());
-                                        } else if (pd1.getKey().toString().equals("Intro")) {
-                                            customExhibitionIntro.add(pd1.getValue().toString());
-                                        }
+                                    final String name=dataSnapshot.getKey().toString();
+                                    EventData data=new EventData();
+                                    data.setAdult(dataSnapshot.child("Adult").getValue(String.class));
+                                    data.setCost(dataSnapshot.child("Cost").getValue().toString());
+                                    data.setDate(dataSnapshot.child("Date").getValue(String.class));
+                                    data.setDrinks(dataSnapshot.child("Drinks").getValue(String.class));
+                                    data.setFood(dataSnapshot.child("Food").getValue(String.class));
+                                    data.setID(name);
+                                    data.setIntro(dataSnapshot.child("Intro").getValue(String.class));
+                                    data.setMusic(dataSnapshot.child("Music").getValue(String.class));
+                                    data.setName(dataSnapshot.child("Name").getValue(String.class));
+                                    data.setTime(dataSnapshot.child("Time").getValue(String.class));
+                                    data.setVenue(dataSnapshot.child("Venue").getValue(String.class));
+                                    items2.add(new ModelClass2(data));
+                                    adapter2.notifyDataSetChanged();
 
-                                    }
-
-                                    if (customExhibitionVenue.size() == s1 && customExhibitionName.size() == s1 && customExhibitionCost.size() == s1 && customExhibitionTime.size() == s1 && customExhibitionDate.size() == s1 && customExhibitionVenue.size() != 0) {
-                                        items2.clear();
-                                        for (int i = 0; i < customExhibitionVenue.size(); i++) {
-                                           items2.add(new ModelClass(MyData.informaldrawableArray[0],
-                                                    customExhibitionName.get(i),
-                                                    customExhibitionVenue.get(i),
-                                                    Integer.parseInt(customExhibitionCost.get(i)),
-                                                    customExhibitionDate.get(i),
-                                                    customExhibitionTime.get(i),
-                                                    customExhibitionAdult.get(i),
-                                                    customExhibitionDrinks.get(i),
-                                                    customExhibitionMusic.get(i),
-                                                    customExhibitionFood.get(i),
-                                                    customExhibitionIntro.get(i),
-                                                    saved.get(i)));
-                                            adapter2.notifyDataSetChanged();
-                                        }
-                                    }
                                 }
 
                                 @Override
