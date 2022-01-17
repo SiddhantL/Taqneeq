@@ -22,10 +22,10 @@
 
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_live_uRZD9B8dUMfbXK" />
+            android:value="" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAvA2CpYwcuopOJ35WZakeVoeDUA3yTz98" />
+            android:value="" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
